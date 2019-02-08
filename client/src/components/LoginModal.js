@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { clearUserCreated } from '../actions/itemActions'
 
 
-export class SignupConfirm extends Component {
+export class LoginModal extends Component {
 
     closeModal = (e) => {
         if (e.target.className === "modal" && e.target.className !== "modal-input") {
@@ -17,7 +17,7 @@ export class SignupConfirm extends Component {
     render() {
         return (
             <div className="modal" onClick={this.closeModal}>
-                <div className="SignupConfirm modal-form">
+                <div className="LoginModal modal-form">
                     <div>
                         <div className="inline">
                             <p>{this.props.message}</p>
@@ -36,4 +36,4 @@ const mapStateToProps = (state) => ({
 
 })
 
-export default connect(mapStateToProps, { clearUserCreated })(SignupConfirm)
+export default connect(mapStateToProps, { clearUserCreated })(LoginModal)

@@ -3,7 +3,7 @@ import Signup from './components/Signup'
 import Login from './components/Login'
 import LoginNav from './components/LoginNav'
 import UserNav from './components/UserNav'
-import SignupConfirm from './components/signupConfirm'
+import LoginModal from './components/LoginModal'
 import { Provider } from 'react-redux'
 import { connect } from 'react-redux'
 import store from './store'
@@ -25,7 +25,7 @@ showLogin = () => {
 showSignup = () => {
   this.setState({ showSignup: !this.state.showSignup })
   }
-  
+
   render() {
     return (
       <Provider store={store}>
@@ -34,8 +34,8 @@ showSignup = () => {
           {!this.props.userData && <LoginNav showLogin={this.showLogin} showSignup={this.showSignup}/>}
           {(this.props.userCreated) ? null : this.state.showSignup && <Signup showSignup={this.showSignup}/>}
           {(this.props.userData) ? null : this.state.showLogin  && <Login showLogin={this.showLogin}/>}
-          {this.props.userCreated && <SignupConfirm message="Thank you for signing up, to continue please log in!" showSignup={this.showSignup}/>}
-          {this.props.invalidLogin && <SignupConfirm message={this.props.invalidLogin} showSignup={()=>{}} />}
+          {this.props.userCreated && <LoginModal message="Thank you for signing up, to continue please log in!" showSignup={this.showSignup}/>}
+          {this.props.invalidLogin && <LoginModal message={this.props.invalidLogin} showSignup={()=>{}} />}
       </div>
       </Provider>
     );
