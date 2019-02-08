@@ -1,0 +1,125 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0; }
+
+html {
+  background: url("../img/background.jpeg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  font-family: 'Montserrat', sans-serif;
+  overflow: scroll;
+  overflow-x: hidden; }
+
+::-webkit-scrollbar {
+  width: 0px;
+  /* remove scrollbar space */
+  background: transparent;
+  /* optional: just make scrollbar invisible */ }
+
+/* optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+  background: #FF0000; }
+
+h2 {
+  font-size: 12px;
+  font-weight: bold;
+  margin: auto; }
+
+h1 {
+  text-align: center;
+  color: #ff7920; }
+
+.toggler:hover {
+  cursor: pointer; }
+
+.page-container {
+  text-align: center;
+  margin-top: 8%; }
+  .page-container span {
+    color: #ff7920; }
+  .page-container h1 {
+    color: white; }
+
+.Btn {
+  border-style: none;
+  background-color: transparent;
+  color: #ff7920;
+  border-radius: 2px;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-weight: bold;
+  font-size: 1rem; }
+  .Btn:hover {
+    background-color: #8dd4f5; }
+
+.inline {
+  display: inline-block; }
+
+.navbar {
+  width: 100%;
+  height: 60px;
+  background-color: #f9fdf6;
+  position: absolute; }
+
+.nav-item {
+  display: inline-block;
+  margin: 20px 10px;
+  font-size: 17px;
+  color: #272322; }
+  .nav-item:hover {
+    color: #ff7920;
+    cursor: pointer; }
+
+.nav-logo {
+  display: inline-block;
+  margin: 18px;
+  font-size: 17px;
+  color: red; }
+
+.SignupConfirm {
+  z-index: 50;
+  min-height: 60px; }
+
+/* The Modal (background) */
+.modal {
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: black;
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.6);
+  /* Black w/ opacity */ }
+
+/* Modal Content/Box */
+.modal-form {
+  border-radius: 5px;
+  background-color: #f9fdf6;
+  margin: 15% auto;
+  /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  /* Could be more or less, depending on screen size */ }
+
+.modal-input {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 1px solid #ff7920;
+  font-size: 1rem;
+  margin: 10px;
+  width: 250px; }

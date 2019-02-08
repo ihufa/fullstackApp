@@ -1,0 +1,5 @@
+{
+    "env": {
+        "MONGO_ATLAST_PW":"admin123"
+    }
+}
