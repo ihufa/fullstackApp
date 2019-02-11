@@ -1,4 +1,4 @@
-import { GET_ITEMS, ADD_ITEM, DELETE_ITEM, ITEMS_LOADING, INITIATE_USER, CLEAR_USER, INVALID_LOGIN } from '../actions/types'
+import { GET_ITEMS, ADD_ITEM, DELETE_ITEM, ITEMS_LOADING, INITIATE_USER, CLEAR_USER, INVALID_LOGIN, UPDATE_PRODUCTS, GET_PRODUCTS, REMOVE_PRODUCTS } from '../actions/types'
 
 
 
@@ -6,7 +6,8 @@ const initialState = {
     itemArray: [],
     userData: "",
     userCreated: false,
-    invalidLogin: false
+    invalidLogin: false,
+    products: []
 }
 
 export default function(state = initialState, action)  {
@@ -50,6 +51,14 @@ export default function(state = initialState, action)  {
                 ...state,
                 invalidLogin: action.payload
             }
+        case UPDATE_PRODUCTS:
+            return {
+                ...state,
+                products: action.payload
+            }
+
+
+
             default:
             return state
     }

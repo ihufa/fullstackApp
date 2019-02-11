@@ -4,6 +4,9 @@ import Login from './components/Login'
 import LoginNav from './components/LoginNav'
 import UserNav from './components/UserNav'
 import LoginModal from './components/LoginModal'
+import Shopnav from './components/Shopnav'
+import Userprofile from './components/Userprofile'
+import Shop from './components/Shop'
 import { Provider } from 'react-redux'
 import { connect } from 'react-redux'
 import store from './store'
@@ -15,7 +18,8 @@ constructor() {
   this.state = {
     showLogin: false,
     showSignup: false,
-    userData: ""
+    userData: "",
+    showShop: true
   }
 }  
 
@@ -36,6 +40,11 @@ showSignup = () => {
           {(this.props.userData) ? null : this.state.showLogin  && <Login showLogin={this.showLogin}/>}
           {this.props.userCreated && <LoginModal message="Thank you for signing up, to continue please log in!" showSignup={this.showSignup}/>}
           {this.props.invalidLogin && <LoginModal message={this.props.invalidLogin} showSignup={()=>{}} />}
+          <div>
+
+           {this.state.showShop && <Shop />}
+           {this.props.profile && <Userprofile user={this.props.profile}/>}
+          </div>
       </div>
       </Provider>
     );
@@ -45,7 +54,8 @@ showSignup = () => {
 const mapStateToProps = (state) => ({
   userData: state.items.userData,
   userCreated: state.items.userCreated,
-  invalidLogin: state.items.invalidLogin
+  invalidLogin: state.items.invalidLogin,
+  profile: state.items.profile
 })
 
 export default connect(mapStateToProps)(App)

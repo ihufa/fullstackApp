@@ -7,7 +7,7 @@ const path = require('path');
 const app = express();
 var allowCrossDomain = function (req, res, next) {
     res.header('Access-Control-Allow-Origin', "*");
-    res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     next();
 }
@@ -15,7 +15,7 @@ var allowCrossDomain = function (req, res, next) {
     app.use(allowCrossDomain)
  
 
-const users = require('./api/routes/users');
+
 // Bodyparser Middleware
 app.use(bodyParser.json());
 
@@ -29,7 +29,14 @@ mongoose
     .catch(err => console.log(err));
 
 // Use Routes
+const users = require('./api/routes/users');
+const products = require('./api/routes/products');
+const orders = require('./api/routes/orders');
+
 app.use('/users', users);
+app.use('/products', products);
+app.use('/orders', orders);
+app.use('/plants', express.static('uploads'))
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === 'production') {

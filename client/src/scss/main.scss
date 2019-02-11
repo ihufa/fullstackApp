@@ -29,7 +29,15 @@ html {
     background: #FF0000;
 }
 
-
+.page-wrapper {
+    margin: auto;
+    max-width: 1200px;
+    display: grid;
+    grid-template-columns: repeat(4, 300px);
+    grid-auto-rows: 250px;
+    grid-gap: 5px;
+    grid-auto-flow: row;
+}
 h2 {
     font-size: 12px;
     font-weight: bold;
@@ -45,18 +53,6 @@ h1 {
     &:hover {
         cursor: pointer;
     } 
-}
-
-.page-container {
-    text-align: center;
-    margin-top: 8%;
-    
-    span {
-        color: $orange;
-    }
-    h1 {
-        color: white;
-    }
 }
 
 .Btn {
@@ -82,7 +78,7 @@ h1 {
     width: 100%;
     height: 60px;
     background-color: $light;
-    position: absolute;
+    text-align: right;
 }
 .nav-item {
     display: inline-block;
@@ -136,6 +132,21 @@ h1 {
   margin: 10px;
   width: 250px;
 }
+
+.plant-card {
+    background-color: white;
+    height: 250px;
+    width: 300px;
+    img {
+        width: 100%;
+        height: 100%;
+    &:hover {
+        opacity: 0.7;
+    }
+}
+}
+
+
 @media screen and (max-width: 1200px) {
 
 }

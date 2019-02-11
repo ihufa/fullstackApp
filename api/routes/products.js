@@ -1,14 +1,40 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const checkAuth = require('../auth/checkAuth')
-
-const Product = require('../models/product')
 const router = express.Router()
+const Product = require('../models/product')
+
+const checkAuth = require('../auth/checkAuth')
+const multer = require('multer')
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './uploads/');
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + file.originalname);
+    }
+});
+const fileFilter = (req, file, cb) => {
+    // reject a file
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+        cb(null, true)
+    } else {
+        cb(null, false)
+    }
+}
+
+const upload = multer({
+    storage: storage,
+    limits: {
+        fileSize: 1024 * 1024 * 5
+    },
+    fileFilter: fileFilter
+})
+
 
 router.get('/', (req, res, next) => {
+    console.log("products GET requested")
     Product.find()
-    .select("product quantity _id")
-    .populate("name")
     .exec()
     .then(docs => {
         const response = {
@@ -16,12 +42,10 @@ router.get('/', (req, res, next) => {
             products: docs.map(doc => {
                 return {
                     name: doc.name,
-                    price: doc.price,
+                    message: doc.message,
                     _id: doc._id,
-                    request: {
-                        type: 'GET',
-                        url: `http://localhost:3000/products/${doc._id}`
-                    }
+                    image: doc.image
+
                 }
             })
         }
@@ -35,16 +59,19 @@ router.get('/', (req, res, next) => {
         })
     })
     })
-router.post('/', checkAuth, (req, res, next) => {
+router.post('/', checkAuth, upload.single('productImage'), (req, res, next) => {
     const product = new Product({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
-        price: req.body.price
+        message: req.body.message,
+        image: req.file.filename,
+        message: req.body.message,
+        user: req.userData.user
     })
     product
     .save()
-    .then(results => {
-        console.log(result)
+    .then(result => {
+        res.status(201).json("product added")
     })
     .catch(err => console.log(err))
     res.status(201).json({
