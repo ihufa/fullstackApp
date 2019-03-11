@@ -1,0 +1,11 @@
+export const GET_USERS = "GET_USERS"
+export const ADD_USER = "ADD_USER"
+
+export const DELETE_USER = "DELETE_USER"
+export const USERS_LOADING = "USERS_LOADING"
+export const INITIATE_USER = "INITIATE_USER"
+export const CLEAR_USER = "CLEAR_USER"
+export const INVALID_LOGIN = "INVALID_LOGIN"
+export const GET_PRODUCTS = "GET_PRODUCTS"
+export const REMOVE_PRODUCTS = "REMOVE_PRODUCTS"
+export const UPDATE_PRODUCTS = "UPDATE_PRODUCTS"

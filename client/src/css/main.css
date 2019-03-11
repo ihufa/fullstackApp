@@ -1,27 +1,8 @@
 * {
   margin: 0;
   padding: 0;
-  border: 0; }
-
-html {
-  background: url("../img/background.jpeg") no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  font-family: 'Montserrat', sans-serif;
-  overflow: scroll;
-  overflow-x: hidden; }
-
-::-webkit-scrollbar {
-  width: 0px;
-  /* remove scrollbar space */
-  background: transparent;
-  /* optional: just make scrollbar invisible */ }
-
-/* optional: show position indicator in red */
-::-webkit-scrollbar-thumb {
-  background: #FF0000; }
+  border: 0;
+  text-decoration: none; }
 
 .page-wrapper {
   margin: auto;
@@ -62,7 +43,10 @@ h1 {
   display: inline-block; }
 
 .navbar {
-  width: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 60px;
   background-color: #f9fdf6;
   text-align: right; }
@@ -125,12 +109,14 @@ h1 {
   margin: 10px;
   width: 250px; }
 
-.plant-card {
-  background-color: lightblue;
-  height: 250px;
-  width: 300px; }
-  .plant-card img {
-    width: 100%;
-    height: 100%; }
-    .plant-card img:hover {
-      opacity: 0.7; }
+.plant-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  justify-content: center;
+  grid-gap: 5px;
+  grid-row-gap: 0px; }
+
+.plant-img {
+  width: 100%;
+  height: auto;
+  max-height: 240px; }

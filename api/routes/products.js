@@ -1,138 +1,136 @@
-const express = require('express')
-const mongoose = require('mongoose')
+const express = require("express")
+const mongoose = require("mongoose")
 const router = express.Router()
-const Product = require('../models/product')
+const Product = require("../models/product")
 
-const checkAuth = require('../auth/checkAuth')
-const multer = require('multer')
+const checkAuth = require("../auth/checkAuth")
+const multer = require("multer")
 
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './uploads/');
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + file.originalname);
-    }
-});
+  destination: function(req, file, cb) {
+    cb(null, "./uploads/")
+  },
+  filename: function(req, file, cb) {
+    cb(null, Date.now() + file.originalname)
+  }
+})
 const fileFilter = (req, file, cb) => {
-    // reject a file
-    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-        cb(null, true)
-    } else {
-        cb(null, false)
-    }
+  // reject a file
+  if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+    cb(null, true)
+  } else {
+    cb(null, false)
+  }
 }
 
 const upload = multer({
-    storage: storage,
-    limits: {
-        fileSize: 1024 * 1024 * 5
-    },
-    fileFilter: fileFilter
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5
+  },
+  fileFilter: fileFilter
 })
 
-
-router.get('/', (req, res, next) => {
-    console.log("products GET requested")
-    Product.find()
+router.get("/", (req, res, next) => {
+  console.log("products GET requested")
+  Product.find()
     .exec()
     .then(docs => {
-        const response = {
-            count: docs.length,
-            products: docs.map(doc => {
-                return {
-                    name: doc.name,
-                    message: doc.message,
-                    _id: doc._id,
-                    image: doc.image
+      const response = {
+        count: docs.length,
+        products: docs.map(doc => {
+          return {
+            name: doc.name,
+            message: doc.message,
+            _id: doc._id,
+            image: doc.image
+          }
+        })
+      }
 
-                }
-            })
-        }
-
-        res.status(200).json(response)
+      res.status(200).json(response)
     })
     .catch(err => {
-        console.log(err)
-        res.status(500).json({
-            error: err
-        })
+      console.log(err)
+      res.status(500).json({
+        error: err
+      })
     })
-    })
-router.post('/', checkAuth, upload.single('productImage'), (req, res, next) => {
-    const product = new Product({
-        _id: new mongoose.Types.ObjectId(),
-        name: req.body.name,
-        message: req.body.message,
-        image: req.file.filename,
-        message: req.body.message,
-        user: req.userData.user
-    })
-    product
+})
+router.post("/", checkAuth, upload.single("productImage"), (req, res, next) => {
+  const product = new Product({
+    _id: new mongoose.Types.ObjectId(),
+    name: req.body.name,
+    message: req.body.message,
+    image: req.file.filename,
+    user: req.body.user,
+    zip: req.body.zip,
+    time: Date.now()
+  })
+  product
     .save()
     .then(result => {
-        res.status(201).json("product added")
+      res.status(201).json("product added")
     })
     .catch(err => console.log(err))
-    res.status(201).json({
-        message: 'product added',
-        createdProduct: product
-    })
+  res.status(201).json({
+    message: "product added",
+    createdProduct: product
+  })
 })
-router.get('/:productId', (req, res, next) => {
-    const id = req.params.productId
-    Product.findById(id)
+router.get("/:productId", (req, res, next) => {
+  const id = req.params.productId
+  Product.findById(id)
     .exec()
     .then(doc => {
-        console.log("from database" + doc)
-        if(doc)
-        {res.status(200).json(doc)}
-        else {
-            res.status(404).json({
-                message: "no entry found"
-            })
-        }
-    })
-    .catch(err => {
-        console.log(err.message)
-        res.status(500).json({
-            error: err.message
+      console.log("from database" + doc)
+      if (doc) {
+        res.status(200).json(doc)
+      } else {
+        res.status(404).json({
+          message: "no entry found"
         })
-    })
-})
-
-router.patch('/:productId', (req, res, next) => {
-    const id = req.params.productId
-    const updateOps = {}
-    for( const ops of req.body) {
-        updateOps[ops.propName] = ops.value
- }
-
-    Product.update({_id: id}, {$set: updateOps})
-    .exec()
-    .then(result => {
-        console.log(result)
-        res.status(200).json(result)
+      }
     })
     .catch(err => {
-        console.log(err)
-        res.status(500).json({"error":err})
- })
-
-})
-
-router.delete('/:productId', (req, res, next) => {
-    const id = req.params.productId
-
-    Product.remove({_id: id})
-    .exec()
-    .then(result => {
-        console.log(result)
-        res.status(200).json(result)})
-    .catch(err => {
-        console.log({error: err})
+      console.log(err.message)
+      res.status(500).json({
+        error: err.message
+      })
     })
 })
 
+router.patch("/:productId", (req, res, next) => {
+  const id = req.params.productId
+  const updateOps = {}
+  for (const ops of req.body) {
+    updateOps[ops.propName] = ops.value
+  }
+
+  Product.update({ _id: id }, { $set: updateOps })
+    .exec()
+    .then(result => {
+      console.log(result)
+      res.status(200).json(result)
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({ error: err })
+    })
+})
+
+router.delete("/:productId", (req, res, next) => {
+  const id = req.params.productId
+
+  Product.remove({ _id: id })
+    .exec()
+    .then(result => {
+      console.log(result)
+      res.status(200).json(result)
+    })
+    .catch(err => {
+      console.log({ error: err })
+    })
+})
 
 module.exports = router

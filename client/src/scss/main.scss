@@ -1,104 +1,87 @@
-
 $primary: #272322;
 $orange: rgb(255, 121, 32);
 $light: rgb(249, 253, 246);
 $red: red;
 
-
 * {
-    margin: 0; 
-    padding: 0;
-    border: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  text-decoration: none;
 }
-html { 
-  background: url("../img/background.jpeg") no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  font-family: 'Montserrat', sans-serif;
-    overflow: scroll;
-    overflow-x: hidden;
-}
-::-webkit-scrollbar {
-    width: 0px;  /* remove scrollbar space */
-    background: transparent;  /* optional: just make scrollbar invisible */
-}
-/* optional: show position indicator in red */
-::-webkit-scrollbar-thumb {
-    background: #FF0000;
-}
-
 .page-wrapper {
-    margin: auto;
-    max-width: 1200px;
-    display: grid;
-    grid-template-columns: repeat(4, 300px);
-    grid-auto-rows: 250px;
-    grid-gap: 5px;
-    grid-auto-flow: row;
+  margin: auto;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: repeat(4, 300px);
+  grid-auto-rows: 250px;
+  grid-gap: 5px;
+  grid-auto-flow: row;
 }
 h2 {
-    font-size: 12px;
-    font-weight: bold;
-    margin: auto;
+  font-size: 12px;
+  font-weight: bold;
+  margin: auto;
 }
 
 h1 {
-    text-align: center;
-    color: $orange;
+  text-align: center;
+  color: $orange;
 }
 
 .toggler {
-    &:hover {
-        cursor: pointer;
-    } 
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .Btn {
-    border-style: none;
-    background-color: transparent;    
-    color:$orange;
-    border-radius: 2px;
-    margin-bottom: 0;
-    padding-bottom: 0;
-    margin-left: 10px;
-    margin-right: 10px;
-    font-weight: bold;
-    font-size: 1rem;
+  border-style: none;
+  background-color: transparent;
+  color: $orange;
+  border-radius: 2px;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-weight: bold;
+  font-size: 1rem;
 
-    &:hover {
-        background-color: rgb(141, 212, 245)
-    }
+  &:hover {
+    background-color: rgb(141, 212, 245);
+  }
 }
 .inline {
-    display: inline-block;
+  display: inline-block;
 }
 .navbar {
-    width: 100%;
-    height: 60px;
-    background-color: $light;
-    text-align: right;
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: $light;
+  text-align: right;
 }
 .nav-item {
-    display: inline-block;
-    margin: 20px 10px;
-    font-size: 17px;
-    color: $primary;
-    &:hover {
-        color: $orange;
-        cursor: pointer;
-    }
+  display: inline-block;
+  margin: 20px 10px;
+  font-size: 17px;
+  color: $primary;
+  &:hover {
+    color: $orange;
+    cursor: pointer;
+  }
 }
 .nav-logo {
-    display: inline-block;
-    margin: 18px;
-    font-size: 17px;
-    color: $red;
+  display: inline-block;
+  margin: 18px;
+  font-size: 17px;
+  color: $red;
 }
 .SignupConfirm {
-    z-index: 50;
-    min-height:60px;
+  z-index: 50;
+  min-height: 60px;
 }
 /* The Modal (background) */
 .modal {
@@ -109,8 +92,8 @@ h1 {
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.6); /* Black w/ opacity */
 }
 
 /* Modal Content/Box */
@@ -121,7 +104,6 @@ h1 {
   padding: 20px;
   border: 1px solid #888;
   width: 50%; /* Could be more or less, depending on screen size */
-
 }
 .modal-input {
   border: 0;
@@ -133,27 +115,27 @@ h1 {
   width: 250px;
 }
 
-.plant-card {
-    background-color: white;
-    height: 250px;
-    width: 300px;
-    img {
-        width: 100%;
-        height: 100%;
-    &:hover {
-        opacity: 0.7;
-    }
-}
+.plant-gallery-page-wrapper {
 }
 
+.plant-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  justify-content: center;
+  grid-gap: 5px;
+  grid-row-gap: 0px;
+}
+
+.plant-img {
+  width: 100%;
+  height: auto;
+  max-height: 240px;
+}
 
 @media screen and (max-width: 1200px) {
-
 }
 @media screen and (max-width: 1000px) {
-
 }
 
 @media screen and (max-width: 800px) {
-
 }
