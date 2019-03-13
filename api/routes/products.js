@@ -38,14 +38,7 @@ router.get("/", (req, res, next) => {
     .then(docs => {
       const response = {
         count: docs.length,
-        products: docs.map(doc => {
-          return {
-            name: doc.name,
-            message: doc.message,
-            _id: doc._id,
-            image: doc.image
-          }
-        })
+        products: docs
       }
 
       res.status(200).json(response)
@@ -57,12 +50,35 @@ router.get("/", (req, res, next) => {
       })
     })
 })
+router.post("/search", (req, res, next) => {
+  console.log("search initiated")
+  console.log(req.body)
+  let searchParam = new RegExp(req.body.searchParam, "i")
+  Product.find({ message: searchParam })
+
+    .exec()
+    .then(prod => {
+      const response = {
+        count: prod.length,
+        products: prod
+      }
+
+      res.status(200).json(response)
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({
+        error: err
+      })
+    })
+})
+
 router.post("/", checkAuth, upload.single("productImage"), (req, res, next) => {
   const product = new Product({
     _id: new mongoose.Types.ObjectId(),
+    image: req.file.filename,
     name: req.body.name,
     message: req.body.message,
-    image: req.file.filename,
     user: req.body.user,
     zip: req.body.zip,
     time: Date.now()

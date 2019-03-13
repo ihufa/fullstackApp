@@ -31,26 +31,48 @@ const UserProfile = props => {
     setPlantName(e.target.value)
   }
 
+  const plantGrid =
+    props.products.length > 0 ? (
+      <div className="plant-gallery-page-wrapper">
+        <div className="plant-grid">
+          {props.products
+            .filter(el => el.user === props.userData.userEmail)
+            .reverse()
+            .map((el, index) => (
+              <div key={el._id}>
+                <img
+                  className="plant-img"
+                  alt={el.name}
+                  src={"http://localhost:5000/plants/" + el.image}
+                />
+              </div>
+            ))}
+        </div>
+      </div>
+    ) : (
+      <div className="plant">
+        <h3>You have no active plants at the moment</h3>
+      </div>
+    )
+
+  useEffect(() => props.getProducts(), [])
+
   return (
     <div>
       <h1>My plants</h1>
-      <div className="plant-grid" />
       <div className="plant-img-upload">
         <form onSubmit={addPlant}>
           <input onChange={onChangeImg} type="file" />
           <input
             onChange={onChangeDescription}
             type="text"
-            placeholder="plant name"
-          />
-          <input
-            onChange={onChangeName}
-            type="text"
             placeholder="description"
           />
+          <input onChange={onChangeName} type="text" placeholder="name" />
           <input type="submit" value="Share!" />
         </form>
       </div>
+      {plantGrid}
     </div>
   )
 }

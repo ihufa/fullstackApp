@@ -1,5 +1,7 @@
+@import url("https://fonts.googleapis.com/css?family=PT+Sans+Narrow");
+
 $primary: #272322;
-$orange: rgb(255, 121, 32);
+$green: rgb(38, 214, 15);
 $light: rgb(249, 253, 246);
 $red: red;
 
@@ -8,7 +10,9 @@ $red: red;
   padding: 0;
   border: 0;
   text-decoration: none;
+  font-family: "PT Sans Narrow", sans-serif;
 }
+
 .page-wrapper {
   margin: auto;
   max-width: 1200px;
@@ -26,7 +30,7 @@ h2 {
 
 h1 {
   text-align: center;
-  color: $orange;
+  color: $green;
 }
 
 .toggler {
@@ -38,7 +42,7 @@ h1 {
 .Btn {
   border-style: none;
   background-color: transparent;
-  color: $orange;
+  color: $green;
   border-radius: 2px;
   margin-bottom: 0;
   padding-bottom: 0;
@@ -69,7 +73,7 @@ h1 {
   font-size: 17px;
   color: $primary;
   &:hover {
-    color: $orange;
+    color: $green;
     cursor: pointer;
   }
 }
@@ -109,27 +113,45 @@ h1 {
   border: 0;
   outline: 0;
   background: transparent;
-  border-bottom: 1px solid $orange;
+  border-bottom: 1px solid $green;
   font-size: 1rem;
   margin: 10px;
   width: 250px;
 }
 
 .plant-gallery-page-wrapper {
+  min-height: calc(100vh - 124px);
 }
 
 .plant-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   justify-content: center;
-  grid-gap: 5px;
-  grid-row-gap: 0px;
+  grid-gap: 35px;
+  grid-row-gap: 35px;
 }
 
 .plant-img {
   width: 100%;
   height: auto;
-  max-height: 240px;
+}
+.plant-grid-time {
+  float: right;
+  margin: 5px;
+  color: rgb(158, 158, 158);
+}
+.plant-grid-name {
+  float: left;
+  margin: 5px;
+}
+.footer {
+  width: 100%;
+  height: 80px;
+  background-color: rgba(157, 252, 153, 0.438);
+  color: $green;
+  text-align: center;
+}
+.footer-item {
 }
 
 @media screen and (max-width: 1200px) {

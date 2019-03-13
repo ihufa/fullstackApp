@@ -8,13 +8,19 @@ const Shop = props => {
   return props.products.length > 0 ? (
     <div className="plant-gallery-page-wrapper">
       <div className="plant-grid">
-        {props.products.map((el, index) => (
+        {props.products.reverse().map((el, index) => (
           <div key={el._id}>
             <img
               className="plant-img"
               alt={el.name}
               src={"http://localhost:5000/plants/" + el.image}
             />
+            <div className="plant-grid-name">
+              <p>{el.name}</p>
+            </div>
+            <div className="plant-grid-time">
+              <p>{(Date.now() - el.time) / 1000} ago</p>
+            </div>
           </div>
         ))}
       </div>
@@ -26,7 +32,8 @@ const Shop = props => {
   )
 }
 const mapStateToProps = state => ({
-  products: state.items.products
+  products: state.items.products,
+  productSearch: state.items.productSearch
 })
 
 export default connect(

@@ -10,6 +10,7 @@ import { Provider } from "react-redux"
 import { connect } from "react-redux"
 import store from "./state/store"
 import "./css/main.css"
+import Footer from "./components/Footer"
 
 class App extends Component {
   constructor() {
@@ -51,6 +52,7 @@ class App extends Component {
               : this.state.showLogin && <Login showLogin={this.showLogin} />}
             <Route path="/plants" component={Shop} />
             <Route path="/myplants" component={UserProfile} />
+            <Footer />
           </div>
         </BrowserRouter>
       </Provider>

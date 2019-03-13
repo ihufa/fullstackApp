@@ -6,7 +6,8 @@ import {
   INITIATE_USER,
   CLEAR_USER,
   INVALID_LOGIN,
-  UPDATE_PRODUCTS
+  UPDATE_PRODUCTS,
+  PRODUCT_SEARCH
 } from "../actions/types"
 
 const initialState = {
@@ -14,7 +15,8 @@ const initialState = {
   userData: "",
   userCreated: false,
   invalidLogin: false,
-  products: []
+  products: [],
+  productSearch: ""
 }
 
 export default function(state = initialState, action) {
@@ -62,6 +64,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         products: action.payload
+      }
+    case PRODUCT_SEARCH:
+      return {
+        ...state,
+        productSearch: action.payload
       }
 
     default:

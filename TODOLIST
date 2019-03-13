@@ -1,11 +1,14 @@
-V Make routes for every page 
-Changes classes to functional comps with hooks
-V Expand plant upload objects 
-Polish login errors
-Make user profiles ....
-Make plant upload feature
-V Make plant album
-Filters for plant album: Nearest, latest
-Make search function for album
-Plan swapping interface
-Make about page
+V   Make routes for every page 
+V   Changes classes to functional comps with hooks
+V   Expand plant upload objects 
+    Polish login errors
+    Make user profiles ....
+V   Make plant upload feature
+V   Make plant album
+V   Connect functional components to reduxStore and dispatchers
+    Filters for plant album: Nearest, latest ...
+    Make search function for album ...
+    Display plant info in album, somewhere
+    
+    Plan swapping interface
+    Make about page
