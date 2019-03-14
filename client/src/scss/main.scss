@@ -4,7 +4,7 @@ $primary: #272322;
 $green: rgb(38, 214, 15);
 $light: rgb(249, 253, 246);
 $red: red;
-
+$brown: rgb(129, 49, 3);
 * {
   margin: 0;
   padding: 0;
@@ -22,6 +22,9 @@ $red: red;
   grid-gap: 5px;
   grid-auto-flow: row;
 }
+.content-wrapper {
+  clear:both;
+}
 h2 {
   font-size: 12px;
   font-weight: bold;
@@ -29,8 +32,8 @@ h2 {
 }
 
 h1 {
-  text-align: center;
   color: $green;
+  text-align:center;
 }
 
 .toggler {
@@ -65,11 +68,10 @@ h1 {
   right: 0;
   height: 60px;
   background-color: $light;
-  text-align: right;
 }
 .nav-item {
   display: inline-block;
-  margin: 20px 10px;
+  margin: 15px 10px;
   font-size: 17px;
   color: $primary;
   &:hover {
@@ -77,11 +79,70 @@ h1 {
     cursor: pointer;
   }
 }
+.nav-items-right {
+  float:right;
+}
 .nav-logo {
+  vertical-align:top;
   display: inline-block;
-  margin: 18px;
+  margin: 5px;
   font-size: 17px;
-  color: $red;
+  color: $primary;
+  &:hover {
+    color: $green;
+    cursor: pointer;
+  }
+}
+
+.search-container {
+  height: 30px;
+  width: 200px;
+  vertical-align: top;
+  text-align: right;
+}
+.searchbox {
+  position: relative;
+  width: 200px;
+  display: block;
+}
+.searchbox:before {
+  position: absolute;
+  content: "";
+  background-color: $brown;
+  height: 10px;
+  width: 2px;
+  transform: rotate(-45deg);
+  right: 0;
+  bottom: -4px;
+}
+.search {
+  height: 30px;
+  width: 30px;
+  border-radius: 15px;
+  background-color: transparent;
+  justify-content: center;
+  align-content: center;
+  border: $brown 2px solid;
+  outline: none;
+  box-sizing: border-box;
+  font-size: 20px;
+  padding-left: 10px;
+  transition: 0.5s;
+}
+::placeholder {
+  opacity: 0;
+  color: rbga(255, 255, 255, 0.5);
+}
+.search:focus {
+  width: 200px;
+}
+
+.fas {
+  font-size: 30px;
+  color: $brown;
+}
+.fa-leaf {
+  color: $green;
 }
 .SignupConfirm {
   z-index: 50;
@@ -127,8 +188,8 @@ h1 {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   justify-content: center;
-  grid-gap: 35px;
-  grid-row-gap: 35px;
+  grid-gap: 15px;
+  grid-row-gap: 15px;
 }
 
 .plant-img {

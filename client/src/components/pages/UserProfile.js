@@ -30,6 +30,25 @@ const UserProfile = props => {
   const onChangeName = e => {
     setPlantName(e.target.value)
   }
+  const timeConvert = millisec => {
+    var seconds = (millisec / 1000).toFixed(0)
+
+    var minutes = (millisec / (1000 * 60)).toFixed(0)
+
+    var hours = (millisec / (1000 * 60 * 60)).toFixed(0)
+
+    var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(0)
+
+    if (seconds < 60) {
+      return seconds + " Sec"
+    } else if (minutes < 60) {
+      return minutes + " Min"
+    } else if (hours < 24) {
+      return hours + " Hours"
+    } else {
+      return days + " Days"
+    }
+  }
 
   const plantGrid =
     props.products.length > 0 ? (
@@ -45,21 +64,29 @@ const UserProfile = props => {
                   alt={el.name}
                   src={"http://localhost:5000/plants/" + el.image}
                 />
+                <div className="plant-grid-name">
+                  <p>{el.name}</p>
+                </div>
+                <div className="plant-grid-time">
+                  <p>{timeConvert(Date.now() - el.time)} ago</p>
+                </div>
               </div>
             ))}
         </div>
       </div>
     ) : (
-      <div className="plant">
-        <h3>You have no active plants at the moment</h3>
-      </div>
-    )
+        <div className="plant">
+          <h3>You have no active plants at the moment</h3>
+        </div>
+      )
 
   useEffect(() => props.getProducts(), [])
 
   return (
     <div>
-      <h1>My plants</h1>
+      <h1>
+        Good day {props.userData && props.userData.userName.split(" ")[0]}
+      </h1>
       <div className="plant-img-upload">
         <form onSubmit={addPlant}>
           <input onChange={onChangeImg} type="file" />

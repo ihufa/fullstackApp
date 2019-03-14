@@ -45,14 +45,16 @@ class App extends Component {
             {this.props.userCreated
               ? null
               : this.state.showSignup && (
-                  <Signup showSignup={this.showSignup} />
-                )}
+                <Signup showSignup={this.showSignup} />
+              )}
             {this.props.userData
               ? null
               : this.state.showLogin && <Login showLogin={this.showLogin} />}
-            <Route path="/plants" component={Shop} />
-            <Route path="/myplants" component={UserProfile} />
-            <Footer />
+            <div className="content-wrapper">
+              <Route path="/plants" component={Shop} />
+              <Route path="/myplants" component={UserProfile} />
+              <Footer />
+            </div>
           </div>
         </BrowserRouter>
       </Provider>

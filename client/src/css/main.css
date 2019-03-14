@@ -15,14 +15,17 @@
   grid-gap: 5px;
   grid-auto-flow: row; }
 
+.content-wrapper {
+  clear: both; }
+
 h2 {
   font-size: 12px;
   font-weight: bold;
   margin: auto; }
 
 h1 {
-  text-align: center;
-  color: #26d60f; }
+  color: #26d60f;
+  text-align: center; }
 
 .toggler:hover {
   cursor: pointer; }
@@ -50,23 +53,78 @@ h1 {
   left: 0;
   right: 0;
   height: 60px;
-  background-color: #f9fdf6;
-  text-align: right; }
+  background-color: #f9fdf6; }
 
 .nav-item {
   display: inline-block;
-  margin: 20px 10px;
+  margin: 15px 10px;
   font-size: 17px;
   color: #272322; }
   .nav-item:hover {
     color: #26d60f;
     cursor: pointer; }
 
+.nav-items-right {
+  float: right; }
+
 .nav-logo {
+  vertical-align: top;
   display: inline-block;
-  margin: 18px;
+  margin: 5px;
   font-size: 17px;
-  color: red; }
+  color: #272322; }
+  .nav-logo:hover {
+    color: #26d60f;
+    cursor: pointer; }
+
+.search-container {
+  height: 30px;
+  width: 200px;
+  vertical-align: top;
+  text-align: right; }
+
+.searchbox {
+  position: relative;
+  width: 200px;
+  display: block; }
+
+.searchbox:before {
+  position: absolute;
+  content: "";
+  background-color: #813103;
+  height: 10px;
+  width: 2px;
+  transform: rotate(-45deg);
+  right: 0;
+  bottom: -4px; }
+
+.search {
+  height: 30px;
+  width: 30px;
+  border-radius: 15px;
+  background-color: transparent;
+  justify-content: center;
+  align-content: center;
+  border: #813103 2px solid;
+  outline: none;
+  box-sizing: border-box;
+  font-size: 20px;
+  padding-left: 10px;
+  transition: 0.5s; }
+
+::placeholder {
+  opacity: 0;
+  color: rbga(255, 255, 255, 0.5); }
+
+.search:focus {
+  width: 200px; }
+
+.fas {
+  font-size: 30px;
+  color: #813103; }
+
+.fa-leaf {
+  color: #26d60f; }
 
 .SignupConfirm {
   z-index: 50;
@@ -118,8 +176,8 @@ h1 {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   justify-content: center;
-  grid-gap: 35px;
-  grid-row-gap: 35px; }
+  grid-gap: 15px;
+  grid-row-gap: 15px; }
 
 .plant-img {
   width: 100%;
