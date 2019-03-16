@@ -7,15 +7,16 @@ const checkAuth = require("../auth/checkAuth")
 const multer = require("multer")
 
 const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
+  destination: function (req, file, cb) {
     cb(null, "./uploads/")
   },
-  filename: function(req, file, cb) {
+  filename: function (req, file, cb) {
     cb(null, Date.now() + file.originalname)
   }
 })
 const fileFilter = (req, file, cb) => {
   // reject a file
+  console.log(file)
   if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
     cb(null, true)
   } else {
@@ -81,18 +82,22 @@ router.post("/", checkAuth, upload.single("productImage"), (req, res, next) => {
     message: req.body.message,
     user: req.body.user,
     zip: req.body.zip,
-    time: Date.now()
+    time: Date.now(),
+    toggleMenu: false,
+    flagged: false,
+    hidden: false
   })
   product
     .save()
     .then(result => {
-      res.status(201).json("product added")
+      res.status(201).json({ "product added": result })
     })
-    .catch(err => console.log(err))
-  res.status(201).json({
-    message: "product added",
-    createdProduct: product
-  })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({
+        err
+      })
+    })
 })
 router.get("/:productId", (req, res, next) => {
   const id = req.params.productId
@@ -116,13 +121,9 @@ router.get("/:productId", (req, res, next) => {
     })
 })
 
-router.patch("/:productId", (req, res, next) => {
-  const id = req.params.productId
-  const updateOps = {}
-  for (const ops of req.body) {
-    updateOps[ops.propName] = ops.value
-  }
-
+router.patch("/", (req, res, next) => {
+  const id = req.body.id
+  const updateOps = { hidden: true }
   Product.update({ _id: id }, { $set: updateOps })
     .exec()
     .then(result => {
@@ -135,10 +136,10 @@ router.patch("/:productId", (req, res, next) => {
     })
 })
 
-router.delete("/:productId", (req, res, next) => {
-  const id = req.params.productId
+router.delete("/:id", (req, res, next) => {
+  const id = req.params.id
 
-  Product.remove({ _id: id })
+  Product.deleteOne({ _id: id })
     .exec()
     .then(result => {
       console.log(result)

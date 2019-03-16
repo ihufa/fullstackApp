@@ -7,7 +7,10 @@ import {
   CLEAR_USER,
   INVALID_LOGIN,
   UPDATE_PRODUCTS,
-  PRODUCT_SEARCH
+  PRODUCT_SEARCH,
+  PRODUCT_MENU_TOGGLE,
+  REMOVE_PRODUCT,
+  TOGGLE_HIDE_PRODUCT
 } from "../actions/types"
 
 const initialState = {
@@ -16,10 +19,10 @@ const initialState = {
   userCreated: false,
   invalidLogin: false,
   products: [],
-  productSearch: ""
+  productSearch: "",
 }
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   console.log(action)
   switch (action.type) {
     case GET_USERS:
@@ -69,6 +72,41 @@ export default function(state = initialState, action) {
       return {
         ...state,
         productSearch: action.payload
+      }
+
+    case PRODUCT_MENU_TOGGLE:
+      let index = state.products.map(prod => prod._id).indexOf(action.payload)    // find index of product to toggle
+      let newProd = state.products.map((item, idx) => {                           // create new array without mutating
+        if (idx !== index) { return item }
+        return {
+          ...item,
+          toggleMenu: !state.products[index].toggleMenu
+        }
+      })
+      return {
+        ...state,
+        products: newProd
+      }
+
+    case REMOVE_PRODUCT:
+      return {
+        ...state,
+        products: state.products.filter((item) => item._id !== action.payload)
+      }
+
+    case TOGGLE_HIDE_PRODUCT:
+      let index1 = state.products.map(prod => prod._id).indexOf(action.payload)    // find index of product to toggle
+      let newProd1 = state.products.map((item, idx) => {                           // create new array without mutating
+        if (idx !== index1) { return item }
+        return {
+          ...item,
+          hidden: !state.products[index1].hidden,
+          toggleMenu: false
+        }
+      })
+      return {
+        ...state,
+        products: newProd1
       }
 
     default:

@@ -2,13 +2,16 @@ V   Make routes for every page
 V   Changes classes to functional comps with hooks
 V   Expand plant upload objects 
     Polish login errors
-    Make user profiles ....
+V   Make user profiles
 V   Make plant upload feature
-V   Make plant album
+V   Make plant gallery
 V   Connect functional components to reduxStore and dispatchers
-    Filters for plant album: Nearest, latest ...
-    Make search function for album ...
-    Display plant info in album, somewhere
+    Filters for plant gallery: Nearest, latest ...
+V   Make search function for gallery
+V   Display plant info in gallery, somewhere
+V   Make menu for each plant, to delete, hide and edit
+V   Make hide and edit function, connect them to server
+    Make component for profile, to edit user info
     
     Plan swapping interface
     Make about page

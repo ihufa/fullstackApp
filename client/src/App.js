@@ -5,7 +5,7 @@ import Login from "./components/modals/Login"
 import LoginNav from "./components/LoginNav"
 import UserNav from "./components/UserNav"
 import UserProfile from "./components/pages/UserProfile"
-import Shop from "./components/Shop"
+import Gallery from "./components/Gallery"
 import { Provider } from "react-redux"
 import { connect } from "react-redux"
 import store from "./state/store"
@@ -19,7 +19,7 @@ class App extends Component {
       showLogin: false,
       showSignup: false,
       userData: "",
-      showShop: true
+      showGallery: true
     }
   }
 
@@ -51,10 +51,10 @@ class App extends Component {
               ? null
               : this.state.showLogin && <Login showLogin={this.showLogin} />}
             <div className="content-wrapper">
-              <Route path="/plants" component={Shop} />
+              <Route path="/plants" component={Gallery} />
               <Route path="/myplants" component={UserProfile} />
-              <Footer />
             </div>
+            <Footer />
           </div>
         </BrowserRouter>
       </Provider>

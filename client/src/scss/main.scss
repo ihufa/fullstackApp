@@ -12,22 +12,12 @@ $brown: rgb(129, 49, 3);
   text-decoration: none;
   font-family: "PT Sans Narrow", sans-serif;
 }
+ // NAVBAR
 
-.page-wrapper {
-  margin: auto;
-  max-width: 1200px;
-  display: grid;
-  grid-template-columns: repeat(4, 300px);
-  grid-auto-rows: 250px;
-  grid-gap: 5px;
-  grid-auto-flow: row;
-}
 .content-wrapper {
   clear:both;
-}
-h2 {
-  font-size: 12px;
-  font-weight: bold;
+  width: 100%;
+  max-width:1270px;
   margin: auto;
 }
 
@@ -35,7 +25,16 @@ h1 {
   color: $green;
   text-align:center;
 }
-
+h2 {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: $brown;
+}
+h3 {
+  font-size: 12px;
+  font-weight: 400;
+  color:$brown;
+}
 .toggler {
   &:hover {
     cursor: pointer;
@@ -56,6 +55,7 @@ h1 {
 
   &:hover {
     background-color: rgb(141, 212, 245);
+    cursor: pointer;
   }
 }
 .inline {
@@ -68,6 +68,11 @@ h1 {
   right: 0;
   height: 60px;
   background-color: $light;
+}
+.nav-item-container {
+  width: 100%;
+  max-width:1270px;
+  margin: auto;
 }
 .nav-item {
   display: inline-block;
@@ -93,7 +98,6 @@ h1 {
     cursor: pointer;
   }
 }
-
 .search-container {
   height: 30px;
   width: 200px;
@@ -125,7 +129,8 @@ h1 {
   border: $brown 2px solid;
   outline: none;
   box-sizing: border-box;
-  font-size: 20px;
+  font-size: 16px;
+  color: rgb(105, 99, 99);
   padding-left: 10px;
   transition: 0.5s;
 }
@@ -144,32 +149,42 @@ h1 {
 .fa-leaf {
   color: $green;
 }
+.fa-ellipsis-v {
+  color: $light;
+}
 .SignupConfirm {
   z-index: 50;
   min-height: 60px;
 }
 /* The Modal (background) */
 .modal {
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  position: fixed; 
+  z-index: 10; 
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.6); /* Black w/ opacity */
+  width: 100%; 
+  height: 100%;
+  overflow: auto; 
+  background-color: rgb(0, 0, 0); 
+  background-color: rgba(0, 0, 0, 0.6); 
 }
 
 /* Modal Content/Box */
 .modal-form {
   border-radius: 5px;
   background-color: $light;
-  margin: 15% auto; /* 15% from the top and centered */
+  margin: 15% auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 50%; /* Could be more or less, depending on screen size */
+  width: 380px;
+  margin-top:28%;
+  z-index: 11;
 }
+.confirmation-modal > * {
+text-align:center;
+margin: 10px;
+}
+
 .modal-input {
   border: 0;
   outline: 0;
@@ -179,9 +194,25 @@ h1 {
   margin: 10px;
   width: 250px;
 }
+.modal-plant-upload {
+  border-radius: 5px;
+  background-color: $light;
+  margin: auto;
+  margin-top: 60px;
+  padding: 20px;
+  border: 1px solid #888;
+  height: 500px;
+  width: 100%;
+  max-width: 700px;
+}
+.plant-upload-form > * {
+  display: block;
+}
 
+// Plant gallery
 .plant-gallery-page-wrapper {
   min-height: calc(100vh - 124px);
+  margin: 20px;
 }
 
 .plant-grid {
@@ -191,10 +222,63 @@ h1 {
   grid-gap: 15px;
   grid-row-gap: 15px;
 }
-
+.plant-card {
+  position: relative;
+}
 .plant-img {
   width: 100%;
   height: auto;
+  max-height: 240px;
+}
+.image-menu {
+  font-size: 1rem;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.image-menu-items {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 80px;
+    height: 90px;
+    z-index: 1;
+  background-color: $light;
+  &:hover {
+    cursor: pointer;
+  }
+}
+.hide {
+  display:none;
+}
+.image-menu-items > * {
+  font-size: 1rem;
+  color:$brown;
+  position: absolute; 
+  left: 0px;
+    height:30px;
+  width: 80px;
+  z-index: +1;
+  &:hover {
+    background-color: $green;
+    cursor: pointer;
+  }
+}
+.image-menu-items > * > p {
+  padding: 5px;
+}
+.image-menu-items > :nth-child(1) {
+  top: 0px;
+}
+.image-menu-items > :nth-child(2) {
+  top: 30px;
+}
+.image-menu-items > :nth-child(3) {
+  top: 60px;  
 }
 .plant-grid-time {
   float: right;
@@ -207,13 +291,31 @@ h1 {
 }
 .footer {
   width: 100%;
-  height: 80px;
+  height: 60px;
   background-color: rgba(157, 252, 153, 0.438);
   color: $green;
   text-align: center;
+  margin-top: 60px;
 }
-.footer-item {
+
+//User Profile
+.profile-top {
+height: 200px;
 }
+.btn-add-plant {
+  height: 60px;
+  width: 200px;
+  font-size: 2.5rem;
+  background-color: $green;
+  color: white;
+  border-radius: 10px;
+  &:hover {
+    background-color: darken($green, 10%)
+  }
+}
+
+
+
 
 @media screen and (max-width: 1200px) {
 }

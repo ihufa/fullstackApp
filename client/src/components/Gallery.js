@@ -2,7 +2,7 @@ import React, { useEffect } from "react"
 import { connect } from "react-redux"
 import { getProducts } from "../state/actions/productsActions"
 
-const Shop = props => {
+const Gallery = props => {
   useEffect(() => props.getProducts(), [])
 
   const timeConvert = millisec => {
@@ -30,7 +30,6 @@ const Shop = props => {
       <div className="plant-gallery-page-wrapper">
         <div className="plant-grid">
           {props.products
-            .filter(el => el.user === props.userData.userEmail)
             .reverse()
             .map((el, index) => (
               <div key={el._id}>
@@ -66,4 +65,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { getProducts }
-)(Shop)
+)(Gallery)

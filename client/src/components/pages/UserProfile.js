@@ -1,44 +1,19 @@
 import React, { useState, useEffect } from "react"
 import { connect } from "react-redux"
-import { getProducts, addProduct } from "../../state/actions/productsActions"
+import { getProducts, toggleProductMenu, removeProduct, toggleHideProduct } from "../../state/actions/productsActions"
+import AddPlant from '../modals/AddPlant'
+import Confirmation from '../modals/Confirmation'
 
 const UserProfile = props => {
-  const [plantName, setPlantName] = useState()
-  const [plantDescription, setPlantDescription] = useState()
-  const [plantImg, setPlantImg] = useState()
+  const [showAddModal, setShowAddModal] = useState(false)
+  const [showRemovePlantModal, setShowRemovePlantModal] = useState()
+  const [plantInFocus, setPlantInFocus] = useState()
 
-  const addPlant = e => {
-    e.preventDefault()
-    console.log(props)
-    let body = new FormData()
-    body.append("name", plantName)
-    body.append("message", plantDescription)
-    body.append("productImage", plantImg)
-    body.append("user", props.userData.userEmail)
-    body.append("zip", props.userData.userZip)
-
-    props.addProduct(body)
-  }
-
-  //figure out how to make universal setState without setState()
-  const onChangeImg = e => {
-    setPlantImg(e.target.files[0])
-  }
-  const onChangeDescription = e => {
-    setPlantDescription(e.target.value)
-  }
-  const onChangeName = e => {
-    setPlantName(e.target.value)
-  }
   const timeConvert = millisec => {
     var seconds = (millisec / 1000).toFixed(0)
-
     var minutes = (millisec / (1000 * 60)).toFixed(0)
-
     var hours = (millisec / (1000 * 60 * 60)).toFixed(0)
-
     var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(0)
-
     if (seconds < 60) {
       return seconds + " Sec"
     } else if (minutes < 60) {
@@ -49,21 +24,46 @@ const UserProfile = props => {
       return days + " Days"
     }
   }
+  const addPlantHandler = () => {
+    setShowAddModal(!showAddModal)
+  }
+  const toggleShowRemoveModal = (e) => {
+    setShowRemovePlantModal(!showRemovePlantModal)
+  }
+  const toggleConfirmation = () => {
+    setShowRemovePlantModal(!showRemovePlantModal)
+  }
+  const togglePlantMenu = (e) => {
+    props.toggleProductMenu(e.target.id)
+    setPlantInFocus(e.target.id)
+  }
+  const toggleHideProduct = (e) => {
+    props.toggleHideProduct(plantInFocus)
+  }
 
-  const plantGrid =
-    props.products.length > 0 ? (
+
+  const activePlantGrid =
+    props.products && props.products.length > 0 ? (
       <div className="plant-gallery-page-wrapper">
+        <h1>My active plants</h1>
         <div className="plant-grid">
           {props.products
             .filter(el => el.user === props.userData.userEmail)
+            .filter(el => el.hidden === false)
             .reverse()
             .map((el, index) => (
-              <div key={el._id}>
+              <div className="plant-card" key={el._id}>
                 <img
                   className="plant-img"
                   alt={el.name}
                   src={"http://localhost:5000/plants/" + el.image}
                 />
+                <div onClick={togglePlantMenu} className={"image-menu"}><i id={el._id} className="fas fa-ellipsis-v"></i></div>
+                <div className={el.toggleMenu ? 'image-menu-items' : "hide"}>
+                  <div onClick={toggleShowRemoveModal}><p>Remove</p></div>
+                  <div onClick={toggleHideProduct}><p>Hide</p></div>
+                  <div><p>Edit</p></div>
+                </div>
                 <div className="plant-grid-name">
                   <p>{el.name}</p>
                 </div>
@@ -80,6 +80,45 @@ const UserProfile = props => {
         </div>
       )
 
+  const hiddenPlantGrid =
+    props.products && props.products.length > 0 ? (
+      <div className="plant-gallery-page-wrapper">
+        <h1>My hidden plants</h1>
+        <div className="plant-grid">
+          {props.products
+            .filter(el => el.user === props.userData.userEmail)
+            .filter(el => el.hidden === true)
+            .reverse()
+            .map((el, index) => (
+              <div className="plant-card" key={el._id}>
+                <img
+                  className="plant-img"
+                  alt={el.name}
+                  src={"http://localhost:5000/plants/" + el.image}
+                />
+                <div onClick={togglePlantMenu} className={"image-menu"}><i id={el._id} className="fas fa-ellipsis-v"></i></div>
+                <div className={el.toggleMenu ? 'image-menu-items' : "hide"}>
+                  <div onClick={toggleShowRemoveModal}><p>Remove</p></div>
+                  <div><p>Inactivate</p></div>
+                  <div><p>Edit</p></div>
+                </div>
+                <div className="plant-grid-name">
+                  <p>{el.name}</p>
+                </div>
+                <div className="plant-grid-time">
+                  <p>{timeConvert(Date.now() - el.time)} ago</p>
+                </div>
+              </div>
+            ))}
+        </div>
+      </div>
+    ) : (
+        <div className="plant">
+          <h3>You have no active plants at the moment</h3>
+        </div>
+      )
+
+
   useEffect(() => props.getProducts(), [])
 
   return (
@@ -87,19 +126,13 @@ const UserProfile = props => {
       <h1>
         Good day {props.userData && props.userData.userName.split(" ")[0]}
       </h1>
-      <div className="plant-img-upload">
-        <form onSubmit={addPlant}>
-          <input onChange={onChangeImg} type="file" />
-          <input
-            onChange={onChangeDescription}
-            type="text"
-            placeholder="description"
-          />
-          <input onChange={onChangeName} type="text" placeholder="name" />
-          <input type="submit" value="Share!" />
-        </form>
+      <div className="profile-top">
+        <button className="Btn btn-add-plant" onClick={addPlantHandler}>Add plant</button>
       </div>
-      {plantGrid}
+      {showAddModal ? <AddPlant showModal={addPlantHandler} /> : null}
+      {showRemovePlantModal ? <Confirmation modalAction="delete this plant" showModal={toggleConfirmation} plant={plantInFocus} /> : null}
+      {activePlantGrid}
+      {hiddenPlantGrid}
     </div>
   )
 }
@@ -111,5 +144,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getProducts, addProduct }
+  { getProducts, toggleProductMenu, removeProduct, toggleHideProduct }
 )(UserProfile)

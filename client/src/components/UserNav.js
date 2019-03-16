@@ -23,28 +23,30 @@ const UserNav = props => {
   return (
     <div>
       <div className="navbar">
-        <div className="nav-logo">
-          <Link to="/plants">
-            <h1>Plantbook <i className="fas fa-leaf" /></h1>
-          </Link>
-        </div>
-        <div className="nav-items-right">
-          <div className="nav-item search-container">
-            <div className="searchbox">
-              <form onSubmit={searchFire}>
-                <input
-                  onChange={onChange}
-                  type="search"
-                  className="search"
-                  placeholder="Search..."
-                />
-              </form>
-            </div>
-          </div>
-          <div className="nav-item">
-            <Link to="/myplants">
-              <i className="fas fa-user-alt" />
+        <div className="nav-item-container">
+          <div className="nav-logo">
+            <Link to="/plants">
+              <h1>Plantbook <i className="fas fa-leaf" /></h1>
             </Link>
+          </div>
+          <div className="nav-items-right">
+            <div className="nav-item search-container">
+              <div className="searchbox">
+                <form onSubmit={searchFire}>
+                  <input
+                    onChange={onChange}
+                    type="search"
+                    className="search"
+                    placeholder="Search..."
+                  />
+                </form>
+              </div>
+            </div>
+            <div className="nav-item">
+              <Link to="/myplants">
+                <i className="fas fa-user-alt" />
+              </Link>
+            </div>
           </div>
         </div>
       </div>

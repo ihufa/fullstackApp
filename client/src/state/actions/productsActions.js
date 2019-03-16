@@ -1,4 +1,4 @@
-import { UPDATE_PRODUCTS, PRODUCT_SEARCH } from "./types"
+import { UPDATE_PRODUCTS, PRODUCT_SEARCH, PRODUCT_MENU_TOGGLE, REMOVE_PRODUCT, TOGGLE_HIDE_PRODUCT } from "./types"
 import axios from "axios"
 
 export const getProducts = () => dispatch => {
@@ -26,7 +26,36 @@ export const addProduct = product => dispatch => {
     })
     .catch(err => console.log(err))
 }
-
+export const toggleProductMenu = id => dispatch => {
+  console.log("togglemenu", id)
+  dispatch({
+    type: PRODUCT_MENU_TOGGLE,
+    payload: id
+  })
+}
+export const toggleHideProduct = id => dispatch => {
+  axios.patch("/products", id, { headers: { authorization: sessionStorage.token } })
+    .then(res => {
+      console.log("product hidden", res)
+    })
+    .catch(err => console.log(err))
+  dispatch({
+    type: TOGGLE_HIDE_PRODUCT,
+    payload: id
+  })
+}
+export const removeProduct = id => dispatch => {
+  console.log("togglemenu", id)
+  axios.delete(`/products/${id}`, { headers: { authorization: sessionStorage.token } })
+    .then(res => {
+      console.log("product deleted", res)
+    })
+    .catch(err => console.log(err))
+  dispatch({
+    type: REMOVE_PRODUCT,
+    payload: id
+  })
+}
 export const productSearch = searchParam => dispatch => {
   axios
     .post("/products/search", searchParam)
