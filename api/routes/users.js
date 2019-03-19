@@ -102,5 +102,24 @@ router.delete("/", (req, res, next) => {
       console.log({ error: err })
     })
 })
+router.patch("/email", (req, res, next) => {
+  User.updateOne({ email: req.body.email }, { $set: { email: req.body.newEmail } })
+    .exec()
+    .then(result => {
+      console.log(result)
+      res.status(204).json("email updated")
+
+    })
+
+})
+router.patch("/zip", (req, res, next) => {
+  User.updateOne({ email: req.body.email }, { $set: { zip: req.body.zip } })
+    .exec()
+    .then(result => {
+      console.log(result)
+      res.status(204).json("zip updated")
+
+    })
+})
 
 module.exports = router

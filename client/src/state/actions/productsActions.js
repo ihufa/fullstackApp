@@ -33,15 +33,15 @@ export const toggleProductMenu = id => dispatch => {
     payload: id
   })
 }
-export const toggleHideProduct = id => dispatch => {
-  axios.patch("/products", id, { headers: { authorization: sessionStorage.token } })
+export const toggleHideProduct = product => dispatch => {
+  axios.patch("/products", product, { headers: { authorization: sessionStorage.token } })
     .then(res => {
-      console.log("product hidden", res)
+      console.log("product hproductden", res)
     })
     .catch(err => console.log(err))
   dispatch({
     type: TOGGLE_HIDE_PRODUCT,
-    payload: id
+    payload: product.id
   })
 }
 export const removeProduct = id => dispatch => {

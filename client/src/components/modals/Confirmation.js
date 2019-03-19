@@ -1,8 +1,11 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { removeProduct } from '../../state/actions/productsActions'
 
 const Confirmation = props => {
+    let input = ""
+
+    const changeHandler = e => {
+        input = e.target.value
+    }
     const closeModal = e => {
         if (
             e.target.className === "modal" &&
@@ -14,24 +17,30 @@ const Confirmation = props => {
     const cancel = () => {
         props.showModal()
     }
-    const removeProduct = () => {
+    const confirm = () => {
         console.log("props.plant", props.plant)
-        props.removeProduct(props.plant)
+        props.confirm(props.plant)
         props.showModal()
     }
+    const inputConfirm = (e) => {
+        e.preventDefault()
+        props.confirm(input)
+        props.showModal()
+    }
+
     return (
         <div className="modal" onClick={closeModal}>
             <div className="modal-form">
                 <div className="confirmation-modal">
-                    <h2>Are you sure you want to {props.modalAction} ?</h2>
-                    <div className="confirmation-modal-buttons"><button onClick={removeProduct} className="Btn">Yes</button> <button onClick={cancel} className="Btn">Cancel</button></div>
+                    <h2>{props.modalMessage}</h2>
+                    {props.input ? <input className="modal-input" onChange={changeHandler} type="text"></input> : null}
+                    {!props.input ? <div className="confirmation-modal-buttons"><button onClick={confirm} className="Btn">Yes</button> <button onClick={cancel} className="Btn">Cancel</button></div> : null}
+                    {props.input ? <div className="confirmation-modal-buttons"><button onClick={inputConfirm} className="Btn">Ok</button> <button onClick={cancel} className="Btn">Cancel</button></div> : null}
+
                 </div>
             </div>
         </div>
     )
 }
 
-const mapStateToProps = state => {
-
-}
-export default connect(mapStateToProps, { removeProduct })(Confirmation)
+export default Confirmation

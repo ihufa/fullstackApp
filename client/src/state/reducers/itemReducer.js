@@ -10,7 +10,9 @@ import {
   PRODUCT_SEARCH,
   PRODUCT_MENU_TOGGLE,
   REMOVE_PRODUCT,
-  TOGGLE_HIDE_PRODUCT
+  TOGGLE_HIDE_PRODUCT,
+  CHANGE_EMAIL,
+  CHANGE_ZIP
 } from "../actions/types"
 
 const initialState = {
@@ -56,6 +58,19 @@ export default function (state = initialState, action) {
       return {
         ...state,
         userData: ""
+      }
+
+    case CHANGE_EMAIL:
+      let newUserDataEmail = { ...state.userData, userEmail: action.payload }
+      return {
+        ...state,
+        userData: newUserDataEmail
+      }
+    case CHANGE_ZIP:
+      let newUserDataZip = { ...state.userData, userZip: action.payload }
+      return {
+        ...state,
+        userData: newUserDataZip
       }
     case INVALID_LOGIN:
       return {

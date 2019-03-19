@@ -124,7 +124,7 @@ router.get("/:productId", (req, res, next) => {
 router.patch("/", (req, res, next) => {
   const id = req.body.id
   const updateOps = { hidden: true }
-  Product.update({ _id: id }, { $set: updateOps })
+  Product.updateOne({ _id: id }, { $set: updateOps })
     .exec()
     .then(result => {
       console.log(result)

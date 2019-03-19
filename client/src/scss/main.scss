@@ -5,6 +5,7 @@ $green: rgb(38, 214, 15);
 $light: rgb(249, 253, 246);
 $red: red;
 $brown: rgb(129, 49, 3);
+$maxWidth: 1000px;
 * {
   margin: 0;
   padding: 0;
@@ -17,8 +18,9 @@ $brown: rgb(129, 49, 3);
 .content-wrapper {
   clear:both;
   width: 100%;
-  max-width:1270px;
+  max-width: $maxWidth;
   margin: auto;
+  min-height: calc(100vh - 60px);
 }
 
 h1 {
@@ -31,8 +33,8 @@ h2 {
   color: $brown;
 }
 h3 {
-  font-size: 12px;
-  font-weight: 400;
+  font-size: 1.1rem;
+  font-weight: 600;
   color:$brown;
 }
 .toggler {
@@ -71,7 +73,7 @@ h3 {
 }
 .nav-item-container {
   width: 100%;
-  max-width:1270px;
+  max-width:$maxWidth;
   margin: auto;
 }
 .nav-item {
@@ -177,14 +179,17 @@ h3 {
   padding: 20px;
   border: 1px solid #888;
   width: 380px;
-  margin-top:28%;
+  margin-top:15%;
   z-index: 11;
 }
 .confirmation-modal > * {
 text-align:center;
 margin: 10px;
 }
-
+.confirmation-modal {
+text-align:center;
+margin: 10px;
+}
 .modal-input {
   border: 0;
   outline: 0;
@@ -193,6 +198,14 @@ margin: 10px;
   font-size: 1rem;
   margin: 10px;
   width: 250px;
+}
+.confirmation-modal-input {
+    border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 1px solid $green;
+  font-size: 1rem;
+  margin: 10px;
 }
 .modal-plant-upload {
   border-radius: 5px;
@@ -211,13 +224,12 @@ margin: 10px;
 
 // Plant gallery
 .plant-gallery-page-wrapper {
-  min-height: calc(100vh - 124px);
   margin: 20px;
 }
 
 .plant-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   justify-content: center;
   grid-gap: 15px;
   grid-row-gap: 15px;
@@ -228,7 +240,6 @@ margin: 10px;
 .plant-img {
   width: 100%;
   height: auto;
-  max-height: 240px;
 }
 .image-menu {
   font-size: 1rem;
@@ -295,7 +306,7 @@ margin: 10px;
   background-color: rgba(157, 252, 153, 0.438);
   color: $green;
   text-align: center;
-  margin-top: 60px;
+  margin-top: 0;
 }
 
 //User Profile
@@ -303,17 +314,32 @@ margin: 10px;
 height: 200px;
 }
 .btn-add-plant {
-  height: 60px;
-  width: 200px;
-  font-size: 2.5rem;
+  height: 40px;
+  width: 160px;
+  font-size: 1.8rem;
   background-color: $green;
   color: white;
-  border-radius: 10px;
+  border-radius: 8px;
   &:hover {
     background-color: darken($green, 10%)
   }
 }
-
+.user-info-container {
+  float: right;
+  background-color: lightgray;
+  padding: 10px;
+}
+.user-info-label {
+  font-weight: bold;
+}
+.fa-edit {
+  color: blue;
+  font-size: 0.6rem;
+  &:hover {
+    
+    cursor: pointer;
+  }
+}
 
 
 

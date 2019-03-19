@@ -7,11 +7,12 @@ V   Make plant upload feature
 V   Make plant gallery
 V   Connect functional components to reduxStore and dispatchers
     Filters for plant gallery: Nearest, latest ...
-V   Make search function for gallery
+V   Make search function for gallery with Regex in mongoose
+    Make elasticSearch function and db
 V   Display plant info in gallery, somewhere
 V   Make menu for each plant, to delete, hide and edit
 V   Make hide and edit function, connect them to server
-    Make component for profile, to edit user info
+    Make component for profile, to show and edit user info ...
     
     Plan swapping interface
     Make about page

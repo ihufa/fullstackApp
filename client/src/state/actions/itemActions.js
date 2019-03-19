@@ -5,7 +5,9 @@ import {
   USERS_LOADING,
   INITIATE_USER,
   CLEAR_USER,
-  INVALID_LOGIN
+  INVALID_LOGIN,
+  CHANGE_EMAIL,
+  CHANGE_ZIP
 } from "./types"
 import axios from "axios"
 
@@ -88,4 +90,27 @@ export const setUsersLoading = () => {
   return {
     type: USERS_LOADING
   }
+}
+export const changeEmail = email => dispatch => {
+  axios
+    .patch("/users/email", email)
+    .then(res => {
+      console.log("changeEmail", res)
+      dispatch({
+        type: CHANGE_EMAIL,
+        payload: email.newEmail
+      })
+    })
+}
+export const changeZip = zip => dispatch => {
+  console.log(zip)
+  axios
+    .patch("/users/zip", zip)
+    .then(res => {
+      console.log("changeZip", res)
+      dispatch({
+        type: CHANGE_ZIP,
+        payload: zip.zip
+      })
+    })
 }

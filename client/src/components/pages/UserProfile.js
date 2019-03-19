@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import { getProducts, toggleProductMenu, removeProduct, toggleHideProduct } from "../../state/actions/productsActions"
 import AddPlant from '../modals/AddPlant'
 import Confirmation from '../modals/Confirmation'
+import UserInfo from './UserProfile/UserInfo'
 
 const UserProfile = props => {
   const [showAddModal, setShowAddModal] = useState(false)
@@ -34,11 +35,13 @@ const UserProfile = props => {
     setShowRemovePlantModal(!showRemovePlantModal)
   }
   const togglePlantMenu = (e) => {
+    e.preventDefault()
     props.toggleProductMenu(e.target.id)
     setPlantInFocus(e.target.id)
+    document.body.addEventListener("click", console.log("click"))
   }
   const toggleHideProduct = (e) => {
-    props.toggleHideProduct(plantInFocus)
+    props.toggleHideProduct({ id: plantInFocus })
   }
 
 
@@ -128,9 +131,10 @@ const UserProfile = props => {
       </h1>
       <div className="profile-top">
         <button className="Btn btn-add-plant" onClick={addPlantHandler}>Add plant</button>
+        <UserInfo />
       </div>
       {showAddModal ? <AddPlant showModal={addPlantHandler} /> : null}
-      {showRemovePlantModal ? <Confirmation modalAction="delete this plant" showModal={toggleConfirmation} plant={plantInFocus} /> : null}
+      {showRemovePlantModal ? <Confirmation modalMessage="Are you sure you want to delete this plant?" showModal={toggleConfirmation} plant={plantInFocus} confirm={props.removeProduct} /> : null}
       {activePlantGrid}
       {hiddenPlantGrid}
     </div>
