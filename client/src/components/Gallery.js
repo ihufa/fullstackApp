@@ -1,8 +1,10 @@
 import React, { useEffect } from "react"
 import { connect } from "react-redux"
 import { getProducts } from "../state/actions/productsActions"
+import { openModal } from '../state/actions/modalActions'
 
 const Gallery = props => {
+
   useEffect(() => props.getProducts(), [])
 
   const timeConvert = millisec => {
@@ -25,24 +27,46 @@ const Gallery = props => {
     }
   }
 
+  const swapHandler = e => {
+    let id = e.target.id
+    let plant = props.products.filter(el => el._id === id)
+
+    props.openModal({
+      type: "plantInfo",
+      plantId: plant[0]._id,
+      image: plant[0].image,
+      plantType: plant[0].name,
+      description: plant[0].message,
+      userName: plant[0].userName,
+      userCity: plant[0].userCity,
+      time: plant[0].time,
+      free: plant[0].free,
+      sapling: plant[0].sapling
+    })
+  }
+
   const plantGrid =
-    props.products.length > 0 ? (
+    props.products && props.products.length > 0 ? (
       <div className="plant-gallery-page-wrapper">
         <div className="plant-grid">
           {props.products
-            .reverse()
             .map((el, index) => (
-              <div key={el._id}>
+              <div className="plant-card" key={el._id}>
                 <img
-                  className="plant-img"
+                  className={"plant-img plantImg" + index}
+                  id={"plant" + index}
                   alt={el.name}
                   src={"http://localhost:5000/plants/" + el.image}
                 />
+                <div className="plant-img-time">{timeConvert(Date.now() - el.time)}</div>
+                <button id={el._id} onClick={swapHandler} className={"plant request-button plant" + index}>
+                  Swap
+                </button>
                 <div className="plant-grid-name">
                   <p>{el.name}</p>
                 </div>
-                <div className="plant-grid-time">
-                  <p>{timeConvert(Date.now() - el.time)} ago</p>
+                <div className="plant-grid-city">
+                  <p>{el.userCity}</p>
                 </div>
               </div>
             ))}
@@ -54,8 +78,11 @@ const Gallery = props => {
         </div>
       )
 
-  return plantGrid
+  return (<div>{plantGrid}</div>)
+
+
 }
+
 const mapStateToProps = state => ({
   products: state.items.products,
   productSearch: state.items.productSearch,
@@ -64,5 +91,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getProducts }
+  { getProducts, openModal }
 )(Gallery)

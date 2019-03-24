@@ -1,79 +1,132 @@
-import React, { Component } from "react"
+import React, { useState } from "react"
 import { connect } from "react-redux"
-import { getUsers, addUser, deleteUser } from "../../state/actions/itemActions"
+import { addUser } from "../../state/actions/itemActions"
+import { openModal } from '../../state/actions/modalActions'
+import { withRouter } from "react-router-dom";
+import ZIPS from '../../zips'
 
-export class Signup extends Component {
-  constructor() {
-    super()
-    this.state = {}
-  }
-  changeHandler = e => {
-    this.setState({
-      [e.target.id]: e.target.value
-    })
-  }
+const Signup = props => {
 
-  addUser = e => {
-    e.preventDefault()
-    this.props.addUser({
-      email: this.state.email,
-      password: this.state.password,
-      name: this.state.name,
-      zip: this.state.zip
-    })
+  const [email, setEmail] = useState()
+  const [password, setPassword] = useState()
+  const [name, setName] = useState()
+  const [zip, setZip] = useState()
+  const [city, setCity] = useState()
+
+  const emailHandler = e => {
+    setEmail(e.target.value)
   }
-  closeModal = e => {
-    if (
-      e.target.className === "modal" &&
-      e.target.className !== "modal-input"
-    ) {
-      this.props.showSignup()
+  const passwordHandler = e => {
+    setPassword(e.target.value)
+  }
+  const nameHandler = e => {
+    setName(e.target.value)
+  }
+  const zipHandler = e => {
+    let value = e.target.value
+    setZip(value)
+    // eslint-disable-next-line eqeqeq
+    let currentCity = ZIPS.filter(el => el.zip == value) // == cus ZIPS.zip are strings and value is number
+    if (currentCity && currentCity[0] && currentCity[0].city) {
+      let newCity = currentCity[0].city
+      setCity(newCity)
+      console.log(newCity)
+    }
+    else {
+      setCity("")
     }
   }
-  render() {
-    return (
-      <div className="modal" onClick={this.closeModal}>
-        <div className="signup modal-form">
-          <div>
-            <form>
+
+  const formValidation = () => {
+
+    const reg = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+    if (!email)
+      return "please enter en email adress"
+    if (email && !email.match(reg))
+      return "please use a valid email adress"
+    if (!password)
+      return "please enter a password"
+    if (password && password.length < 6)
+      return "password needs to be 6 characters or more"
+    if (!name)
+      return "please enter a name"
+    if (!zip)
+      return "please enter a zip code"
+    if (zip < 0 || zip > 10000)
+      return "please use a 4 digit zip code"
+    else return "accepted"
+  }
+
+  const addUser = e => {
+    e.preventDefault()
+    let validation = formValidation()
+    if (validation === "accepted") {
+      props.addUser({
+        email: email,
+        password: password,
+        name: name,
+        zip: zip,
+        city: city
+      })
+    }
+    else props.openModal({
+      type: "error",
+      message: validation,
+      input: false,
+      binary: false,
+    })
+  }
+  const closeModal = e => {
+    if (e.target.className === "signupmodal" && e.target.className !== "signup-modal-form") {
+      props.history.push("/plants")
+    }
+  }
+  return (
+    <div className="signupmodal" onClick={closeModal}>
+      <div className="signup-modal-form">
+        <div>
+          <form>
+            <input
+              className="modal-input"
+              type="text"
+              id="email"
+              placeholder="Email"
+              onChange={emailHandler}
+            />
+            <input
+              className="modal-input"
+              type="password"
+              id="password"
+              placeholder="Password"
+              onChange={passwordHandler}
+            />
+            <input
+              className="modal-input"
+              type="text"
+              id="name"
+              placeholder="Name"
+              onChange={nameHandler}
+            />
+            <div>
               <input
-                className="modal-input"
-                type="text"
-                id="email"
-                placeholder="enter email"
-                onChange={this.changeHandler}
-              />
-              <input
-                className="modal-input"
-                type="text"
-                id="password"
-                placeholder="enter password"
-                onChange={this.changeHandler}
-              />
-              <input
-                className="modal-input"
-                type="text"
-                id="name"
-                placeholder="enter name"
-                onChange={this.changeHandler}
-              />
-              <input
-                className="modal-input"
+                className="modal-input zip-input"
                 type="text"
                 id="zip"
-                placeholder="your zip code"
-                onChange={this.changeHandler}
+                placeholder="zip code"
+                onChange={zipHandler}
               />
-              <button className="Btn" onClick={this.addUser}>
-                Sign up
+              {city ? <span>{city}</span> : <span></span>}
+            </div>
+            <button className="Btn" onClick={addUser}>
+              Sign up
               </button>
-            </form>
-          </div>
+          </form>
         </div>
       </div>
-    )
-  }
+    </div>
+  )
 }
+
 
 const mapStateToProps = state => ({
   items: state.items,
@@ -81,7 +134,7 @@ const mapStateToProps = state => ({
   userCreated: state.items.userCreated
 })
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
-  { getUsers, deleteUser, addUser }
-)(Signup)
+  { addUser, openModal }
+)(Signup))

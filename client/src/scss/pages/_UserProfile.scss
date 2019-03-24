@@ -1,0 +1,65 @@
+.image-menu {
+  font-size: 1rem;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.image-menu-items {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 80px;
+    height: 90px;
+    z-index: 1;
+  background-color: $light;
+  &:hover {
+    cursor: pointer;
+  }
+}
+.hide {
+  display:none;
+}
+.image-menu-items > * {
+  font-size: 1rem;
+  color:$brown;
+  position: absolute; 
+  left: 0px;
+    height:30px;
+  width: 80px;
+  z-index: +1;
+  &:hover {
+    background-color: $green;
+    cursor: pointer;
+  }
+}
+.image-menu-items > * > p {
+  padding: 5px;
+}
+.image-menu-items > :nth-child(1) {
+  top: 0px;
+}
+.image-menu-items > :nth-child(2) {
+  top: 30px;
+}
+.image-menu-items > :nth-child(3) {
+  top: 60px;  
+}
+
+.profile-top {
+height: 200px;
+}
+.btn-add-plant {
+  height: 40px;
+  width: 160px;
+  font-size: 1.8rem;
+  background-color: $green;
+  color: white;
+  border-radius: 8px;
+  &:hover {
+    background-color: darken($green, 10%)
+  }
+}

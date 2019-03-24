@@ -1,18 +1,37 @@
 V   Make routes for every page 
 V   Changes classes to functional comps with hooks
 V   Expand plant upload objects 
-    Polish login errors
+V   Polish errors and confirmations for signup, login, uploads and userdata edits
+V   Polish plant upload modal
+
 V   Make user profiles
 V   Make plant upload feature
 V   Make plant gallery
 V   Connect functional components to reduxStore and dispatchers
-    Filters for plant gallery: Nearest, latest ...
 V   Make search function for gallery with Regex in mongoose
-    Make elasticSearch function and db
 V   Display plant info in gallery, somewhere
 V   Make menu for each plant, to delete, hide and edit
 V   Make hide and edit function, connect them to server
-    Make component for profile, to show and edit user info ...
+V   Make component for profile, to show and edit user info
     
-    Plan swapping interface
+    Plant swapping interface {
+        Make request objects in mongodb
+        Make request functionality on each plant in gallery
+        Show incoming + outgoing requests in userprofile
+        Make chat function
+        Make rating function (?)
+
+
+
+    }
+    Make elasticSearch function and db
     Make about page
+V   Reorganize entire scss collection
+V   Fix search function
+V   Fix all confirmation and error modals
+V   Make initial reduxStore use localStorage if available
+V   Display zip code converted to city name
+V   Make login and signup validate inputs and give error messages
+    Make server send increments of products
+    Filters for plant gallery: Nearest, latest ...
+    Change zip modal to update userCity

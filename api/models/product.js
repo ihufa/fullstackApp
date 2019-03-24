@@ -5,12 +5,16 @@ const productSchema = mongoose.Schema({
   name: { type: String, required: true },
   message: { type: String, required: false },
   image: { type: String, required: true },
-  user: { type: String, required: true },
+  userId: { type: String, required: false },
+  userName: { type: String, required: true },
+  userCity: { type: String, required: true },
   zip: { type: Number, required: true },
   time: { type: Number, required: true },
   toggleMenu: { type: Boolean, required: true },
   hidden: { type: Boolean, required: true },
-  flagged: { type: Boolean, required: true }
+  flagged: { type: Boolean, required: true },
+  requestedBy: { type: Number, required: false },
+  requestSeen: { type: Boolean, required: false }
 })
 
 module.exports = mongoose.model("Product", productSchema)

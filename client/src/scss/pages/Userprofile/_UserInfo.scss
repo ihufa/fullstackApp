@@ -1,0 +1,16 @@
+.user-info-container {
+  float: right;
+  background-color: lightgray;
+  padding: 10px;
+}
+.user-info-label {
+  font-weight: bold;
+}
+.fa-edit {
+  color: blue;
+  font-size: 0.6rem;
+  &:hover {
+    
+    cursor: pointer;
+  }
+}

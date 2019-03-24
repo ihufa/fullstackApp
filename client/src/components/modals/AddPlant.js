@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { addProduct } from "../../state/actions/productsActions"
-import ReactCrop from 'react-image-crop'
-import 'react-image-crop/dist/ReactCrop.css'
+import ReactCrop from 'react-image-crop/dist/ReactCrop'
+import "react-image-crop/dist/ReactCrop.css"
 
 const AddPlant = props => {
 
@@ -13,6 +13,7 @@ const AddPlant = props => {
     const [plantImgUrl, setPlantImgUrl] = useState()
     const [plantImg, setPlantImg] = useState()
     const [plantImgElement, setPlantImgElement] = useState()
+    const [croppedImage, setCroppedImage] = useState()
 
     const [crop, setCrop] = useState({
         aspect: 1,
@@ -21,8 +22,6 @@ const AddPlant = props => {
         y: 0,
     })
 
-    let croppedImage = ""
-
     const addPlant = async (e) => {
         e.preventDefault()
         console.log("croppedImage", croppedImage)
@@ -30,10 +29,12 @@ const AddPlant = props => {
         body.append("productImage", croppedImage)
         body.append("name", plantName)
         body.append("message", plantDescription)
-        body.append("user", props.userData.userEmail)
+        body.append("userId", props.userData.userId)
+        body.append("userName", props.userData.userName)
         body.append("zip", props.userData.userZip)
         body.append("free", plantFree)
         body.append("sappling", plantSapling)
+        body.append("userCity", props.userData.userCity)
 
         props.addProduct(body)
     }
@@ -120,23 +121,20 @@ const AddPlant = props => {
 
     const test = async (image, pixelCrop, fileName) => {
         console.log("image: ", image, "pixelCrop: ", pixelCrop, "fileName: ", fileName)
+        let cropped
         if (image && pixelCrop.width && pixelCrop.height)
-            croppedImage = await getCroppedImg(image, pixelCrop, fileName);
+            cropped = await getCroppedImg(image, pixelCrop, fileName);
+        setCroppedImage(cropped)
         console.log(croppedImage)
     }
 
     return (
         <div className="modal" onClick={closeModal}>
             <div className="modal-plant-upload">
-                <h1>Add a plant so you can swap!</h1>
+                <h2>Add a plant</h2>
                 <div className="plant-img-upload">
                     <form className="plant-upload-form" onSubmit={addPlant}>
                         <input onChange={onChangeImg} type="file" />
-                        <input
-                            onChange={onChangeDescription}
-                            type="text"
-                            placeholder="description"
-                        />
                         {plantImg ?
                             <ReactCrop
                                 src={plantImgUrl}
@@ -147,10 +145,18 @@ const AddPlant = props => {
                                 className="imgCrop"
 
                             /> : null}
-                        <input onChange={onChangeName} type="text" placeholder="name" />
+                        <p><span>Plant type</span><input
+                            onChange={onChangeName}
+                            type="text"
+                            placeholder="name" /></p>
+                        <p><span>Description</span><input
+                            onChange={onChangeDescription}
+                            type="text"
+                            placeholder="description"
+                        /></p>
                         <div><input type="checkbox" onChange={onChangeSapling} /><span>I am only offering a sapling of this plant</span></div>
                         <div><input type="checkbox" onChange={onChangeFree} /><span>I want to give away this baby for free</span></div>
-                        <input type="submit" value="Share!" />
+                        <input type="submit" value="Add!" />
                     </form>
                 </div>
             </div>

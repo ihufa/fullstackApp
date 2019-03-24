@@ -1,0 +1,19 @@
+.modal-plant-upload {
+  border-radius: 5px;
+  background-color: $light;
+  margin: auto;
+  margin-top: 60px;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 100%;
+  max-width: 700px;
+  display: inline-block;
+  text-align: left;
+}
+.plant-upload-form > * {
+  display: block;
+  margin: 10px;
+}
+.plant-upload-form > p > * {
+  margin: 10px;
+}

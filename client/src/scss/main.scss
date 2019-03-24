@@ -1,11 +1,23 @@
 @import url("https://fonts.googleapis.com/css?family=PT+Sans+Narrow");
 
-$primary: #272322;
-$green: rgb(38, 214, 15);
-$light: rgb(249, 253, 246);
-$red: red;
-$brown: rgb(129, 49, 3);
-$maxWidth: 1000px;
+@import "GlobalVariables";
+
+@import "UserNav";
+@import "LoginNav";
+@import "Gallery";
+@import "Footer";
+
+@import "pages/UserProfile";
+@import "pages/Userprofile/UserInfo";
+
+@import "modals/AddPlant";
+@import "modals/Confirmation";
+@import "modals/Login";
+@import "modals/Signup";
+@import "modals/PlantInfo";
+
+
+
 * {
   margin: 0;
   padding: 0;
@@ -37,11 +49,6 @@ h3 {
   font-weight: 600;
   color:$brown;
 }
-.toggler {
-  &:hover {
-    cursor: pointer;
-  }
-}
 
 .Btn {
   border-style: none;
@@ -60,286 +67,21 @@ h3 {
     cursor: pointer;
   }
 }
-.inline {
-  display: inline-block;
-}
-.navbar {
-  position: relative;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  background-color: $light;
-}
-.nav-item-container {
-  width: 100%;
-  max-width:$maxWidth;
-  margin: auto;
-}
-.nav-item {
-  display: inline-block;
-  margin: 15px 10px;
-  font-size: 17px;
-  color: $primary;
-  &:hover {
-    color: $green;
-    cursor: pointer;
-  }
-}
-.nav-items-right {
-  float:right;
-}
-.nav-logo {
-  vertical-align:top;
-  display: inline-block;
-  margin: 5px;
-  font-size: 17px;
-  color: $primary;
-  &:hover {
-    color: $green;
-    cursor: pointer;
-  }
-}
-.search-container {
-  height: 30px;
-  width: 200px;
-  vertical-align: top;
-  text-align: right;
-}
-.searchbox {
-  position: relative;
-  width: 200px;
-  display: block;
-}
-.searchbox:before {
-  position: absolute;
-  content: "";
-  background-color: $brown;
-  height: 10px;
-  width: 2px;
-  transform: rotate(-45deg);
-  right: 0;
-  bottom: -4px;
-}
-.search {
-  height: 30px;
-  width: 30px;
-  border-radius: 15px;
-  background-color: transparent;
-  justify-content: center;
-  align-content: center;
-  border: $brown 2px solid;
-  outline: none;
-  box-sizing: border-box;
-  font-size: 16px;
-  color: rgb(105, 99, 99);
-  padding-left: 10px;
-  transition: 0.5s;
-}
-::placeholder {
-  opacity: 0;
-  color: rbga(255, 255, 255, 0.5);
-}
-.search:focus {
-  width: 200px;
-}
 
 .fas {
   font-size: 30px;
   color: $brown;
 }
-.fa-leaf {
-  color: $green;
-}
 .fa-ellipsis-v {
-  color: $light;
-}
-.SignupConfirm {
-  z-index: 50;
-  min-height: 60px;
-}
-/* The Modal (background) */
-.modal {
-  position: fixed; 
-  z-index: 10; 
-  left: 0;
-  top: 0;
-  width: 100%; 
-  height: 100%;
-  overflow: auto; 
-  background-color: rgb(0, 0, 0); 
-  background-color: rgba(0, 0, 0, 0.6); 
-}
-
-/* Modal Content/Box */
-.modal-form {
-  border-radius: 5px;
-  background-color: $light;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 380px;
-  margin-top:15%;
-  z-index: 11;
-}
-.confirmation-modal > * {
-text-align:center;
-margin: 10px;
-}
-.confirmation-modal {
-text-align:center;
-margin: 10px;
-}
-.modal-input {
-  border: 0;
-  outline: 0;
-  background: transparent;
-  border-bottom: 1px solid $green;
-  font-size: 1rem;
-  margin: 10px;
-  width: 250px;
-}
-.confirmation-modal-input {
-    border: 0;
-  outline: 0;
-  background: transparent;
-  border-bottom: 1px solid $green;
-  font-size: 1rem;
-  margin: 10px;
-}
-.modal-plant-upload {
-  border-radius: 5px;
-  background-color: $light;
-  margin: auto;
-  margin-top: 60px;
-  padding: 20px;
-  border: 1px solid #888;
-  height: 500px;
-  width: 100%;
-  max-width: 700px;
-}
-.plant-upload-form > * {
-  display: block;
-}
-
-// Plant gallery
-.plant-gallery-page-wrapper {
-  margin: 20px;
-}
-
-.plant-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  justify-content: center;
-  grid-gap: 15px;
-  grid-row-gap: 15px;
-}
-.plant-card {
-  position: relative;
-}
-.plant-img {
-  width: 100%;
-  height: auto;
-}
-.image-menu {
-  font-size: 1rem;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-.image-menu-items {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    width: 80px;
-    height: 90px;
-    z-index: 1;
-  background-color: $light;
-  &:hover {
-    cursor: pointer;
-  }
-}
-.hide {
-  display:none;
-}
-.image-menu-items > * {
-  font-size: 1rem;
-  color:$brown;
-  position: absolute; 
-  left: 0px;
-    height:30px;
-  width: 80px;
-  z-index: +1;
-  &:hover {
-    background-color: $green;
-    cursor: pointer;
-  }
-}
-.image-menu-items > * > p {
-  padding: 5px;
-}
-.image-menu-items > :nth-child(1) {
-  top: 0px;
-}
-.image-menu-items > :nth-child(2) {
-  top: 30px;
-}
-.image-menu-items > :nth-child(3) {
-  top: 60px;  
-}
-.plant-grid-time {
-  float: right;
-  margin: 5px;
-  color: rgb(158, 158, 158);
-}
-.plant-grid-name {
-  float: left;
-  margin: 5px;
-}
-.footer {
-  width: 100%;
-  height: 60px;
-  background-color: rgba(157, 252, 153, 0.438);
   color: $green;
-  text-align: center;
-  margin-top: 0;
 }
+
+
+
+
 
 //User Profile
-.profile-top {
-height: 200px;
-}
-.btn-add-plant {
-  height: 40px;
-  width: 160px;
-  font-size: 1.8rem;
-  background-color: $green;
-  color: white;
-  border-radius: 8px;
-  &:hover {
-    background-color: darken($green, 10%)
-  }
-}
-.user-info-container {
-  float: right;
-  background-color: lightgray;
-  padding: 10px;
-}
-.user-info-label {
-  font-weight: bold;
-}
-.fa-edit {
-  color: blue;
-  font-size: 0.6rem;
-  &:hover {
-    
-    cursor: pointer;
-  }
-}
+
 
 
 

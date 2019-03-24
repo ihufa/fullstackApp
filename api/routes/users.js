@@ -36,7 +36,8 @@ router.post("/", (req, res, next) => {
         password: hash,
         name: req.body.name,
         zip: req.body.zip,
-        email: req.body.email
+        email: req.body.email,
+        city: req.body.city
       })
       user
         .save()
@@ -44,7 +45,7 @@ router.post("/", (req, res, next) => {
           return res.status(201).json("user created")
         })
         .catch(err => {
-          res.status(500).json("invalid email adress")
+          res.status(500).json(err)
         })
     }
   })
@@ -69,7 +70,7 @@ router.post("/login", (req, res, then) => {
               userId: user[0]._id
             },
             "secret",
-            { expiresIn: "1d" }
+            { expiresIn: "365d" }
           )
           console.log("login successful" + token)
           return res.status(200).json({
@@ -77,7 +78,9 @@ router.post("/login", (req, res, then) => {
             securityToken: token,
             userEmail: user[0].email,
             userZip: user[0].zip,
-            userName: user[0].name
+            userName: user[0].name,
+            userId: user[0]._id,
+            userCity: user[0].city
           })
         }
         console.log("wrong password")
@@ -103,7 +106,8 @@ router.delete("/", (req, res, next) => {
     })
 })
 router.patch("/email", (req, res, next) => {
-  User.updateOne({ email: req.body.email }, { $set: { email: req.body.newEmail } })
+  console.log(req.body)
+  User.updateOne({ _id: req.body.id }, { $set: { email: req.body.input } })
     .exec()
     .then(result => {
       console.log(result)
@@ -113,7 +117,7 @@ router.patch("/email", (req, res, next) => {
 
 })
 router.patch("/zip", (req, res, next) => {
-  User.updateOne({ email: req.body.email }, { $set: { zip: req.body.zip } })
+  User.updateOne({ _id: req.body.id }, { $set: { zip: req.body.input } })
     .exec()
     .then(result => {
       console.log(result)

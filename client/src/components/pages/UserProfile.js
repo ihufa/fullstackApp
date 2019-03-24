@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react"
 import { connect } from "react-redux"
-import { getProducts, toggleProductMenu, removeProduct, toggleHideProduct } from "../../state/actions/productsActions"
+import { getProducts, toggleProductMenu, removeProduct, toggleHideProduct, toggleShowProduct } from "../../state/actions/productsActions"
 import AddPlant from '../modals/AddPlant'
-import Confirmation from '../modals/Confirmation'
+import { openModal } from '../../state/actions/modalActions'
 import UserInfo from './UserProfile/UserInfo'
 
 const UserProfile = props => {
   const [showAddModal, setShowAddModal] = useState(false)
-  const [showRemovePlantModal, setShowRemovePlantModal] = useState()
   const [plantInFocus, setPlantInFocus] = useState()
+
 
   const timeConvert = millisec => {
     var seconds = (millisec / 1000).toFixed(0)
@@ -28,30 +28,39 @@ const UserProfile = props => {
   const addPlantHandler = () => {
     setShowAddModal(!showAddModal)
   }
-  const toggleShowRemoveModal = (e) => {
-    setShowRemovePlantModal(!showRemovePlantModal)
-  }
-  const toggleConfirmation = () => {
-    setShowRemovePlantModal(!showRemovePlantModal)
+  const removeProduct = e => {
+    e.preventDefault()
+    props.openModal({
+      type: "productRemover",
+      input: false,
+      binary: true,
+      message: "Are you sure you want to remove this plant?",
+      id: plantInFocus
+    })
   }
   const togglePlantMenu = (e) => {
     e.preventDefault()
-    props.toggleProductMenu(e.target.id)
-    setPlantInFocus(e.target.id)
-    document.body.addEventListener("click", console.log("click"))
+    let id = e.target.id
+    props.toggleProductMenu(id)
+    setPlantInFocus(id)
+    document.body.addEventListener("click", () => {
+      props.toggleProductMenu(id)
+    }, { once: true })
   }
   const toggleHideProduct = (e) => {
     props.toggleHideProduct({ id: plantInFocus })
   }
-
+  const toggleShowProduct = (e) => {
+    props.toggleShowProduct({ id: plantInFocus })
+  }
 
   const activePlantGrid =
-    props.products && props.products.length > 0 ? (
+    props.products && props.products.length && props.products.filter(el => el.userId === props.userData.userId).filter(el => el.hidden === false).length > 0 ? (
       <div className="plant-gallery-page-wrapper">
-        <h1>My active plants</h1>
+        <h2>My active plants</h2>
         <div className="plant-grid">
           {props.products
-            .filter(el => el.user === props.userData.userEmail)
+            .filter(el => el.userId === props.userData.userId)
             .filter(el => el.hidden === false)
             .reverse()
             .map((el, index) => (
@@ -63,7 +72,7 @@ const UserProfile = props => {
                 />
                 <div onClick={togglePlantMenu} className={"image-menu"}><i id={el._id} className="fas fa-ellipsis-v"></i></div>
                 <div className={el.toggleMenu ? 'image-menu-items' : "hide"}>
-                  <div onClick={toggleShowRemoveModal}><p>Remove</p></div>
+                  <div onClick={removeProduct}><p>Remove</p></div>
                   <div onClick={toggleHideProduct}><p>Hide</p></div>
                   <div><p>Edit</p></div>
                 </div>
@@ -79,17 +88,18 @@ const UserProfile = props => {
       </div>
     ) : (
         <div className="plant">
-          <h3>You have no active plants at the moment</h3>
+          <h2>My plants</h2>
+          <p>-</p>
         </div>
       )
 
   const hiddenPlantGrid =
-    props.products && props.products.length > 0 ? (
+    props.products && props.products.length && props.products.filter(el => el.userId === props.userData.userId).filter(el => el.hidden === true).length > 0 ? (
       <div className="plant-gallery-page-wrapper">
-        <h1>My hidden plants</h1>
+        <h2>My private plants</h2>
         <div className="plant-grid">
           {props.products
-            .filter(el => el.user === props.userData.userEmail)
+            .filter(el => el.userId === props.userData.userId)
             .filter(el => el.hidden === true)
             .reverse()
             .map((el, index) => (
@@ -101,8 +111,8 @@ const UserProfile = props => {
                 />
                 <div onClick={togglePlantMenu} className={"image-menu"}><i id={el._id} className="fas fa-ellipsis-v"></i></div>
                 <div className={el.toggleMenu ? 'image-menu-items' : "hide"}>
-                  <div onClick={toggleShowRemoveModal}><p>Remove</p></div>
-                  <div><p>Inactivate</p></div>
+                  <div onClick={removeProduct}><p>Remove</p></div>
+                  <div onClick={toggleShowProduct}><p>Show</p></div>
                   <div><p>Edit</p></div>
                 </div>
                 <div className="plant-grid-name">
@@ -116,27 +126,22 @@ const UserProfile = props => {
         </div>
       </div>
     ) : (
-        <div className="plant">
-          <h3>You have no active plants at the moment</h3>
-        </div>
+        null
       )
 
 
   useEffect(() => props.getProducts(), [])
 
   return (
-    <div>
-      <h1>
-        Good day {props.userData && props.userData.userName.split(" ")[0]}
-      </h1>
+    <div className="user-profile-wrapper">
       <div className="profile-top">
         <button className="Btn btn-add-plant" onClick={addPlantHandler}>Add plant</button>
         <UserInfo />
       </div>
-      {showAddModal ? <AddPlant showModal={addPlantHandler} /> : null}
-      {showRemovePlantModal ? <Confirmation modalMessage="Are you sure you want to delete this plant?" showModal={toggleConfirmation} plant={plantInFocus} confirm={props.removeProduct} /> : null}
       {activePlantGrid}
       {hiddenPlantGrid}
+      {showAddModal ? <AddPlant showModal={addPlantHandler} /> : null}
+
     </div>
   )
 }
@@ -148,5 +153,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getProducts, toggleProductMenu, removeProduct, toggleHideProduct }
+  { getProducts, toggleProductMenu, removeProduct, toggleHideProduct, toggleShowProduct, openModal }
 )(UserProfile)

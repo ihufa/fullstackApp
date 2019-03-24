@@ -1,0 +1,86 @@
+.navbar {
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: $light;
+}
+.nav-item-container {
+  width: 100%;
+  max-width:$maxWidth;
+  margin: auto;
+}
+.nav-item {
+  display: inline-block;
+  margin: 15px 10px;
+  font-size: 17px;
+  color: $primary;
+  &:hover {
+    color: $green;
+    cursor: pointer;
+  }
+}
+.nav-items-right {
+  float:right;
+}
+.nav-logo {
+  vertical-align:top;
+  display: inline-block;
+  margin: 5px;
+  font-size: 17px;
+  color: $primary;
+  &:hover {
+    color: $green;
+    cursor: pointer;
+  }
+}
+.search-container {
+  height: 30px;
+  width: 200px;
+  vertical-align: top;
+  text-align: right;
+}
+.searchbox {
+  position: relative;
+  width: 200px;
+  display: block;
+}
+.searchbox:before {
+  position: absolute;
+  content: "";
+  background-color: $brown;
+  height: 10px;
+  width: 2px;
+  transform: rotate(-45deg);
+  right: 0;
+  bottom: -4px;
+}
+.search {
+  height: 30px;
+  width: 30px;
+  border-radius: 15px;
+  background-color: transparent;
+  justify-content: center;
+  align-content: center;
+  border: $brown 2px solid;
+  outline: none;
+  box-sizing: border-box;
+  font-size: 16px;
+  color: rgb(105, 99, 99);
+  padding-left: 15px;
+  padding-right: 5px;
+  transition: 0.5s;
+}
+::placeholder {
+  opacity: 0.8;
+  font-style: italic;
+  color: rbga(255, 255, 255, 0.5);
+}
+.search:focus {
+  width: 200px;
+}
+
+.fa-leaf {
+  color: $green;
+}

@@ -12,7 +12,7 @@ import {
   REMOVE_PRODUCT,
   TOGGLE_HIDE_PRODUCT,
   CHANGE_EMAIL,
-  CHANGE_ZIP
+  CHANGE_ZIP,
 } from "../actions/types"
 
 const initialState = {
@@ -125,6 +125,8 @@ export default function (state = initialState, action) {
       }
 
     default:
-      return state
+      return {
+        ...state
+      }
   }
 }

@@ -18,32 +18,34 @@ const LoginNav = props => {
   return (
     <div>
       <div className="navbar">
-        <div className="nav-logo">
-          <Link to="/plants">
-            <h1>Plantbook <i className="fas fa-leaf" /></h1>
-          </Link>
-        </div>
-        <div className="nav-items-right">
-          <div className="nav-item search-container">
-            <div className="searchbox">
-              <form onSubmit={searchFire}>
-                <input
-                  onChange={onChange}
-                  type="search"
-                  className="search"
-                  placeholder="Search..."
-                />
-              </form>
+        <div className="nav-item-container">
+          <div className="nav-logo">
+            <Link to="/plants">
+              <h1>Plantbook <i className="fas fa-leaf" /></h1>
+            </Link>
+          </div>
+          <div className="nav-items-right">
+            <div className="nav-item search-container">
+              <div className="searchbox">
+                <form onSubmit={searchFire}>
+                  <input
+                    onChange={onChange}
+                    type="search"
+                    className="search"
+                    placeholder="Search..."
+                  />
+                </form>
+              </div>
             </div>
-          </div>
-          <div className="nav-item">
-            <div className="nav-item" onClick={props.showLogin}>
-              Log in
-          </div>
-            <div className="nav-item" onClick={props.showSignup}>
-              Sign up
-          </div>
-            <div className="nav-item">About</div>
+            <div className="nav-item">
+              <Link to="/plants/login" className="nav-item">
+                Log in
+          </Link>
+              <Link to="/plants/signup" className="nav-item">
+                Sign up
+          </Link>
+              <div className="nav-item">About</div>
+            </div>
           </div>
         </div>
       </div>

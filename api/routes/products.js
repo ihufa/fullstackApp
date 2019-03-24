@@ -34,7 +34,7 @@ const upload = multer({
 
 router.get("/", (req, res, next) => {
   console.log("products GET requested")
-  Product.find()
+  Product.find().sort('-time')
     .exec()
     .then(docs => {
       const response = {
@@ -80,8 +80,10 @@ router.post("/", checkAuth, upload.single("productImage"), (req, res, next) => {
     image: req.file.filename,
     name: req.body.name,
     message: req.body.message,
-    user: req.body.user,
+    userId: req.body.userId,
+    userName: req.body.userName,
     zip: req.body.zip,
+    userCity: req.body.userCity,
     time: Date.now(),
     toggleMenu: false,
     flagged: false,
@@ -121,9 +123,23 @@ router.get("/:productId", (req, res, next) => {
     })
 })
 
-router.patch("/", (req, res, next) => {
+router.patch("/hide", (req, res, next) => {
   const id = req.body.id
   const updateOps = { hidden: true }
+  Product.updateOne({ _id: id }, { $set: updateOps })
+    .exec()
+    .then(result => {
+      console.log(result)
+      res.status(200).json(result)
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({ error: err })
+    })
+})
+router.patch("/show", (req, res, next) => {
+  const id = req.body.id
+  const updateOps = { hidden: false }
   Product.updateOne({ _id: id }, { $set: updateOps })
     .exec()
     .then(result => {

@@ -19,7 +19,7 @@ export const addProduct = product => dispatch => {
   console.log(product)
   axios
     .post("/products", product, {
-      headers: { authorization: sessionStorage.token }
+      headers: { authorization: localStorage.token }
     })
     .then(res => {
       console.log("product added", res)
@@ -34,7 +34,18 @@ export const toggleProductMenu = id => dispatch => {
   })
 }
 export const toggleHideProduct = product => dispatch => {
-  axios.patch("/products", product, { headers: { authorization: sessionStorage.token } })
+  axios.patch("/products/hide", product, { headers: { authorization: localStorage.token } })
+    .then(res => {
+      console.log("product hproductden", res)
+    })
+    .catch(err => console.log(err))
+  dispatch({
+    type: TOGGLE_HIDE_PRODUCT,
+    payload: product.id
+  })
+}
+export const toggleShowProduct = product => dispatch => {
+  axios.patch("/products/show", product, { headers: { authorization: localStorage.token } })
     .then(res => {
       console.log("product hproductden", res)
     })
@@ -46,7 +57,7 @@ export const toggleHideProduct = product => dispatch => {
 }
 export const removeProduct = id => dispatch => {
   console.log("togglemenu", id)
-  axios.delete(`/products/${id}`, { headers: { authorization: sessionStorage.token } })
+  axios.delete(`/products/${id}`, { headers: { authorization: localStorage.token } })
     .then(res => {
       console.log("product deleted", res)
     })

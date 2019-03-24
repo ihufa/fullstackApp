@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { connect } from "react-redux"
 import { checkUser } from "../../state/actions/itemActions"
+import { withRouter } from 'react-router-dom'
 
 const Login = (props) => {
   const [email, setEmail] = useState()
@@ -13,6 +14,7 @@ const Login = (props) => {
     setPassword(e.target.value)
   }
   const checkUser = e => {
+    props.history.push("/plants")
     props.checkUser({
       email: email,
       password: password
@@ -25,7 +27,7 @@ const Login = (props) => {
       e.target.className === "modal" &&
       e.target.className !== "modal-input"
     ) {
-      props.showLogin()
+      props.history.push("/plants")
     }
   }
 
@@ -42,7 +44,7 @@ const Login = (props) => {
           />
           <input
             className="modal-input"
-            type="text"
+            type="password"
             id="password"
             placeholder="enter password"
             onChange={passwordHandler}
@@ -61,7 +63,7 @@ const mapStateToProps = state => ({
   userData: state.items.userData
 })
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   { checkUser }
-)(Login)
+)(Login))
