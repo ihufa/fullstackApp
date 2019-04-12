@@ -17,13 +17,30 @@ const Confirmation = props => {
     const cancel = () => {
         props.closeModal()
     }
-    const inputConfirm = () => {
-        props.confirm({
-            id: props.id,
-            input: input
-        })
-        props.closeModal()
+    const zipConfirm = zip => {
+        if (zip > 1000 && zip < 10000) {
+            return true
+        }
     }
+    const emailConfirm = email => {
+        const reg = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+        if (!email)
+            return false
+        if (email && email.match(reg))
+            return true
+    }
+    const inputConfirm = () => {
+        if ((props.type === "zipChanger" && zipConfirm(input)) || (props.type === "emailChanger" && emailConfirm(input))) {
+            props.confirm({
+                id: props.id,
+                input: input
+            })
+            props.closeModal()
+        }
+
+
+    }
+
     const confirm = (e) => {
         e.preventDefault()
         props.confirm(props.id)

@@ -31,11 +31,11 @@ mongoose
 // Use Routes
 const users = require('./api/routes/users');
 const products = require('./api/routes/products');
-const orders = require('./api/routes/orders');
+const swaps = require('./api/routes/swaps');
 
 app.use('/users', users);
 app.use('/products', products);
-app.use('/orders', orders);
+app.use('/swaps', swaps);
 app.use('/plants', express.static('uploads'))
 
 // Serve static assets if in production

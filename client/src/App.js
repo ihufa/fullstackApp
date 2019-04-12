@@ -12,6 +12,7 @@ import store from "./state/store"
 import "./css/main.css"
 import Footer from "./components/Footer"
 import Modals from './components/Modals'
+import Swaps from './components/pages/Swaps'
 
 class App extends Component {
   constructor() {
@@ -44,6 +45,7 @@ class App extends Component {
               <Route path="/plants/login/" component={Login} />
               <Route path="/plants/signup/" component={Signup} />
               <Route exact path="/myplants" component={UserProfile} />
+              <Route path="/myswaps" component={Swaps} />
             </div>
             <Footer />
           </div>

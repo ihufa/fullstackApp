@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const checkAuth = require("../auth/checkAuth")
 const User = require("../models/user")
+const ZIPS = require("../zips")
 
 router.get("/", checkAuth, (req, res, next) => {
   User.find()
@@ -66,7 +67,6 @@ router.post("/login", (req, res, then) => {
         if (result) {
           const token = jwt.sign(
             {
-              user: user[0].email,
               userId: user[0]._id
             },
             "secret",
@@ -109,21 +109,44 @@ router.patch("/email", (req, res, next) => {
   console.log(req.body)
   User.updateOne({ _id: req.body.id }, { $set: { email: req.body.input } })
     .exec()
-    .then(result => {
-      console.log(result)
-      res.status(204).json("email updated")
-
+    .then(() => {
+      User.findOne({ _id: req.body.id })
+        .exec()
+        .then(user => {
+          let newUser = {
+            name: user.name,
+            zip: user.zip,
+            city: user.city,
+            email: user.email,
+            id: user._id
+          }
+          return res.status(200).json(newUser)
+        })
+        .catch(err => console.log(err))
     })
-
+    .catch(err => console.log(err))
 })
-router.patch("/zip", (req, res, next) => {
-  User.updateOne({ _id: req.body.id }, { $set: { zip: req.body.input } })
-    .exec()
-    .then(result => {
-      console.log(result)
-      res.status(204).json("zip updated")
 
+router.patch("/zip", (req, res, next) => {
+  let city = ZIPS.filter(el => el.zip == req.body.input)[0].city
+  User.updateOne({ _id: req.body.id }, { $set: { city: city, zip: req.body.input } })
+    .exec()
+    .then(() => {
+      User.findOne({ _id: req.body.id })
+        .exec()
+        .then(user => {
+          let newUser = {
+            name: user.name,
+            zip: user.zip,
+            city: user.city,
+            email: user.email,
+            id: user._id
+          }
+          return res.status(200).json(newUser)
+        })
+        .catch(err => console.log(err))
     })
+    .catch(err => console.log(err))
 })
 
 module.exports = router

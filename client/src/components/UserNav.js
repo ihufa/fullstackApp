@@ -26,7 +26,7 @@ const UserNav = props => {
         <div className="nav-item-container">
           <div className="nav-logo">
             <Link to="/plants">
-              <h1>Plantbook <i className="fas fa-leaf" /></h1>
+              <h1>Planthood <i className="fas fa-leaf" /></h1>
             </Link>
           </div>
           <div className="nav-items-right">
@@ -45,6 +45,11 @@ const UserNav = props => {
             <div className="nav-item">
               <Link to="/myplants">
                 <i className="fas fa-user-alt" />
+              </Link>
+            </div>
+            <div className="nav-item">
+              <Link to="/myswaps">
+                <i className="fas fa-comments" />
               </Link>
             </div>
           </div>

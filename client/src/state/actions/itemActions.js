@@ -3,8 +3,6 @@ import {
   ADD_USER,
   INITIATE_USER,
   CLEAR_USER,
-  CHANGE_EMAIL,
-  CHANGE_ZIP,
   OPEN_MODAL
 } from "./types"
 import axios from "axios"
@@ -93,14 +91,25 @@ export const changeEmail = email => dispatch => {
   axios
     .patch("/users/email", email)
     .then(res => {
+      console.log("email return data ", res.data)
+
+      let userData = {
+        userEmail: res.data.email,
+        userZip: res.data.zip,
+        userName: res.data.name,
+        userId: res.data.id,
+        userCity: res.data.city
+      }
       dispatch({
-        type: CHANGE_EMAIL,
-        payload: email.input
+        type: INITIATE_USER,
+        payload: userData
       })
+      localStorage.setItem("userData", JSON.stringify(userData))
+
       dispatch({
         type: OPEN_MODAL,
         payload: {
-          message: "Email updated!",
+          message: "Zip code changed!",
           binary: false,
           type: "confirmation"
         }
@@ -111,10 +120,21 @@ export const changeZip = zip => dispatch => {
   axios
     .patch("/users/zip", zip)
     .then(res => {
+      console.log("zip return data ", res.data)
+
+      let userData = {
+        userEmail: res.data.email,
+        userZip: res.data.zip,
+        userName: res.data.name,
+        userId: res.data.id,
+        userCity: res.data.city
+      }
       dispatch({
-        type: CHANGE_ZIP,
-        payload: zip.input
+        type: INITIATE_USER,
+        payload: userData
       })
+      localStorage.setItem("userData", JSON.stringify(userData))
+
       dispatch({
         type: OPEN_MODAL,
         payload: {

@@ -33,7 +33,8 @@ const Gallery = props => {
 
     props.openModal({
       type: "plantInfo",
-      plantId: plant[0]._id,
+      userId: plant[0].userId,
+      productId: plant[0]._id,
       image: plant[0].image,
       plantType: plant[0].name,
       description: plant[0].message,
@@ -58,7 +59,6 @@ const Gallery = props => {
                   alt={el.name}
                   src={"http://localhost:5000/plants/" + el.image}
                 />
-                <div className="plant-img-time">{timeConvert(Date.now() - el.time)}</div>
                 <button id={el._id} onClick={swapHandler} className={"plant request-button plant" + index}>
                   Swap
                 </button>

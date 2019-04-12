@@ -13,6 +13,14 @@ V   Display plant info in gallery, somewhere
 V   Make menu for each plant, to delete, hide and edit
 V   Make hide and edit function, connect them to server
 V   Make component for profile, to show and edit user info
+V   Reorganize entire scss collection
+V   Fix search function
+V   Fix all confirmation and error modals
+V   Make initial reduxStore use localStorage if available
+V   Display zip code converted to city name
+V   Make login and signup validate inputs and give error messages
+V   Make upload plant function crisp
+V   Change zip modal to update userCity and include form validation
     
     Plant swapping interface {
         Make request objects in mongodb
@@ -20,18 +28,13 @@ V   Make component for profile, to show and edit user info
         Show incoming + outgoing requests in userprofile
         Make chat function
         Make rating function (?)
+        Make userprofile showing the users plants
 
 
 
     }
+    Make individual GET routes for gallery, userprofiles, and different gallery searches
     Make elasticSearch function and db
     Make about page
-V   Reorganize entire scss collection
-V   Fix search function
-V   Fix all confirmation and error modals
-V   Make initial reduxStore use localStorage if available
-V   Display zip code converted to city name
-V   Make login and signup validate inputs and give error messages
-    Make server send increments of products
     Filters for plant gallery: Nearest, latest ...
-    Change zip modal to update userCity
+    Make server send increments of products

@@ -1,4 +1,4 @@
-import { UPDATE_PRODUCTS, PRODUCT_SEARCH, PRODUCT_MENU_TOGGLE, REMOVE_PRODUCT, TOGGLE_HIDE_PRODUCT } from "./types"
+import { UPDATE_PRODUCTS, PRODUCT_SEARCH, PRODUCT_MENU_TOGGLE, REMOVE_PRODUCT, TOGGLE_HIDE_PRODUCT, OPEN_MODAL } from "./types"
 import axios from "axios"
 
 export const getProducts = () => dispatch => {
@@ -22,9 +22,28 @@ export const addProduct = product => dispatch => {
       headers: { authorization: localStorage.token }
     })
     .then(res => {
-      console.log("product added", res)
+      console.log("success")
+      dispatch({
+        type: OPEN_MODAL,
+        payload: {
+          binary: false,
+          input: false,
+          message: "Plant successfully added!",
+          type: "confirmationPlantAdd"
+        }
+      })
     })
-    .catch(err => console.log(err))
+    .catch(err => {
+      dispatch({
+        type: OPEN_MODAL,
+        payload: {
+          binary: false,
+          input: false,
+          message: "There was an error adding your plant", err,
+          type: "error"
+        }
+      })
+    })
 }
 export const toggleProductMenu = id => dispatch => {
   console.log("togglemenu", id)

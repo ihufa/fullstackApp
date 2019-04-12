@@ -5,6 +5,7 @@ import AddPlant from '../modals/AddPlant'
 import { openModal } from '../../state/actions/modalActions'
 import UserInfo from './UserProfile/UserInfo'
 
+
 const UserProfile = props => {
   const [showAddModal, setShowAddModal] = useState(false)
   const [plantInFocus, setPlantInFocus] = useState()
@@ -76,10 +77,10 @@ const UserProfile = props => {
                   <div onClick={toggleHideProduct}><p>Hide</p></div>
                   <div><p>Edit</p></div>
                 </div>
-                <div className="plant-grid-name">
+                <div className="profile-plant-grid-name">
                   <p>{el.name}</p>
                 </div>
-                <div className="plant-grid-time">
+                <div className="profile-plant-grid-time">
                   <p>{timeConvert(Date.now() - el.time)} ago</p>
                 </div>
               </div>
@@ -115,10 +116,10 @@ const UserProfile = props => {
                   <div onClick={toggleShowProduct}><p>Show</p></div>
                   <div><p>Edit</p></div>
                 </div>
-                <div className="plant-grid-name">
+                <div className="profile-plant-grid-name">
                   <p>{el.name}</p>
                 </div>
-                <div className="plant-grid-time">
+                <div className="profile-plant-grid-time">
                   <p>{timeConvert(Date.now() - el.time)} ago</p>
                 </div>
               </div>

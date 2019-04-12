@@ -67,7 +67,7 @@ export default function (state = initialState, action) {
         userData: newUserDataEmail
       }
     case CHANGE_ZIP:
-      let newUserDataZip = { ...state.userData, userZip: action.payload }
+      let newUserDataZip = { ...state.userData, userZip: action.payload.newZip, userCity: action.payload.newCity }
       return {
         ...state,
         userData: newUserDataZip

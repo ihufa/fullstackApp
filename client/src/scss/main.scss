@@ -9,12 +9,14 @@
 
 @import "pages/UserProfile";
 @import "pages/Userprofile/UserInfo";
+@import "pages/Swaps";
 
 @import "modals/AddPlant";
 @import "modals/Confirmation";
 @import "modals/Login";
 @import "modals/Signup";
 @import "modals/PlantInfo";
+
 
 
 
@@ -70,8 +72,9 @@ h3 {
 
 .fas {
   font-size: 30px;
-  color: $brown;
+  color: $green;
 }
+
 .fa-ellipsis-v {
   color: $green;
 }

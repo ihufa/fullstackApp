@@ -1,0 +1,47 @@
+.swap-inbox {
+    width: 100%;
+}
+.swap-item {
+    background-color: $light;
+    width: 100%;
+    display: inline-flex;
+}
+.swap-inbox-img {
+    height: 70px;
+    margin: 5px;
+}
+.swap-inbox-text {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 10px;
+}
+.swap-inbox-sender {
+    font-weight: bold;
+}
+.swap-inbox-message {
+    font-weight: 300;
+}
+.swap-inbox-buttons button {
+    height: 25px;
+    border-radius: 3px;
+    margin: 5px;
+    color: $brown;
+    font-weight: bold;
+    font-size: 0.9rem;
+    &:hover {
+        cursor: pointer;
+    }
+
+}
+.swap-inbox-see-plants-button {
+    width: 120px;
+    background-color: $green;
+}
+.swap-inbox-yes-button {
+    width: 60px;
+    background-color: $green;
+}
+.swap-inbox-no-button {
+    width: 60px;
+    background-color: red;
+}

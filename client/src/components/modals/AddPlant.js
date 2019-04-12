@@ -35,8 +35,8 @@ const AddPlant = props => {
         body.append("free", plantFree)
         body.append("sappling", plantSapling)
         body.append("userCity", props.userData.userCity)
-
         props.addProduct(body)
+        props.showModal()
     }
     //figure out how to make universal onChange to set state without setState()
     const onChangeImg = (e) => {
