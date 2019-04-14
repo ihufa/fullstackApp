@@ -34,15 +34,10 @@ const upload = multer({
 
 router.get("/", (req, res, next) => {
   console.log("products GET requested")
-  Product.find().sort('-time')
+  Product.find().sort({ time: -1 })
     .exec()
-    .then(docs => {
-      const response = {
-        count: docs.length,
-        products: docs
-      }
-
-      res.status(200).json(response)
+    .then(result => {
+      res.status(200).json(result)
     })
     .catch(err => {
       console.log(err)
@@ -101,17 +96,17 @@ router.post("/", checkAuth, upload.single("productImage"), (req, res, next) => {
       })
     })
 })
-router.get("/:productId", (req, res, next) => {
-  const id = req.params.productId
-  Product.findById(id)
+router.get("/:userId", (req, res, next) => {
+  const id = req.params.userId
+  Product.find({ userId: id }).sort({ time: -1 })           // I dunno why sort('-time') gives products with biggest first, when it starts with smallest with plain Product.find()
     .exec()
-    .then(doc => {
-      console.log("from database" + doc)
-      if (doc) {
-        res.status(200).json(doc)
+    .then(result => {
+      if (result) {
+        console.log("productsById", result)
+        res.status(200).json(result)
       } else {
         res.status(404).json({
-          message: "no entry found"
+          message: "no plants"
         })
       }
     })

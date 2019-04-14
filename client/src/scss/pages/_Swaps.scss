@@ -1,47 +1,114 @@
 .swap-inbox {
-    width: 100%;
+  width: 100%;
+}
+.swap-messages-toggler {
+  margin: auto;
+  width: 320px;
+  font-size: 0;
+}
+.swap-messages-toggler-left {
+  display: inline-block;
+  background-color: $green;
+  border-radius: 20px 0 0 20px;
+  width: 155px;
+  margin: auto;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: right;
+  h2 {
+    margin: 7px;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
+.swap-messages-toggler-right {
+  display: inline-block;
+  background-color: $green;
+  border-radius: 0 20px 20px 0;
+  width: 155px;
+  margin: auto;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  h2 {
+    margin: 7px;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
+.deactivated {
+  background-color: $light;
 }
 .swap-item {
-    background-color: $light;
-    width: 100%;
-    display: inline-flex;
+  width: 100%;
+  display: inline-flex;
 }
 .swap-inbox-img {
-    height: 70px;
-    margin: 5px;
+  height: 70px;
+  margin: 10px;
+  margin-top: 0;
+  float: left;
+  border-radius: 50%;
+}
+.swap-chat-img {
+  height: 70px;
+  margin: 10px;
+  margin-top: 0;
+  float: left;
+  border-radius: 50%;
+}
+.swap-chat-item {
+  clear: both;
+  &:hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
+}
+.swap-chat-sender {
+  font-size: 1.2rem;
+}
+.swap-chat-message {
+  opacity: 0.75;
+  display: inline-block;
+}
+.swap-chat-message-sender {
+  display: inline-block;
+  width: calc(100% - 95px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre-wrap;
+  height: 40px;
+  opacity: 0.9;
 }
 .swap-inbox-text {
-    font-size: 1rem;
-    font-weight: bold;
-    margin: 10px;
 }
 .swap-inbox-sender {
-    font-weight: bold;
+  font-size: 1.2rem;
 }
 .swap-inbox-message {
-    font-weight: 300;
+  opacity: 0.75;
 }
 .swap-inbox-buttons button {
-    height: 25px;
-    border-radius: 3px;
-    margin: 5px;
-    color: $brown;
-    font-weight: bold;
-    font-size: 0.9rem;
-    &:hover {
-        cursor: pointer;
-    }
-
+  height: 25px;
+  border-radius: 3px;
+  margin: 5px;
+  color: $brown;
+  font-weight: bold;
+  font-size: 0.9rem;
+  &:hover {
+    cursor: pointer;
+  }
 }
 .swap-inbox-see-plants-button {
-    width: 120px;
-    background-color: $green;
+  width: 120px;
+  background-color: $green;
 }
 .swap-inbox-yes-button {
-    width: 60px;
-    background-color: $green;
+  width: 60px;
+  background-color: $green;
 }
 .swap-inbox-no-button {
-    width: 60px;
-    background-color: red;
+  width: 60px;
+  background-color: red;
 }

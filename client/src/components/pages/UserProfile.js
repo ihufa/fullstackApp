@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { connect } from "react-redux"
-import { getProducts, toggleProductMenu, removeProduct, toggleHideProduct, toggleShowProduct } from "../../state/actions/productsActions"
+import { getUserProducts, toggleProductMenu, removeProduct, toggleHideProduct, toggleShowProduct } from "../../state/actions/productsActions"
 import AddPlant from '../modals/AddPlant'
 import { openModal } from '../../state/actions/modalActions'
 import UserInfo from './UserProfile/UserInfo'
@@ -63,7 +63,6 @@ const UserProfile = props => {
           {props.products
             .filter(el => el.userId === props.userData.userId)
             .filter(el => el.hidden === false)
-            .reverse()
             .map((el, index) => (
               <div className="plant-card" key={el._id}>
                 <img
@@ -131,7 +130,7 @@ const UserProfile = props => {
       )
 
 
-  useEffect(() => props.getProducts(), [])
+  useEffect(() => props.getUserProducts(props.userData.userId), [])
 
   return (
     <div className="user-profile-wrapper">
@@ -148,11 +147,11 @@ const UserProfile = props => {
 }
 
 const mapStateToProps = state => ({
-  products: state.items.products,
+  products: state.items.userProducts,
   userData: state.items.userData
 })
 
 export default connect(
   mapStateToProps,
-  { getProducts, toggleProductMenu, removeProduct, toggleHideProduct, toggleShowProduct, openModal }
+  { getUserProducts, toggleProductMenu, removeProduct, toggleHideProduct, toggleShowProduct, openModal }
 )(UserProfile)

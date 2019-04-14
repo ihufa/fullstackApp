@@ -7,6 +7,8 @@ import {
   CLEAR_USER,
   INVALID_LOGIN,
   UPDATE_PRODUCTS,
+  UPDATE_USER_PRODUCTS,
+  UPDATE_BROWSED_USER_PRODUCTS,
   PRODUCT_SEARCH,
   PRODUCT_MENU_TOGGLE,
   REMOVE_PRODUCT,
@@ -22,6 +24,8 @@ const initialState = {
   invalidLogin: false,
   products: [],
   productSearch: "",
+  browsedUserProducts: [],
+  userProducts: []
 }
 
 export default function (state = initialState, action) {
@@ -83,6 +87,16 @@ export default function (state = initialState, action) {
         ...state,
         products: action.payload
       }
+    case UPDATE_BROWSED_USER_PRODUCTS:
+      return {
+        ...state,
+        browsedUserProducts: action.payload
+      }
+    case UPDATE_USER_PRODUCTS:
+      return {
+        ...state,
+        userProducts: action.payload
+      }
     case PRODUCT_SEARCH:
       return {
         ...state,
@@ -90,38 +104,38 @@ export default function (state = initialState, action) {
       }
 
     case PRODUCT_MENU_TOGGLE:
-      let index = state.products.map(prod => prod._id).indexOf(action.payload)    // find index of product to toggle
-      let newProd = state.products.map((item, idx) => {                           // create new array without mutating
+      let index = state.userProducts.map(prod => prod._id).indexOf(action.payload)    // find index of product to toggle
+      let newProd = state.userProducts.map((item, idx) => {                           // create new array without mutating
         if (idx !== index) { return item }
         return {
           ...item,
-          toggleMenu: !state.products[index].toggleMenu
+          toggleMenu: !state.userProducts[index].toggleMenu
         }
       })
       return {
         ...state,
-        products: newProd
+        userProducts: newProd
       }
 
     case REMOVE_PRODUCT:
       return {
         ...state,
-        products: state.products.filter((item) => item._id !== action.payload)
+        userProducts: state.userProducts.filter((item) => item._id !== action.payload)
       }
 
     case TOGGLE_HIDE_PRODUCT:
-      let index1 = state.products.map(prod => prod._id).indexOf(action.payload)    // find index of product to toggle
-      let newProd1 = state.products.map((item, idx) => {                           // create new array without mutating
+      let index1 = state.userProducts.map(prod => prod._id).indexOf(action.payload)    // find index of product to toggle
+      let newProd1 = state.userProducts.map((item, idx) => {                           // create new array without mutating
         if (idx !== index1) { return item }
         return {
           ...item,
-          hidden: !state.products[index1].hidden,
+          hidden: !state.userProducts[index1].hidden,
           toggleMenu: false
         }
       })
       return {
         ...state,
-        products: newProd1
+        userProducts: newProd1
       }
 
     default:

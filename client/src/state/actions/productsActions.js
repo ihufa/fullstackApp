@@ -1,4 +1,4 @@
-import { UPDATE_PRODUCTS, PRODUCT_SEARCH, PRODUCT_MENU_TOGGLE, REMOVE_PRODUCT, TOGGLE_HIDE_PRODUCT, OPEN_MODAL } from "./types"
+import { UPDATE_BROWSED_USER_PRODUCTS, UPDATE_USER_PRODUCTS, UPDATE_PRODUCTS, PRODUCT_SEARCH, PRODUCT_MENU_TOGGLE, REMOVE_PRODUCT, TOGGLE_HIDE_PRODUCT, OPEN_MODAL } from "./types"
 import axios from "axios"
 
 export const getProducts = () => dispatch => {
@@ -8,12 +8,37 @@ export const getProducts = () => dispatch => {
     .then(res => {
       dispatch({
         type: UPDATE_PRODUCTS,
-        payload: res.data.products
+        payload: res.data
       })
     })
     .catch(err => console.log(err))
 }
-
+export const getProductsByUserId = userId => dispatch => {
+  console.log("getProducts...")
+  axios
+    .get(`/products/${userId}`)
+    .then(res => {
+      console.log("updateProductsByUserId...", res)
+      dispatch({
+        type: UPDATE_BROWSED_USER_PRODUCTS,
+        payload: res.data
+      })
+    })
+    .catch(err => console.log(err))
+}
+export const getUserProducts = userId => dispatch => {
+  console.log("getUserProducts...")
+  axios
+    .get(`/products/${userId}`)
+    .then(res => {
+      console.log("updateProductsByUserId...", res)
+      dispatch({
+        type: UPDATE_USER_PRODUCTS,
+        payload: res.data
+      })
+    })
+    .catch(err => console.log(err))
+}
 export const addProduct = product => dispatch => {
   console.log("addProduct...")
   console.log(product)

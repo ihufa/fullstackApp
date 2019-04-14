@@ -43,7 +43,7 @@ const PlantInfo = props => {
                 <p>User: {props.userName}</p>
                 <p>Sapling ? {props.sapling ? "Yes" : "No"}</p>
                 <p>Message: </p>
-                <p><input defaultValue={`Hi ${props.userName.split(" ")[0]}, I would like to swap with your ${props.plantType}. Please see my plants and let me know if you are interested.`} type="text" onChange={messageChangeHandler}></input></p>
+                <p><input maxLength="160" defaultValue={`Hi ${props.userName.split(" ")[0]}, I would like to swap with your ${props.plantType}. Please see my plants and let me know if you are interested.`} type="text" onChange={messageChangeHandler}></input></p>
                 <button className="Btn" onClick={swapHandler} >Ask to swap</button>
             </div>
         </div>) : null

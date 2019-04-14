@@ -226,25 +226,86 @@
 .swap-inbox {
   width: 100%; }
 
+.swap-messages-toggler {
+  margin: auto;
+  width: 320px;
+  font-size: 0; }
+
+.swap-messages-toggler-left {
+  display: inline-block;
+  background-color: #26d60f;
+  border-radius: 20px 0 0 20px;
+  width: 155px;
+  margin: auto;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: right; }
+  .swap-messages-toggler-left h2 {
+    margin: 7px; }
+  .swap-messages-toggler-left:hover {
+    cursor: pointer; }
+
+.swap-messages-toggler-right {
+  display: inline-block;
+  background-color: #26d60f;
+  border-radius: 0 20px 20px 0;
+  width: 155px;
+  margin: auto;
+  margin-top: 5px;
+  margin-bottom: 5px; }
+  .swap-messages-toggler-right h2 {
+    margin: 7px; }
+  .swap-messages-toggler-right:hover {
+    cursor: pointer; }
+
+.deactivated {
+  background-color: #f9fdf6; }
+
 .swap-item {
-  background-color: #f9fdf6;
   width: 100%;
   display: inline-flex; }
 
 .swap-inbox-img {
   height: 70px;
-  margin: 5px; }
+  margin: 10px;
+  margin-top: 0;
+  float: left;
+  border-radius: 50%; }
 
-.swap-inbox-text {
-  font-size: 1rem;
-  font-weight: bold;
-  margin: 10px; }
+.swap-chat-img {
+  height: 70px;
+  margin: 10px;
+  margin-top: 0;
+  float: left;
+  border-radius: 50%; }
+
+.swap-chat-item {
+  clear: both; }
+  .swap-chat-item:hover {
+    opacity: 0.8;
+    cursor: pointer; }
+
+.swap-chat-sender {
+  font-size: 1.2rem; }
+
+.swap-chat-message {
+  opacity: 0.75;
+  display: inline-block; }
+
+.swap-chat-message-sender {
+  display: inline-block;
+  width: calc(100% - 95px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre-wrap;
+  height: 40px;
+  opacity: 0.9; }
 
 .swap-inbox-sender {
-  font-weight: bold; }
+  font-size: 1.2rem; }
 
 .swap-inbox-message {
-  font-weight: 300; }
+  opacity: 0.75; }
 
 .swap-inbox-buttons button {
   height: 25px;
@@ -267,6 +328,14 @@
 .swap-inbox-no-button {
   width: 60px;
   background-color: red; }
+
+.browsed-user-plants {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  justify-content: center;
+  grid-gap: 15px;
+  grid-row-gap: 15px;
+  position: relative; }
 
 .modal-plant-upload {
   border-radius: 5px;
