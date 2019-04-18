@@ -1,17 +1,15 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { connect } from "react-redux"
-import { clearUser } from "../state/actions/itemActions"
 import { productSearch } from "../state/actions/productsActions"
+import { getSwaps } from "../state/actions/swapActions"
 import { Link } from "react-router-dom"
 
 const UserNav = props => {
   const [search, setSearch] = useState("")
 
-  const logout = e => {
-    props.clearUser()
-    props.showLogin()
-  }
-
+  useEffect(() => {
+    props.getSwaps(props.userData.userId)
+  }, [])
   const onChange = e => {
     setSearch(e.target.value)
   }
@@ -20,13 +18,24 @@ const UserNav = props => {
     console.log(search)
     props.productSearch({ searchParam: search })
   }
+  const isRelevantNotification = item => {
+    if (item.requesterId === props.userData.userId) {
+      // check if user is requester
+      return !item.seenByRequester // if seenByRequester === false, then the item is relevant notification
+    } else {
+      return !item.seenByReceiver
+    }
+  }
+
   return (
     <div>
       <div className="navbar">
         <div className="nav-item-container">
           <div className="nav-logo">
             <Link to="/plants">
-              <h1>Planthood <i className="fas fa-leaf" /></h1>
+              <h1>
+                Planthood <i className="fas fa-leaf" />
+              </h1>
             </Link>
           </div>
           <div className="nav-items-right">
@@ -50,6 +59,12 @@ const UserNav = props => {
             <div className="nav-item">
               <Link to="/myswaps">
                 <i className="fas fa-comments" />
+
+                {props.swaps.filter(isRelevantNotification).length > 0 ? (
+                  <div className="nav-notification">
+                    {props.swaps.filter(isRelevantNotification).length}
+                  </div>
+                ) : null}
               </Link>
             </div>
           </div>
@@ -60,11 +75,12 @@ const UserNav = props => {
 }
 const mapStateToProps = state => {
   return {
-    userData: state.items.userData
+    userData: state.items.userData,
+    swaps: state.swaps.swaps
   }
 }
 
 export default connect(
   mapStateToProps,
-  { clearUser, productSearch }
+  { productSearch, getSwaps }
 )(UserNav)

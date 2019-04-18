@@ -1,31 +1,21 @@
 import React, { useEffect } from "react"
 import { connect } from "react-redux"
 import { getProducts } from "../state/actions/productsActions"
-import { openModal } from '../state/actions/modalActions'
+import { openModal } from "../state/actions/modalActions"
 
 const Gallery = props => {
-
   useEffect(() => props.getProducts(), [])
-
-  const timeConvert = millisec => {
-    var seconds = (millisec / 1000).toFixed(0)
-
-    var minutes = (millisec / (1000 * 60)).toFixed(0)
-
-    var hours = (millisec / (1000 * 60 * 60)).toFixed(0)
-
-    var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(0)
-
-    if (seconds < 60) {
-      return seconds + " Sec"
-    } else if (minutes < 60) {
-      return minutes + " Min"
-    } else if (hours < 24) {
-      return hours + " Hrs"
-    } else {
-      return days + " Days"
-    }
-  }
+  //  useEffect(() => {
+  //    const connection = new WebSocket("ws://localhost:8080")
+  //    console.log(connection)
+  //    connection.onopen = () => {
+  //      console.log("websocket open")
+  //      connection.send("hey")
+  //    }
+  //    connection.onerror = () => {
+  //      console.log("websocket error")
+  //    }
+  //  })
 
   const swapHandler = e => {
     let id = e.target.id
@@ -50,37 +40,37 @@ const Gallery = props => {
     props.products && props.products.length > 0 ? (
       <div className="plant-gallery-page-wrapper">
         <div className="plant-grid">
-          {props.products
-            .map((el, index) => (
-              <div className="plant-card" key={el._id}>
-                <img
-                  className={"plant-img plantImg" + index}
-                  id={"plant" + index}
-                  alt={el.name}
-                  src={"http://localhost:5000/plants/" + el.image}
-                />
-                <button id={el._id} onClick={swapHandler} className={"plant request-button plant" + index}>
-                  Swap
-                </button>
-                <div className="plant-grid-name">
-                  <p>{el.name}</p>
-                </div>
-                <div className="plant-grid-city">
-                  <p>{el.userCity}</p>
-                </div>
+          {props.products.map((el, index) => (
+            <div className="plant-card" key={el._id}>
+              <img
+                className={"plant-img plantImg" + index}
+                id={"plant" + index}
+                alt={el.name}
+                src={"http://localhost:5000/plants/" + el.image}
+              />
+              <button
+                id={el._id}
+                onClick={swapHandler}
+                className={"plant request-button plant" + index}>
+                Swap
+              </button>
+              <div className="plant-grid-name">
+                <p>{el.name}</p>
               </div>
-            ))}
+              <div className="plant-grid-city">
+                <p>{el.userCity}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     ) : (
-        <div className="plant">
-          <h3>You have no active plants at the moment</h3>
-        </div>
-      )
+      <div className="plant">
+        <h3>You have no active plants at the moment</h3>
+      </div>
+    )
 
-  return (<div>{plantGrid}</div>)
-
-
+  return <div>{plantGrid}</div>
 }
 
 const mapStateToProps = state => ({

@@ -7,6 +7,7 @@
   font-size: 0;
 }
 .swap-messages-toggler-left {
+  position: relative;
   display: inline-block;
   background-color: $green;
   border-radius: 20px 0 0 20px;
@@ -23,6 +24,7 @@
   }
 }
 .swap-messages-toggler-right {
+  position: relative;
   display: inline-block;
   background-color: $green;
   border-radius: 0 20px 20px 0;
@@ -59,11 +61,27 @@
   border-radius: 50%;
 }
 .swap-chat-item {
+  position: relative;
   clear: both;
   &:hover {
     opacity: 0.8;
     cursor: pointer;
   }
+}
+.swap-chat-item-notification {
+  position: absolute;
+  top: 45px;
+  left: 55px;
+  z-index: 10;
+  background-color: red;
+  width: 11px;
+  height: 11px;
+  font-size: 12px;
+  line-height: 14px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 8px;
 }
 .swap-chat-sender {
   font-size: 1.2rem;
@@ -111,4 +129,90 @@
 .swap-inbox-no-button {
   width: 60px;
   background-color: red;
+}
+.chat-box {
+  margin: 10px;
+  position: relative;
+  height: calc(100vh - 160px);
+}
+
+.chat-box-history-text {
+  bottom: 50px;
+  align-self: flex-end;
+  max-height: 100%;
+  width: 100%;
+}
+.chat-box-history {
+  overflow-y: scroll;
+  height: calc(100vh - 220px);
+  display: flex;
+}
+.chat-box-input form {
+  height: 40px;
+  border-radius: 6px;
+  border: 1px solid darkgreen;
+  margin: auto;
+  position: absolute;
+  bottom: 0;
+  padding-left: 10px;
+  &:focus {
+    outline: none;
+  }
+}
+.chat-box-input input {
+  width: calc(100vw - 80px);
+  max-width: 920px;
+  height: 40px;
+  border-radius: 6px;
+  border: none;
+}
+.chat-box-input button {
+  height: 40px;
+  border-radius: 6px;
+  width: 45px;
+}
+.chat-box-message {
+  font-size: 16px;
+  color: #1d1c1d;
+}
+.chat-box-timestamp {
+  margin-left: 5px;
+  opacity: 0.75;
+  font-size: 13px;
+}
+.chat-box-sender {
+  font-weight: bold;
+  font-size: 16px;
+}
+.incoming-messages-notification-number {
+  position: absolute;
+  top: 30px;
+  left: 120px;
+  z-index: 10;
+  background-color: red;
+  width: 15px;
+  height: 13px;
+  font-size: 12px;
+  line-height: 14px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 8px;
+  border: 1px white solid;
+}
+.messages-notification-number {
+  position: absolute;
+  top: 30px;
+  right: 120px;
+  z-index: 10;
+  background-color: red;
+  width: 15px;
+  height: 13px;
+  font-size: 12px;
+  line-height: 14px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 8px;
+  border: 1px white solid;
 }

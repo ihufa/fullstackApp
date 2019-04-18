@@ -36,7 +36,7 @@ export const getSwaps = id => dispatch => {
     .then(res => {
       dispatch({
         type: UPDATE_SWAPS,
-        payload: res.data.result
+        payload: res.data.results
       })
     })
     .catch(err => {
@@ -89,22 +89,23 @@ export const addMessage = message => dispatch => {
     message: message.message,
     time: message.time
   }
+  dispatch({
+    type: ADD_MESSAGE,
+    payload: message
+  })
   axios
     .patch(`/swaps/${message.id}`, mes)
-    .then(res => {
-      dispatch({
-        type: ADD_MESSAGE,
-        payload: message
-      })
-    })
+    .then()
     .catch(console.log("addMessage error"))
 }
 
-export const seeMessage = user => dispatch => {
-  axios.patch(`/swaps/seen/${user.id}`, user).then(res => {
+export const seeMessage = swap => dispatch => {
+  console.log(swap)
+  axios.patch(`/swaps/seen/${swap}`).then(res => {
+    console.log("swapsies ", swap)
     dispatch({
       type: SEE_MESSAGE,
-      payload: user
+      payload: swap
     })
   })
 }

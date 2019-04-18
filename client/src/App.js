@@ -11,9 +11,9 @@ import { connect } from "react-redux"
 import store from "./state/store"
 import "./css/main.css"
 import Footer from "./components/Footer"
-import Modals from './components/Modals'
-import Swaps from './components/pages/Swaps'
-import Userplants from './components/pages/Userplants'
+import Modals from "./components/Modals"
+import Swaps from "./components/pages/Swaps"
+import Userplants from "./components/pages/Userplants"
 
 class App extends Component {
   constructor() {
@@ -38,7 +38,12 @@ class App extends Component {
           <div className="App">
             <Modals />
             {this.props.userData && <UserNav showLogin={this.showLogin} />}
-            {!this.props.userData && (<LoginNav showLogin={this.showLogin} showSignup={this.showSignup} />)}
+            {!this.props.userData && (
+              <LoginNav
+                showLogin={this.showLogin}
+                showSignup={this.showSignup}
+              />
+            )}
 
             <div className="content-wrapper">
               <Route exact path="/" component={Gallery} />
@@ -49,7 +54,6 @@ class App extends Component {
               <Route path="/myswaps" component={Swaps} />
               <Route path="/users" component={Userplants} />
             </div>
-            <Footer />
           </div>
         </BrowserRouter>
       </Provider>

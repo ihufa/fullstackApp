@@ -4,7 +4,7 @@ const mongoose = require("mongoose")
 
 const Swap = require("../models/swap")
 
-router.post("/", (req, res, next) => {
+router.get("/", (req, res, next) => {
   const swap = new Swap({
     _id: mongoose.Types.ObjectId(),
     requesterId: req.body.requesterId,
@@ -17,7 +17,11 @@ router.post("/", (req, res, next) => {
     seenByRequester: true,
     seenByReceiver: false,
     accepted: false,
-    messages: { message: req.body.message, sender: req.body.requesterName }
+    messages: {
+      message: req.body.message,
+      sender: req.body.requesterName,
+      time: Date.now()
+    }
   })
   swap
     .save()
@@ -30,13 +34,23 @@ router.post("/", (req, res, next) => {
       res.status(500).json({ error: err })
     })
 })
+
 router.get("/:userId", (req, res, next) => {
+  let results
   Swap.find({ receiverId: req.params.userId })
     .sort({ time: -1 })
     .exec()
-    .then(result => {
-      console.log("swap", result)
-      res.status(201).json({ result })
+    .then(result1 => {
+      results = result1
+
+      Swap.find({ requesterId: req.params.userId })
+        .sort({ time: -1 })
+        .exec()
+        .then(result2 => {
+          results = results.concat(result2)
+          console.log("results ", results)
+          res.status(201).json({ results })
+        })
     })
 })
 
@@ -68,10 +82,11 @@ router.patch("/accept/:swapId", (req, res, next) => {
     })
 })
 router.patch("/:swapId", (req, res, next) => {
+  console.log("addMsg body ", req.body)
   Swap.updateOne(
     { _id: req.params.swapId },
-    { $push: { messages: req.body } },
     {
+      $push: { messages: req.body },
       $set: {
         seenByRequester: req.body.requester,
         seenByReceiver: !req.body.requester
@@ -87,24 +102,23 @@ router.patch("/:swapId", (req, res, next) => {
     })
 })
 router.patch("/seen/:swapId", (req, res, next) => {
-  if (req.body.requester) {
-    Swap.updateOne(
-      { _id: req.params.swapId },
-      {
-        $set: {
-          seenByRequester: true,
-          seenByReceiver: true
-        }
+  console.log("see msg request recieved...")
+  Swap.updateOne(
+    { _id: req.params.swapId },
+    {
+      $set: {
+        seenByRequester: true,
+        seenByReceiver: true
       }
-    )
-      .exec()
-      .then(result => {
-        res.status(201).json({ result })
-      })
-      .catch(err => {
-        res.status(404).json(err)
-      })
-  }
+    }
+  )
+    .exec()
+    .then(result => {
+      res.status(201).json({ result })
+    })
+    .catch(err => {
+      res.status(404).json(err)
+    })
 })
 
 module.exports = router

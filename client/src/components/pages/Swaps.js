@@ -23,6 +23,7 @@ const Swaps = props => {
   }
   const showSwapsHandler = e => {
     setToggleInbox(true)
+    setToggledChat(null)
   }
   const acceptHandler = e => {
     props.acceptSwap(e.target.id)
@@ -32,36 +33,71 @@ const Swaps = props => {
   }
   const chatToggleHandler = e => {
     setToggledChat(e.target.id)
-    props.seeMessage({
-      requester:
-        props.userData.userId ===
-        props.swaps.filter(el => el._id === e.target.id)[0].requesterId,
-      id: e.target.id
-    })
+    props.seeMessage(e.target.id)
+    setTimeout(() => {
+      scrollDown()
+    }, 0)
+  }
+  const isRelevantNotification = item => {
+    if (item.requesterId === props.userData.userId) {
+      // check if user is requester
+      return !item.seenByRequester // if seenByRequester === false, then the item is relevant notification
+    } else {
+      return !item.seenByReceiver
+    }
+  }
+  const scrollDown = () => {
+    let chatWindow = document.getElementsByClassName("chat-box-history")[0]
+    if (chatWindow) {
+      let xH = chatWindow.scrollHeight
+      chatWindow.scrollTo(0, xH)
+    }
   }
   const onChatChangeHandler = e => {
     setChatMessage(e.target.value)
   }
   const sendChatHandler = e => {
     e.preventDefault()
-    props.addMessage({
-      requester:
-        props.userData.userId ===
-        props.swaps.filter(el => el._id === toggledChat)[0].requesterId,
-      id: toggledChat,
-      sender: props.userData.userName,
-      message: chatMessage,
-      time: Date.now()
-    })
-  }
-  const backToSwapsHandler = e => {
-    e.preventDefault()
-    setToggledChat("")
+    if (chatMessage !== "" && chatMessage !== " ") {
+      props.addMessage({
+        requester:
+          props.userData.userId ===
+          props.swaps.filter(el => el._id === toggledChat)[0].requesterId,
+        id: toggledChat,
+        sender: props.userData.userName,
+        message: chatMessage,
+        time: Date.now()
+      })
+      setChatMessage("")
+    }
+    setTimeout(() => {
+      scrollDown()
+    }, 0)
   }
 
+  const timeConvert = millisec => {
+    var seconds = (millisec / 1000).toFixed(0)
+
+    var minutes = (millisec / (1000 * 60)).toFixed(0)
+
+    var hours = (millisec / (1000 * 60 * 60)).toFixed(0)
+
+    var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(0)
+
+    if (seconds < 60) {
+      return seconds + " Sec"
+    } else if (minutes < 60) {
+      return minutes + " Min"
+    } else if (hours < 24) {
+      return hours + " Hrs"
+    } else {
+      return days + " Days"
+    }
+  }
   const IncomingRequests =
     props.swaps && props.swaps.length > 0
       ? props.swaps
+          .filter(el => el.requesterId !== props.userData.userId)
           .filter(el => el.accepted === false)
           .map((el, index) => (
             <div key={el._id} className="swap-item">
@@ -103,22 +139,39 @@ const Swaps = props => {
     props.swaps.filter(swap => swap._id === toggledChat)[0] &&
     props.swaps.filter(swap => swap._id === toggledChat)[0].messages ? (
       <div className="chat-box">
-        <button onClick={backToSwapsHandler}>Back</button>
         <div className="chat-box-history">
-          {props.swaps
-            .filter(swap => swap._id === toggledChat)[0]
-            .messages.map((el, index) => (
-              <div key={index}>
-                {el.sender} {el.message}
-              </div>
-            ))}
+          <div className="chat-box-history-text">
+            {props.swaps
+              .filter(swap => swap._id === toggledChat)[0]
+              .messages.map((el, index) => (
+                <div key={index} className="chat-box-message">
+                  <span className="chat-box-sender">{el.sender}</span>
+                  <span className="chat-box-timestamp">
+                    {new Date(el.time).toLocaleTimeString("en", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hourCycle: "h24"
+                    })}
+                  </span>
+                  <p className="chat-box-message">{el.message}</p>
+                </div>
+              ))}
+          </div>
         </div>
         <div className="chat-box-input">
           <form>
             <input
               onChange={onChatChangeHandler}
-              placeholder="type here..."
+              placeholder={`Message ${
+                props.swaps.filter(swap => swap._id === toggledChat)[0]
+                  .requesterId === props.userData.userId
+                  ? props.swaps.filter(swap => swap._id === toggledChat)[0]
+                      .receiverName
+                  : props.swaps.filter(swap => swap._id === toggledChat)[0]
+                      .requesterName
+              }`}
               type="text"
+              value={chatMessage}
             />
             <button onClick={sendChatHandler} type="submit">
               Send
@@ -131,12 +184,21 @@ const Swaps = props => {
   const OngoingSwaps =
     props.swaps && props.swaps.length > 0 && !toggledChat
       ? props.swaps
+          .sort((a, b) => {
+            return (
+              a.messages[a.messages.length - 1].time +
+              b.messages[b.messages.length - 1].time
+            )
+          })
           .filter(el => el.accepted === true)
           .map((el, index) => (
             <div
               onClick={chatToggleHandler}
               key={el._id}
               className="swap-chat-item">
+              {isRelevantNotification(el) ? (
+                <div className="swap-chat-item-notification" />
+              ) : null}
               <div className="swap-chat-text">
                 <img
                   id={el._id}
@@ -168,6 +230,19 @@ const Swaps = props => {
               toggleInbox ? "deactivated" : ""
             }`}>
             <h2>Incoming requests</h2>
+            {props.swaps &&
+            props.swaps.length &&
+            props.swaps
+              .filter(el => el.requesterId !== props.userData.userId)
+              .filter(el => el.accepted === false).length > 0 ? (
+              <div className="incoming-messages-notification-number">
+                {
+                  props.swaps
+                    .filter(el => el.requesterId !== props.userData.userId)
+                    .filter(el => el.accepted === false).length
+                }
+              </div>
+            ) : null}
           </div>
           <div
             onClick={showSwapsHandler}
@@ -175,7 +250,18 @@ const Swaps = props => {
               !toggleInbox ? "deactivated" : ""
             }`}>
             {" "}
-            <h2>Ongoing swaps</h2>
+            <h2>Messages</h2>
+            {props.swaps
+              .filter(el => el.accepted === true)
+              .filter(isRelevantNotification).length > 0 ? (
+              <div className="messages-notification-number">
+                {
+                  props.swaps
+                    .filter(el => el.accepted === true)
+                    .filter(isRelevantNotification).length
+                }
+              </div>
+            ) : null}
           </div>
         </div>
         {!toggleInbox ? IncomingRequests : null}

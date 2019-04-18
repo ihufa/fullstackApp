@@ -18,9 +18,6 @@
 @import "modals/Signup";
 @import "modals/PlantInfo";
 
-
-
-
 * {
   margin: 0;
   padding: 0;
@@ -28,19 +25,21 @@
   text-decoration: none;
   font-family: "PT Sans Narrow", sans-serif;
 }
- // NAVBAR
-
+// NAVBAR
+*:focus {
+  outline: none;
+}
 .content-wrapper {
-  clear:both;
+  clear: both;
   width: 100%;
   max-width: $maxWidth;
   margin: auto;
-  min-height: calc(100vh - 60px);
+  min-height: calc(100vh - 75px);
 }
 
 h1 {
   color: $green;
-  text-align:center;
+  text-align: center;
 }
 h2 {
   font-size: 1.3rem;
@@ -50,7 +49,7 @@ h2 {
 h3 {
   font-size: 1.1rem;
   font-weight: 600;
-  color:$brown;
+  color: $brown;
 }
 
 .Btn {
@@ -80,14 +79,7 @@ h3 {
   color: $green;
 }
 
-
-
-
-
 //User Profile
-
-
-
 
 @media screen and (max-width: 1200px) {
 }

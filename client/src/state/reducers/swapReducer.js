@@ -35,7 +35,9 @@ export default function(state = initialState, action) {
         }
         return {
           ...item,
-          accepted: true
+          accepted: true,
+          seenByRequester: false,
+          seenByReceiver: true
         }
       })
       return {
@@ -64,7 +66,7 @@ export default function(state = initialState, action) {
         swaps: newMessageSwaps
       }
     case SEE_MESSAGE:
-      let swapIdx = state.swaps.map(swap => swap._id).indexOf(action.payload.id)
+      let swapIdx = state.swaps.map(swap => swap._id).indexOf(action.payload)
       let newSwaps0 = [...state.swaps]
       newSwaps0[swapIdx].seenByRequester = true
       newSwaps0[swapIdx].seenByReceiver = true
