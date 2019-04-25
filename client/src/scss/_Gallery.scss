@@ -1,3 +1,6 @@
+.plant-gallery-page-wrapper {
+  clear: both;
+}
 .plant-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -20,7 +23,7 @@
   height: 0;
   background-color: $green;
   position: absolute;
-  bottom:24px;
+  bottom: 24px;
   left: 0;
   text-align: center;
   line-height: 0;
@@ -49,4 +52,63 @@
   height: 20px;
   float: left;
   margin: 0 5px 0 5px;
+}
+.svg {
+  height: 100%;
+}
+.search-container {
+  height: 30px;
+  width: 200px;
+  vertical-align: top;
+  text-align: right;
+}
+.searchbox {
+  position: relative;
+  width: 200px;
+  display: block;
+}
+.searchbox:before {
+  position: absolute;
+  content: "";
+  background-color: $brown;
+  height: 10px;
+  width: 2px;
+  transform: rotate(-45deg);
+  right: 0;
+  bottom: -4px;
+}
+.search {
+  height: 30px;
+  width: 30px;
+  border-radius: 15px;
+  background-color: transparent;
+  justify-content: center;
+  align-content: center;
+  border: $brown 2px solid;
+  outline: none;
+  box-sizing: border-box;
+  font-size: 16px;
+  color: rgb(105, 99, 99);
+  padding-left: 15px;
+  padding-right: 5px;
+  transition: 0.5s;
+}
+::placeholder {
+  opacity: 0.8;
+  font-style: italic;
+  color: rbga(255, 255, 255, 0.5);
+}
+.search:focus {
+  width: 200px;
+}
+
+.location-option {
+  display: inline-block;
+  margin: 10px;
+}
+.location-option > input {
+  margin-right: 3px;
+}
+.location-search {
+  float: left;
 }

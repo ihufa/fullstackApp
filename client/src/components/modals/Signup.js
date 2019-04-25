@@ -1,12 +1,11 @@
 import React, { useState } from "react"
 import { connect } from "react-redux"
 import { addUser } from "../../state/actions/itemActions"
-import { openModal } from '../../state/actions/modalActions'
-import { withRouter } from "react-router-dom";
-import ZIPS from '../../zips'
+import { openModal } from "../../state/actions/modalActions"
+import { withRouter } from "react-router-dom"
+import { ZIPS } from "../../zips"
 
 const Signup = props => {
-
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
   const [name, setName] = useState()
@@ -31,29 +30,21 @@ const Signup = props => {
       let newCity = currentCity[0].city
       setCity(newCity)
       console.log(newCity)
-    }
-    else {
+    } else {
       setCity("")
     }
   }
 
   const formValidation = () => {
-
     const reg = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
-    if (!email)
-      return "please enter en email adress"
-    if (email && !email.match(reg))
-      return "please use a valid email adress"
-    if (!password)
-      return "please enter a password"
+    if (!email) return "please enter en email adress"
+    if (email && !email.match(reg)) return "please use a valid email adress"
+    if (!password) return "please enter a password"
     if (password && password.length < 6)
       return "password needs to be 6 characters or more"
-    if (!name)
-      return "please enter a name"
-    if (!zip)
-      return "please enter a zip code"
-    if (zip < 0 || zip > 10000)
-      return "please use a 4 digit zip code"
+    if (!name) return "please enter a name"
+    if (!zip) return "please enter a zip code"
+    if (zip < 0 || zip > 10000) return "please use a 4 digit zip code"
     else return "accepted"
   }
 
@@ -68,16 +59,19 @@ const Signup = props => {
         zip: zip,
         city: city
       })
-    }
-    else props.openModal({
-      type: "error",
-      message: validation,
-      input: false,
-      binary: false,
-    })
+    } else
+      props.openModal({
+        type: "error",
+        message: validation,
+        input: false,
+        binary: false
+      })
   }
   const closeModal = e => {
-    if (e.target.className === "signupmodal" && e.target.className !== "signup-modal-form") {
+    if (
+      e.target.className === "signupmodal" &&
+      e.target.className !== "signup-modal-form"
+    ) {
       props.history.push("/plants")
     }
   }
@@ -115,11 +109,11 @@ const Signup = props => {
                 placeholder="zip code"
                 onChange={zipHandler}
               />
-              {city ? <span>{city}</span> : <span></span>}
+              {city ? <span>{city}</span> : <span />}
             </div>
             <button className="Btn" onClick={addUser}>
               Sign up
-              </button>
+            </button>
           </form>
         </div>
       </div>
@@ -127,14 +121,15 @@ const Signup = props => {
   )
 }
 
-
 const mapStateToProps = state => ({
   items: state.items,
   userData: state.items.userData,
   userCreated: state.items.userCreated
 })
 
-export default withRouter(connect(
-  mapStateToProps,
-  { addUser, openModal }
-)(Signup))
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { addUser, openModal }
+  )(Signup)
+)

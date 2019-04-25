@@ -14,7 +14,9 @@ const productSchema = mongoose.Schema({
   hidden: { type: Boolean, required: true },
   flagged: { type: Boolean, required: true },
   requestedBy: { type: Number, required: false },
-  requestSeen: { type: Boolean, required: false }
+  requestSeen: { type: Boolean, required: false },
+  longitude: { type: Number, required: true },
+  latitude: { type: Number, required: true }
 })
 
 module.exports = mongoose.model("Product", productSchema)

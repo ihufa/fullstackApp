@@ -5,17 +5,13 @@ const mongoose = require("mongoose")
 const bodyParser = require("body-parser")
 const path = require("path")
 
-const WebSocket = require("ws")
-
-const ws = new WebSocket("wss://localhost:6000")
-
-ws.on("open", function open() {
-  ws.send("something")
+const server = require("http").createServer()
+const io = require("socket.io")(server)
+io.on("connection", socket => console.log("one socket connection"))
+io.on("message", obj => {
+  console.log("message received")
 })
-
-ws.on("message", function incoming(data) {
-  console.log(data)
-})
+server.listen(4000)
 var allowCrossDomain = function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*")
   res.header(

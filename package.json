@@ -29,5 +29,7 @@
     "request": "^2.88.0",
     "ws": "^6.2.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "socket.io": "^2.2.0"
+  }
 }

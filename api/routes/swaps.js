@@ -48,7 +48,6 @@ router.get("/:userId", (req, res, next) => {
         .exec()
         .then(result2 => {
           results = results.concat(result2)
-          console.log("results ", results)
           res.status(201).json({ results })
         })
     })
@@ -82,7 +81,6 @@ router.patch("/accept/:swapId", (req, res, next) => {
     })
 })
 router.patch("/:swapId", (req, res, next) => {
-  console.log("addMsg body ", req.body)
   Swap.updateOne(
     { _id: req.params.swapId },
     {
@@ -102,7 +100,6 @@ router.patch("/:swapId", (req, res, next) => {
     })
 })
 router.patch("/seen/:swapId", (req, res, next) => {
-  console.log("see msg request recieved...")
   Swap.updateOne(
     { _id: req.params.swapId },
     {

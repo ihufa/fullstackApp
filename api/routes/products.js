@@ -7,16 +7,16 @@ const checkAuth = require("../auth/checkAuth")
 const multer = require("multer")
 
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
+  destination: function(req, file, cb) {
     cb(null, "./uploads/")
   },
-  filename: function (req, file, cb) {
+  filename: function(req, file, cb) {
     cb(null, Date.now() + file.originalname)
   }
 })
 const fileFilter = (req, file, cb) => {
   // reject a file
-  console.log(file)
+
   if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
     cb(null, true)
   } else {
@@ -32,10 +32,151 @@ const upload = multer({
   fileFilter: fileFilter
 })
 
-router.get("/", (req, res, next) => {
-  console.log("products GET requested")
-  Product.find().sort({ time: -1 })
-    .exec()
+router.post("/sort/time", (req, res, next) => {
+  console.log("products latest sort requested")
+  Product.aggregate([
+    {
+      $project: {
+        _id: "$_id",
+        image: "$image",
+        message: "$message",
+        name: "$name",
+        userId: "$userId",
+        userName: "$userName",
+        zip: "$zipv",
+        userCity: "$userCity",
+        longitude: "$longitude",
+        latitude: "$latitude",
+        time: "$time",
+        toggleMenu: "$toggleMenu",
+        flagged: "$flagged",
+        hidden: "$hidden"
+      }
+    },
+    { $sort: { time: -1 } },
+    { $skip: req.body.count[0] },
+    { $limit: req.body.count[1] }
+  ])
+
+    .then(result => {
+      res.status(200).json(result)
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({
+        error: err
+      })
+    })
+})
+router.post("/sort/distance", (req, res, next) => {
+  console.log("products distance sort requested")
+  console.log(req.body.location.long)
+  Product.aggregate([
+    { $match: {} },
+    {
+      $project: {
+        dist: {
+          $sqrt: {
+            $sum: [
+              {
+                $pow: [{ $subtract: ["$longitude", req.body.location.long] }, 2]
+              },
+              {
+                $pow: [{ $subtract: ["$latitude", req.body.location.lat] }, 2]
+              }
+            ]
+          }
+        },
+        _id: "$_id",
+        image: "$image",
+        message: "$message",
+        name: "$name",
+        userId: "$userId",
+        userName: "$userName",
+        zip: "$zipv",
+        userCity: "$userCity",
+        longitude: "$longitude",
+        latitude: "$latitude",
+        time: "$time",
+        toggleMenu: "$toggleMenu",
+        flagged: "$flagged",
+        hidden: "$hidden"
+      }
+    },
+    { $sort: { dist: 1 } },
+    { $skip: req.body.count[0] },
+    { $limit: req.body.count[1] }
+  ])
+
+    .then(result => {
+      res.status(200).json(result)
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({
+        error: err
+      })
+    })
+})
+router.post("/sort/suggested", (req, res, next) => {
+  console.log("products suggested sort requested")
+  console.log(req.body.location.long)
+  let start = req.body.count[0]
+  let number = req.body.count[1]
+  Product.aggregate([
+    { $match: {} },
+    {
+      $project: {
+        irrelevancy: {
+          // calculated as (dist in degrees^2 * 400) + (hours since upload). the weight should prolly be adjusted later
+          $add: [
+            {
+              $multiply: [
+                {
+                  $sum: [
+                    {
+                      $pow: [
+                        { $subtract: ["$longitude", req.body.location.long] },
+                        2
+                      ]
+                    },
+                    {
+                      $pow: [
+                        { $subtract: ["$latitude", req.body.location.lat] },
+                        2
+                      ]
+                    }
+                  ]
+                },
+                400
+              ]
+            },
+
+            {
+              $divide: [{ $subtract: [Date.now(), "$time"] }, 1000 * 60 * 60]
+            }
+          ]
+        },
+        _id: "$_id",
+        image: "$image",
+        message: "$message",
+        name: "$name",
+        userId: "$userId",
+        userName: "$userName",
+        zip: "$zipv",
+        userCity: "$userCity",
+        longitude: "$longitude",
+        latitude: "$latitude",
+        time: "$time",
+        toggleMenu: "$toggleMenu",
+        flagged: "$flagged",
+        hidden: "$hidden"
+      }
+    },
+    { $sort: { irrelevancy: 1 } },
+    { $skip: req.body.count[0] },
+    { $limit: req.body.count[1] }
+  ])
     .then(result => {
       res.status(200).json(result)
     })
@@ -47,19 +188,65 @@ router.get("/", (req, res, next) => {
     })
 })
 router.post("/search", (req, res, next) => {
-  console.log("search initiated")
+  console.log("products search requested")
   console.log(req.body)
   let searchParam = new RegExp(req.body.searchParam, "i")
-  Product.find({ message: searchParam })
+  Product.aggregate([
+    { $match: { name: searchParam } },
+    {
+      $project: {
+        irrelevancy: {
+          // calculated as (dist in degrees^2 * 400) + (hours since upload). the weight should prolly be adjusted later
+          $add: [
+            {
+              $multiply: [
+                {
+                  $sum: [
+                    {
+                      $pow: [
+                        { $subtract: ["$longitude", req.body.location.long] },
+                        2
+                      ]
+                    },
+                    {
+                      $pow: [
+                        { $subtract: ["$latitude", req.body.location.lat] },
+                        2
+                      ]
+                    }
+                  ]
+                },
+                400
+              ]
+            },
 
-    .exec()
-    .then(prod => {
-      const response = {
-        count: prod.length,
-        products: prod
+            {
+              $divide: [{ $subtract: [Date.now(), "$time"] }, 1000 * 60 * 60]
+            }
+          ]
+        },
+        _id: "$_id",
+        image: "$image",
+        message: "$message",
+        name: "$name",
+        userId: "$userId",
+        userName: "$userName",
+        zip: "$zipv",
+        userCity: "$userCity",
+        longitude: "$longitude",
+        latitude: "$latitude",
+        time: "$time",
+        toggleMenu: "$toggleMenu",
+        flagged: "$flagged",
+        hidden: "$hidden"
       }
-
-      res.status(200).json(response)
+    },
+    { $sort: { irrelevancy: 1 } },
+    { $skip: req.body.count[0] },
+    { $limit: req.body.count[1] }
+  ])
+    .then(result => {
+      res.status(200).json(result)
     })
     .catch(err => {
       console.log(err)
@@ -79,6 +266,8 @@ router.post("/", checkAuth, upload.single("productImage"), (req, res, next) => {
     userName: req.body.userName,
     zip: req.body.zip,
     userCity: req.body.userCity,
+    longitude: req.body.long,
+    latitude: req.body.lat,
     time: Date.now(),
     toggleMenu: false,
     flagged: false,
@@ -98,11 +287,11 @@ router.post("/", checkAuth, upload.single("productImage"), (req, res, next) => {
 })
 router.get("/:userId", (req, res, next) => {
   const id = req.params.userId
-  Product.find({ userId: id }).sort({ time: -1 })           // I dunno why sort('-time') gives products with biggest first, when it starts with smallest with plain Product.find()
+  Product.find({ userId: id })
+    .sort({ time: -1 }) // I dunno why sort('-time') gives products with biggest first, when it starts with smallest with plain Product.find()
     .exec()
     .then(result => {
       if (result) {
-        console.log("productsById", result)
         res.status(200).json(result)
       } else {
         res.status(404).json({
@@ -124,7 +313,6 @@ router.patch("/hide", (req, res, next) => {
   Product.updateOne({ _id: id }, { $set: updateOps })
     .exec()
     .then(result => {
-      console.log(result)
       res.status(200).json(result)
     })
     .catch(err => {
@@ -138,7 +326,6 @@ router.patch("/show", (req, res, next) => {
   Product.updateOne({ _id: id }, { $set: updateOps })
     .exec()
     .then(result => {
-      console.log(result)
       res.status(200).json(result)
     })
     .catch(err => {
@@ -153,7 +340,6 @@ router.delete("/:id", (req, res, next) => {
   Product.deleteOne({ _id: id })
     .exec()
     .then(result => {
-      console.log(result)
       res.status(200).json(result)
     })
     .catch(err => {

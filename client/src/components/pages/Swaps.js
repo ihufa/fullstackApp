@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { connect } from "react-redux"
+import io from "socket.io-client"
 import {
   getSwaps,
   acceptSwap,
@@ -13,13 +14,24 @@ const Swaps = props => {
   const [toggleInbox, setToggleInbox] = useState(false) // false = show Incoming requests, true = show Ongoing swaps
   const [toggledChat, setToggledChat] = useState(null)
   const [chatMessage, setChatMessage] = useState("")
-
+  let socket
   useEffect(() => {
-    props.getSwaps(props.userData.userId)
+    // props.getSwaps(props.userData.userId)
+    socket = io("http://localhost:4000")
+    if (socket !== undefined) {
+      console.log(socket)
+    }
+
+    socket.send("message", {
+      message: "message --------------------------------------"
+    })
+    socket.on("event", function(data) {})
+    socket.on("disconnect", function() {})
   }, [])
 
   const showRequestsHandler = e => {
     setToggleInbox(false)
+    socket.emit("message", { text: "message" })
   }
   const showSwapsHandler = e => {
     setToggleInbox(true)

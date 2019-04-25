@@ -1,17 +1,69 @@
-import { UPDATE_BROWSED_USER_PRODUCTS, UPDATE_USER_PRODUCTS, UPDATE_PRODUCTS, PRODUCT_SEARCH, PRODUCT_MENU_TOGGLE, REMOVE_PRODUCT, TOGGLE_HIDE_PRODUCT, OPEN_MODAL } from "./types"
+import {
+  UPDATE_BROWSED_USER_PRODUCTS,
+  UPDATE_USER_PRODUCTS,
+  UPDATE_PRODUCTS,
+  PRODUCT_MENU_TOGGLE,
+  REMOVE_PRODUCT,
+  TOGGLE_HIDE_PRODUCT,
+  OPEN_MODAL,
+  CONCAT_PRODUCTS
+} from "./types"
 import axios from "axios"
 
-export const getProducts = () => dispatch => {
-  console.log("getProducts...")
-  axios
-    .get("/products")
-    .then(res => {
-      dispatch({
-        type: UPDATE_PRODUCTS,
-        payload: res.data
+export const getProducts = args => dispatch => {
+  console.log("getProducts", args)
+  if (args.sort === "time") {
+    axios
+      .post("/products/sort/time", args)
+      .then(res => {
+        if (args.count[0] === 0)
+          dispatch({
+            type: UPDATE_PRODUCTS,
+            payload: res.data
+          })
+        else {
+          dispatch({
+            type: CONCAT_PRODUCTS,
+            payload: res.data
+          })
+        }
       })
-    })
-    .catch(err => console.log(err))
+      .catch(err => console.log(err))
+  } else if (args.sort === "distance") {
+    axios
+      .post("/products/sort/distance", args)
+      .then(res => {
+        if (args.count[0] === 0)
+          dispatch({
+            type: UPDATE_PRODUCTS,
+            payload: res.data
+          })
+        else {
+          dispatch({
+            type: CONCAT_PRODUCTS,
+            payload: res.data
+          })
+        }
+      })
+      .catch(err => console.log(err))
+  } else if (args.sort === "suggested") {
+    axios
+      .post("/products/sort/suggested", args)
+      .then(res => {
+        if (args.count[0] === 0)
+          dispatch({
+            type: UPDATE_PRODUCTS,
+            payload: res.data
+          })
+        else {
+          dispatch({
+            type: CONCAT_PRODUCTS,
+            payload: res.data
+          })
+        }
+      })
+      .catch(err => console.log(err))
+  }
 }
 export const getProductsByUserId = userId => dispatch => {
   console.log("getProducts...")
@@ -64,7 +116,8 @@ export const addProduct = product => dispatch => {
         payload: {
           binary: false,
           input: false,
-          message: "There was an error adding your plant", err,
+          message: "There was an error adding your plant",
+          err,
           type: "error"
         }
       })
@@ -78,7 +131,10 @@ export const toggleProductMenu = id => dispatch => {
   })
 }
 export const toggleHideProduct = product => dispatch => {
-  axios.patch("/products/hide", product, { headers: { authorization: localStorage.token } })
+  axios
+    .patch("/products/hide", product, {
+      headers: { authorization: localStorage.token }
+    })
     .then(res => {
       console.log("product hproductden", res)
     })
@@ -89,7 +145,10 @@ export const toggleHideProduct = product => dispatch => {
   })
 }
 export const toggleShowProduct = product => dispatch => {
-  axios.patch("/products/show", product, { headers: { authorization: localStorage.token } })
+  axios
+    .patch("/products/show", product, {
+      headers: { authorization: localStorage.token }
+    })
     .then(res => {
       console.log("product hproductden", res)
     })
@@ -101,7 +160,10 @@ export const toggleShowProduct = product => dispatch => {
 }
 export const removeProduct = id => dispatch => {
   console.log("togglemenu", id)
-  axios.delete(`/products/${id}`, { headers: { authorization: localStorage.token } })
+  axios
+    .delete(`/products/${id}`, {
+      headers: { authorization: localStorage.token }
+    })
     .then(res => {
       console.log("product deleted", res)
     })
@@ -111,20 +173,21 @@ export const removeProduct = id => dispatch => {
     payload: id
   })
 }
-export const productSearch = searchParam => dispatch => {
+export const productSearch = args => dispatch => {
   axios
-    .post("/products/search", searchParam)
+    .post("/products/search", args)
     .then(res => {
-      console.log("products found:", res)
-
-      dispatch({
-        type: PRODUCT_SEARCH,
-        payload: searchParam.searchParam
-      })
-      dispatch({
-        type: UPDATE_PRODUCTS,
-        payload: res.data.products
-      })
+      if (args.count[0] === 0)
+        dispatch({
+          type: UPDATE_PRODUCTS,
+          payload: res.data
+        })
+      else {
+        dispatch({
+          type: CONCAT_PRODUCTS,
+          payload: res.data
+        })
+      }
     })
-    .catch(err => console.log("search failed ", err))
+    .catch(err => console.log(err))
 }

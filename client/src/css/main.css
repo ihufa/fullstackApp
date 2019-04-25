@@ -30,55 +30,11 @@
   display: inline-block;
   margin: 5px;
   font-size: 17px;
-  color: #272322; }
+  color: #272322;
+  height: 57px; }
   .nav-logo:hover {
     color: #26d60f;
     cursor: pointer; }
-
-.search-container {
-  height: 30px;
-  width: 200px;
-  vertical-align: top;
-  text-align: right; }
-
-.searchbox {
-  position: relative;
-  width: 200px;
-  display: block; }
-
-.searchbox:before {
-  position: absolute;
-  content: "";
-  background-color: #813103;
-  height: 10px;
-  width: 2px;
-  transform: rotate(-45deg);
-  right: 0;
-  bottom: -4px; }
-
-.search {
-  height: 30px;
-  width: 30px;
-  border-radius: 15px;
-  background-color: transparent;
-  justify-content: center;
-  align-content: center;
-  border: #813103 2px solid;
-  outline: none;
-  box-sizing: border-box;
-  font-size: 16px;
-  color: #696363;
-  padding-left: 15px;
-  padding-right: 5px;
-  transition: 0.5s; }
-
-::placeholder {
-  opacity: 0.8;
-  font-style: italic;
-  color: rbga(255, 255, 255, 0.5); }
-
-.search:focus {
-  width: 200px; }
 
 .fa-leaf {
   color: #26d60f; }
@@ -87,7 +43,7 @@
   position: absolute;
   top: 16px;
   left: 2px;
-  z-index: 10;
+  z-index: 2;
   background-color: red;
   width: 15px;
   height: 13px;
@@ -98,6 +54,9 @@
   text-align: center;
   border-radius: 8px;
   border: 1px white solid; }
+
+.plant-gallery-page-wrapper {
+  clear: both; }
 
 .plant-grid {
   display: grid;
@@ -147,6 +106,64 @@
   height: 20px;
   float: left;
   margin: 0 5px 0 5px; }
+
+.svg {
+  height: 100%; }
+
+.search-container {
+  height: 30px;
+  width: 200px;
+  vertical-align: top;
+  text-align: right; }
+
+.searchbox {
+  position: relative;
+  width: 200px;
+  display: block; }
+
+.searchbox:before {
+  position: absolute;
+  content: "";
+  background-color: #813103;
+  height: 10px;
+  width: 2px;
+  transform: rotate(-45deg);
+  right: 0;
+  bottom: -4px; }
+
+.search {
+  height: 30px;
+  width: 30px;
+  border-radius: 15px;
+  background-color: transparent;
+  justify-content: center;
+  align-content: center;
+  border: #813103 2px solid;
+  outline: none;
+  box-sizing: border-box;
+  font-size: 16px;
+  color: #696363;
+  padding-left: 15px;
+  padding-right: 5px;
+  transition: 0.5s; }
+
+::placeholder {
+  opacity: 0.8;
+  font-style: italic;
+  color: rbga(255, 255, 255, 0.5); }
+
+.search:focus {
+  width: 200px; }
+
+.location-option {
+  display: inline-block;
+  margin: 10px; }
+
+.location-option > input {
+  margin-right: 3px; }
+
+.location-search {
+  float: left; }
 
 .footer {
   width: 100%;
