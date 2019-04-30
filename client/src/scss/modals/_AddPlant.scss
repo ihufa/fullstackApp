@@ -1,18 +1,38 @@
 .modal-plant-upload {
   border-radius: 5px;
-  background-color: $light;
+  background-color: lighten($turq, 10%);
   margin: auto;
   margin-top: 60px;
-  padding: 20px;
+  padding: 30px;
   border: 1px solid #888;
   display: inline-block;
   max-width: 700px;
   text-align: left;
 }
+
 .plant-upload-form > * {
   display: block;
-  margin: 10px;
+  margin: 15px;
+  margin-left: 0;
 }
 .plant-upload-form > p > * {
-  margin: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+}
+.plant-upload-form > p > input {
+  width: 150px;
+}
+.add-file-btn {
+  width: 220px;
+  font-size: 1rem;
+  background-color: #2b5d76;
+  color: white;
+}
+.submit-plant-btn {
+  font-size: 1rem;
+  background-color: #2b5d76;
+  color: white;
+  padding: 5px 15px 5px 15px;
+  border-radius: 6px;
 }

@@ -50,7 +50,9 @@ router.get("/:userId", (req, res, next) => {
           results = results.concat(result2)
           res.status(201).json({ results })
         })
+        .catch(() => console.log("fetching swaps error"))
     })
+    .catch(() => console.log("fetching swaps error"))
 })
 
 router.delete("/:swapId", (req, res, next) => {

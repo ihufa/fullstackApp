@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useReducer } from "react"
 import { connect } from "react-redux"
-import { getProducts, productSearch } from "../state/actions/productsActions"
+import {
+  getProducts,
+  productSearch,
+  productSearchNoUser
+} from "../state/actions/productsActions"
 import { openModal } from "../state/actions/modalActions"
 import { ZIPS } from "../zips"
 
@@ -23,7 +27,7 @@ const Gallery = props => {
   }, 0)
 
   let city = ZIPS.filter(el => el.zip === props.userData.userZip)[0]
-  let coords = { long: city.long, lat: city.lat }
+  let coords = city ? { long: city.long, lat: city.lat } : null
 
   useEffect(() => {
     getOneRoundOfProducts()
@@ -46,19 +50,32 @@ const Gallery = props => {
     }
   }
   const getOneRoundOfProducts = () => {
-    if (!search) {
+    if (!search && props.userData) {
       props.getProducts({
         count: [count, incrementer],
         location: coords,
         sort: sort
       })
       dispatch("inc")
-    } else if (search) {
+    } else if (!search && !props.usereData) {
+      props.getProducts({
+        count: [count, incrementer],
+        sort: "time"
+      })
+      dispatch("inc")
+    } else if (search && props.userData) {
       props.productSearch({
         searchParam: search,
         count: [count, incrementer],
         location: coords,
         sort: sort
+      })
+      dispatch("inc")
+    } else if (search && !props.userData) {
+      props.productSearch({
+        searchParam: search,
+        count: [count, incrementer],
+        sort: "time"
       })
       dispatch("inc")
     }
@@ -87,15 +104,24 @@ const Gallery = props => {
   }
   const searchFire = e => {
     e.preventDefault()
-    console.log(search)
-    props.productSearch({
-      searchParam: search,
-      count: [0, incrementer],
-      location: coords,
-      sort: sort
-    })
-    dispatch("firstSearch")
-    setSearch("")
+    if (props.userData) {
+      props.productSearch({
+        searchParam: search,
+        count: [0, incrementer],
+        location: coords,
+        sort: sort
+      })
+      dispatch("firstSearch")
+      setSearch("")
+    } else if (!props.userData) {
+      props.productSearchNoUser({
+        searchParam: search,
+        count: [0, incrementer],
+        sort: "time"
+      })
+      dispatch("firstSearch")
+      setSearch("")
+    }
   }
   const onSortChange = e => {
     setSort(e.target.id)
@@ -160,45 +186,46 @@ const Gallery = props => {
     <div>
       <div className="location-and-search-bar">
         <div className="location-search">
-          <div className="location-option">
-            <h3>Show</h3>
+          <div className="sort-options">
+            <h3>Sort by</h3>
           </div>
-          <div className="location-option">
+          <div className="sort-option">
             <input onChange={onSortChange} type="radio" name="sort" id="time" />
-            <span>Latest</span>
+            <label htmlFor="time" className="label time" />
+            <div className="text-label">Latest</div>
           </div>
-          <div className="location-option">
+          <div className="sort-option">
             <input
               onChange={onSortChange}
               type="radio"
               name="sort"
               id="distance"
             />
-            <span>Closest</span>
+            <label htmlFor="distance" className="label distance" />
+            <div className="text-label">Closest</div>
           </div>
-          <div className="location-option">
+          <div className="sort-option">
             <input
               onChange={onSortChange}
               type="radio"
               name="sort"
               id="suggested"
             />
-            <span>Suggested</span>
+            <label htmlFor="suggested" className="label suggested" />
+            <div className="text-label">Suggested</div>
           </div>
         </div>
 
-        <div className="string-search">
-          <div className="nav-item search-container">
-            <div className="searchbox">
-              <form onSubmit={searchFire}>
-                <input
-                  onChange={onSearchChange}
-                  type="search"
-                  className="search"
-                  placeholder="Search..."
-                />
-              </form>
-            </div>
+        <div className="nav-item search-container">
+          <div className="searchbox">
+            <form onSubmit={searchFire}>
+              <input
+                onChange={onSearchChange}
+                type="search"
+                className="search"
+                placeholder="Search..."
+              />
+            </form>
           </div>
         </div>
       </div>
@@ -214,5 +241,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getProducts, productSearch, openModal }
+  { getProducts, productSearch, productSearchNoUser, openModal }
 )(Gallery)

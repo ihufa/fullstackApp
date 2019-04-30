@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useContext } from "react"
 import { connect } from "react-redux"
-import io from "socket.io-client"
 import {
   getSwaps,
   acceptSwap,
@@ -9,29 +8,16 @@ import {
   seeMessage
 } from "../../state/actions/swapActions"
 import { Link } from "react-router-dom"
+import SocketContext from "../SocketContext"
 
 const Swaps = props => {
   const [toggleInbox, setToggleInbox] = useState(false) // false = show Incoming requests, true = show Ongoing swaps
   const [toggledChat, setToggledChat] = useState(null)
   const [chatMessage, setChatMessage] = useState("")
-  let socket
-  useEffect(() => {
-    // props.getSwaps(props.userData.userId)
-    socket = io("http://localhost:4000")
-    if (socket !== undefined) {
-      console.log(socket)
-    }
-
-    socket.send("message", {
-      message: "message --------------------------------------"
-    })
-    socket.on("event", function(data) {})
-    socket.on("disconnect", function() {})
-  }, [])
+  const { socket } = useContext(SocketContext)
 
   const showRequestsHandler = e => {
     setToggleInbox(false)
-    socket.emit("message", { text: "message" })
   }
   const showSwapsHandler = e => {
     setToggleInbox(true)
@@ -70,16 +56,30 @@ const Swaps = props => {
   }
   const sendChatHandler = e => {
     e.preventDefault()
+    let chatRequester = props.swaps.filter(el => el._id === toggledChat)[0]
+      .requesterId
+    let chatReceiver = props.swaps.filter(el => el._id === toggledChat)[0]
+      .receiverId
+    let receiverId
+    if (chatRequester !== props.userData.userId) {
+      receiverId = chatRequester
+    } else if (chatReceiver !== props.userData.userId) {
+      receiverId = chatReceiver
+    }
     if (chatMessage !== "" && chatMessage !== " ") {
-      props.addMessage({
+      let message = {
+        // is the message sender the original requester of the swap, true=yes
         requester:
           props.userData.userId ===
           props.swaps.filter(el => el._id === toggledChat)[0].requesterId,
         id: toggledChat,
         sender: props.userData.userName,
+        receiverId: receiverId,
         message: chatMessage,
         time: Date.now()
-      })
+      }
+      props.addMessage(message)
+      socket.emit("message", message)
       setChatMessage("")
     }
     setTimeout(() => {
@@ -218,9 +218,15 @@ const Swaps = props => {
                   alt={el.plantType}
                   src={"http://localhost:5000/plants/" + el.plant}
                 />
-                <Link to={`/users/${el.requesterId}`}>
-                  <div className="swap-chat-sender">{el.requesterName}</div>
-                </Link>
+                {el.requesterId !== props.userData.userId ? (
+                  <Link to={`/users/${el.requesterId}/${el.requesterName}`}>
+                    <div className="swap-chat-sender">{el.requesterName}</div>
+                  </Link>
+                ) : (
+                  <Link to={`/users/${el.receiverId}/${el.receiverName}`}>
+                    <div className="swap-chat-sender">{el.receiverName}</div>
+                  </Link>
+                )}
                 <div id={el._id} className="swap-chat-message-sender">
                   <span id={el._id}>
                     {el.messages[el.messages.length - 1].sender}:{" "}

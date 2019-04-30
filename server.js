@@ -6,12 +6,43 @@ const bodyParser = require("body-parser")
 const path = require("path")
 
 const server = require("http").createServer()
-const io = require("socket.io")(server)
-io.on("connection", socket => console.log("one socket connection"))
-io.on("message", obj => {
-  console.log("message received")
+const io = require("socket.io")({})
+io.attach(server, {
+  pingInterval: 10000,
+  pingTimeout: 5000,
+  cookie: false
 })
 server.listen(4000)
+io.on("connect", onConnect)
+let clients = []
+function onConnect(socket) {
+  if (socket.handshake.query.userId !== "undefined") {
+    console.log(socket.id, "connected")
+    clients.push({
+      userId: socket.handshake.query.userId,
+      userName: socket.handshake.query.userName,
+      socketId: socket.id
+    })
+    console.log(clients)
+    socket.on("message", message => {
+      console.log("message received", message.receiverId)
+      let receiver = message.receiverId
+      let receiverClient
+      for (let i = 0; i < clients.length; i++) {
+        if (clients[i].userId === receiver) {
+          receiverClient = clients[i].socketId
+        }
+      }
+      console.log(clients[0].userId)
+      socket.broadcast.to(receiverClient).emit("message")
+    })
+    socket.on("disconnect", () => {
+      console.log("a client has disconnected")
+      clients = clients.filter(el => el.socketId !== socket.id)
+      console.log(clients)
+    })
+  }
+}
 var allowCrossDomain = function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*")
   res.header(
@@ -59,3 +90,4 @@ if (process.env.NODE_ENV === "production") {
 const port = process.env.PORT || 5000
 
 app.listen(port, () => console.log(`Server started on port ${port}`))
+app.use(express.static("client/public"))

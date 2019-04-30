@@ -68,9 +68,7 @@ const AddPlant = props => {
   const onChangeName = e => {
     setPlantName(e.target.value)
   }
-  const onChangeFree = e => {
-    setPlantFree(e.target.value)
-  }
+
   const onChangeSapling = e => {
     setPlantSapling(e.target.value)
   }
@@ -151,7 +149,11 @@ const AddPlant = props => {
         <h2>Add a plant</h2>
         <div className="plant-img-upload">
           <form className="plant-upload-form" onSubmit={addPlant}>
-            <input onChange={onChangeImg} type="file" />
+            <input
+              className="add-file-btn"
+              onChange={onChangeImg}
+              type="file"
+            />
             {plantImg ? (
               <ReactCrop
                 src={plantImgUrl}
@@ -163,8 +165,12 @@ const AddPlant = props => {
               />
             ) : null}
             <p>
-              <span>Plant type</span>
-              <input onChange={onChangeName} type="text" placeholder="name" />
+              <span>*Plant type</span>
+              <input
+                onChange={onChangeName}
+                type="text"
+                placeholder="species or common name"
+              />
             </p>
             <p>
               <span>Description</span>
@@ -178,11 +184,7 @@ const AddPlant = props => {
               <input type="checkbox" onChange={onChangeSapling} />
               <span>I am only offering a sapling of this plant</span>
             </div>
-            <div>
-              <input type="checkbox" onChange={onChangeFree} />
-              <span>I want to give away this baby for free</span>
-            </div>
-            <input type="submit" value="Add!" />
+            <input className="submit-plant-btn" type="submit" value="Add!" />
           </form>
         </div>
       </div>

@@ -11,6 +11,7 @@
 @import "pages/Userprofile/UserInfo";
 @import "pages/Swaps";
 @import "pages/Userplants";
+@import "pages/StaticPages";
 
 @import "modals/AddPlant";
 @import "modals/Confirmation";
@@ -38,45 +39,33 @@
 }
 
 h1 {
-  color: $green;
+  color: $terra;
   text-align: center;
+  font-weight: 400;
 }
 h2 {
   font-size: 1.3rem;
-  font-weight: bold;
-  color: $brown;
+  font-weight: 400;
+  color: $terra;
 }
 h3 {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: $brown;
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: $terra;
+}
+.fas {
+  color: $terra;
+  font-size: 30px;
 }
 
 .Btn {
-  border-style: none;
-  background-color: transparent;
-  color: $green;
-  border-radius: 2px;
-  margin-bottom: 0;
-  padding-bottom: 0;
-  margin-left: 10px;
-  margin-right: 10px;
-  font-weight: bold;
-  font-size: 1rem;
-
+  padding: 5px 15px 5px 15px;
+  background-color: #2b5d76;
+  color: white;
   &:hover {
-    background-color: rgb(141, 212, 245);
+    background-color: lighten($blue, 10%);
     cursor: pointer;
   }
-}
-
-.fas {
-  font-size: 30px;
-  color: $green;
-}
-
-.fa-ellipsis-v {
-  color: $green;
 }
 
 //User Profile

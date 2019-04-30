@@ -3,8 +3,8 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 60px;
-  background-color: $light;
+  height: 90px;
+  background-color: lighten($turq, 18%);
 }
 .nav-item-container {
   width: 100%;
@@ -13,39 +13,70 @@
 }
 .nav-item {
   display: inline-block;
-  margin: 15px 10px;
-  font-size: 17px;
-  color: $primary;
+  margin-left: 10px;
+  margin-right: 10px;
+  height: 45px;
   position: relative;
 
   &:hover {
-    color: $green;
+    opacity: 0.6;
     cursor: pointer;
   }
 }
 .nav-items-right {
   float: right;
+  position: relative;
+  margin-top: 25px;
+}
+.burger-menu {
+  position: relative;
+}
+.burger-menu-items {
+  position: absolute;
+  right: 0;
+  top: 65px;
+  width: 160px;
+  background-color: lighten($turq, 18%);
+  z-index: 2;
+  text-align: center;
+  height: 0;
+  overflow: hidden;
+  transition: 0.5s ease;
+}
+.burger-menu-items-active {
+  height: 249px; // hard coded for transition to work, 1 pixel short to hide bottom border
+}
+
+.burger-menu-item {
+  border-bottom: solid 1px $light-terra;
+  &:hover {
+    background-color: lighten($turq, 5%);
+    cursor: pointer;
+  }
+}
+.burger-menu-item > * {
+  color: $terra;
+  font-size: 23px;
+  font-weight: 400;
+  padding: 10px;
 }
 .nav-logo {
   vertical-align: top;
   display: inline-block;
-  margin: 5px;
+  margin: 12px;
+  margin-top: 13px;
   font-size: 17px;
-  color: $primary;
-  height: 57px;
+  color: $turq;
+  height: 65px;
   &:hover {
-    color: $green;
     cursor: pointer;
   }
 }
 
-.fa-leaf {
-  color: $green;
-}
 .nav-notification {
   position: absolute;
-  top: 16px;
-  left: 2px;
+  top: 30px;
+  left: 4px;
   z-index: 2;
   background-color: red;
   width: 15px;

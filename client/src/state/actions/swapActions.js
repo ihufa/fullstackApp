@@ -31,6 +31,7 @@ export const requestSwap = swapRequest => dispatch => {
     })
 }
 export const getSwaps = id => dispatch => {
+  console.log("getting swaps")
   axios
     .get(`/swaps/${id}`)
     .then(res => {
@@ -85,6 +86,7 @@ export const deleteSwap = id => dispatch => {
 export const addMessage = message => dispatch => {
   let mes = {
     requester: message.requester,
+    receiverId: message.receiverId,
     sender: message.sender,
     message: message.message,
     time: message.time
@@ -93,10 +95,11 @@ export const addMessage = message => dispatch => {
     type: ADD_MESSAGE,
     payload: message
   })
+  console.log("/swaps/message.id sent", mes)
   axios
     .patch(`/swaps/${message.id}`, mes)
-    .then()
-    .catch(console.log("addMessage error"))
+    .then(() => console.log("addMessage success"))
+    .catch(() => console.log("addMessage error"))
 }
 
 export const seeMessage = swap => dispatch => {

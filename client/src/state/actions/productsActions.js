@@ -191,3 +191,21 @@ export const productSearch = args => dispatch => {
     })
     .catch(err => console.log(err))
 }
+export const productSearchNoUser = args => dispatch => {
+  axios
+    .post("/products/search/nouser", args)
+    .then(res => {
+      if (args.count[0] === 0)
+        dispatch({
+          type: UPDATE_PRODUCTS,
+          payload: res.data
+        })
+      else {
+        dispatch({
+          type: CONCAT_PRODUCTS,
+          payload: res.data
+        })
+      }
+    })
+    .catch(err => console.log(err))
+}

@@ -21,7 +21,7 @@
 .request-button {
   width: 100%;
   height: 0;
-  background-color: $green;
+  background-color: $blue;
   position: absolute;
   bottom: 24px;
   left: 0;
@@ -49,7 +49,6 @@
   color: rgb(158, 158, 158);
 }
 .plant-grid-name {
-  height: 20px;
   float: left;
   margin: 0 5px 0 5px;
 }
@@ -61,6 +60,8 @@
   width: 200px;
   vertical-align: top;
   text-align: right;
+  margin: 0;
+  padding-top: 13px;
 }
 .searchbox {
   position: relative;
@@ -70,7 +71,7 @@
 .searchbox:before {
   position: absolute;
   content: "";
-  background-color: $brown;
+  background-color: $terra;
   height: 10px;
   width: 2px;
   transform: rotate(-45deg);
@@ -82,9 +83,7 @@
   width: 30px;
   border-radius: 15px;
   background-color: transparent;
-  justify-content: center;
-  align-content: center;
-  border: $brown 2px solid;
+  border: $terra 2px solid;
   outline: none;
   box-sizing: border-box;
   font-size: 16px;
@@ -101,14 +100,56 @@
 .search:focus {
   width: 200px;
 }
-
-.location-option {
+.sort-options {
+  display: inline-block;
+  margin: 10px;
+  vertical-align: super;
+}
+.sort-option {
   display: inline-block;
   margin: 10px;
 }
-.location-option > input {
+.sort-option > input {
   margin-right: 3px;
 }
+
 .location-search {
-  float: left;
+  display: inline-block;
+}
+.location-and-search-bar {
+  margin-top: 60px;
+  display: inline-block;
+}
+.text-label {
+  display: inline-block;
+  vertical-align: super;
+  opacity: 0.8;
+  padding-left: 5px;
+}
+
+.label {
+  background-image: url("../svg/leaf.svg");
+  cursor: pointer;
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  transition: all 100ms ease-in;
+  opacity: 0.4;
+}
+
+.label:hover {
+  opacity: 0.8;
+}
+.sort-option input {
+  margin: 0;
+  padding: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.sort-option input:checked + .label {
+  opacity: 1;
 }

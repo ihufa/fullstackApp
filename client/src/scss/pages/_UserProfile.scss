@@ -1,5 +1,6 @@
-
-
+.user-profile-wrapper {
+  margin-top: 40px;
+}
 .profile-plant-grid-name {
   height: 20px;
   float: left;
@@ -22,30 +23,30 @@
 }
 
 .image-menu-items {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    width: 80px;
-    height: 90px;
-    z-index: 1;
-  background-color: $light;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 80px;
+  height: 60px;
+  z-index: 1;
+  background-color: $turq;
   &:hover {
     cursor: pointer;
   }
 }
 .hide {
-  display:none;
+  display: none;
 }
 .image-menu-items > * {
   font-size: 1rem;
-  color:$brown;
-  position: absolute; 
+  color: $terra;
+  position: absolute;
   left: 0px;
-    height:30px;
+  height: 30px;
   width: 80px;
   z-index: +1;
   &:hover {
-    background-color: $green;
+    background-color: lighten($turq, 10%);
     cursor: pointer;
   }
 }
@@ -59,20 +60,23 @@
   top: 30px;
 }
 .image-menu-items > :nth-child(3) {
-  top: 60px;  
+  top: 60px;
 }
 
 .profile-top {
-height: 200px;
 }
 .btn-add-plant {
-  height: 40px;
-  width: 160px;
   font-size: 1.8rem;
-  background-color: $green;
+  background-color: $blue;
   color: white;
   border-radius: 8px;
   &:hover {
-    background-color: darken($green, 10%)
+    background-color: lighten($blue, 10%);
   }
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 80%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }

@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from "react"
 import { connect } from "react-redux"
-import { getUserProducts, toggleProductMenu, removeProduct, toggleHideProduct, toggleShowProduct } from "../../state/actions/productsActions"
-import AddPlant from '../modals/AddPlant'
-import { openModal } from '../../state/actions/modalActions'
-import UserInfo from './UserProfile/UserInfo'
-
+import {
+  getUserProducts,
+  toggleProductMenu,
+  removeProduct,
+  toggleHideProduct,
+  toggleShowProduct
+} from "../../state/actions/productsActions"
+import AddPlant from "../modals/AddPlant"
+import { openModal } from "../../state/actions/modalActions"
+import UserInfo from "./UserProfile/UserInfo"
 
 const UserProfile = props => {
   const [showAddModal, setShowAddModal] = useState(false)
   const [plantInFocus, setPlantInFocus] = useState()
-
 
   const timeConvert = millisec => {
     var seconds = (millisec / 1000).toFixed(0)
@@ -39,24 +43,32 @@ const UserProfile = props => {
       id: plantInFocus
     })
   }
-  const togglePlantMenu = (e) => {
+  const togglePlantMenu = e => {
     e.preventDefault()
     let id = e.target.id
     props.toggleProductMenu(id)
     setPlantInFocus(id)
-    document.body.addEventListener("click", () => {
-      props.toggleProductMenu(id)
-    }, { once: true })
+    document.body.addEventListener(
+      "click",
+      () => {
+        props.toggleProductMenu(id)
+      },
+      { once: true }
+    )
   }
-  const toggleHideProduct = (e) => {
+  const toggleHideProduct = e => {
     props.toggleHideProduct({ id: plantInFocus })
   }
-  const toggleShowProduct = (e) => {
+  const toggleShowProduct = e => {
     props.toggleShowProduct({ id: plantInFocus })
   }
 
   const activePlantGrid =
-    props.products && props.products.length && props.products.filter(el => el.userId === props.userData.userId).filter(el => el.hidden === false).length > 0 ? (
+    props.products &&
+    props.products.length &&
+    props.products
+      .filter(el => el.userId === props.userData.userId)
+      .filter(el => el.hidden === false).length > 0 ? (
       <div className="plant-gallery-page-wrapper">
         <h2>My active plants</h2>
         <div className="plant-grid">
@@ -70,11 +82,16 @@ const UserProfile = props => {
                   alt={el.name}
                   src={"http://localhost:5000/plants/" + el.image}
                 />
-                <div onClick={togglePlantMenu} className={"image-menu"}><i id={el._id} className="fas fa-ellipsis-v"></i></div>
-                <div className={el.toggleMenu ? 'image-menu-items' : "hide"}>
-                  <div onClick={removeProduct}><p>Remove</p></div>
-                  <div onClick={toggleHideProduct}><p>Hide</p></div>
-                  <div><p>Edit</p></div>
+                <div onClick={togglePlantMenu} className={"image-menu"}>
+                  <i id={el._id} className="fas fa-ellipsis-v" />
+                </div>
+                <div className={el.toggleMenu ? "image-menu-items" : "hide"}>
+                  <div onClick={removeProduct}>
+                    <p>Remove</p>
+                  </div>
+                  <div onClick={toggleHideProduct}>
+                    <p>Hide</p>
+                  </div>
                 </div>
                 <div className="profile-plant-grid-name">
                   <p>{el.name}</p>
@@ -87,14 +104,18 @@ const UserProfile = props => {
         </div>
       </div>
     ) : (
-        <div className="plant">
-          <h2>My plants</h2>
-          <p>-</p>
-        </div>
-      )
+      <div className="plant">
+        <h2>My plants</h2>
+        <p>-</p>
+      </div>
+    )
 
   const hiddenPlantGrid =
-    props.products && props.products.length && props.products.filter(el => el.userId === props.userData.userId).filter(el => el.hidden === true).length > 0 ? (
+    props.products &&
+    props.products.length &&
+    props.products
+      .filter(el => el.userId === props.userData.userId)
+      .filter(el => el.hidden === true).length > 0 ? (
       <div className="plant-gallery-page-wrapper">
         <h2>My private plants</h2>
         <div className="plant-grid">
@@ -109,11 +130,19 @@ const UserProfile = props => {
                   alt={el.name}
                   src={"http://localhost:5000/plants/" + el.image}
                 />
-                <div onClick={togglePlantMenu} className={"image-menu"}><i id={el._id} className="fas fa-ellipsis-v"></i></div>
-                <div className={el.toggleMenu ? 'image-menu-items' : "hide"}>
-                  <div onClick={removeProduct}><p>Remove</p></div>
-                  <div onClick={toggleShowProduct}><p>Show</p></div>
-                  <div><p>Edit</p></div>
+                <div onClick={togglePlantMenu} className={"image-menu"}>
+                  <i id={el._id} className="fas fa-ellipsis-v" />
+                </div>
+                <div className={el.toggleMenu ? "image-menu-items" : "hide"}>
+                  <div onClick={removeProduct}>
+                    <p>Remove</p>
+                  </div>
+                  <div onClick={toggleShowProduct}>
+                    <p>Show</p>
+                  </div>
+                  <div>
+                    <p>Edit</p>
+                  </div>
                 </div>
                 <div className="profile-plant-grid-name">
                   <p>{el.name}</p>
@@ -125,23 +154,23 @@ const UserProfile = props => {
             ))}
         </div>
       </div>
-    ) : (
-        null
-      )
-
+    ) : null
 
   useEffect(() => props.getUserProducts(props.userData.userId), [])
 
   return (
     <div className="user-profile-wrapper">
-      <div className="profile-top">
-        <button className="Btn btn-add-plant" onClick={addPlantHandler}>Add plant</button>
+      <div className="user-info-container">
         <UserInfo />
+        <div className="add-plant-btn-container">
+          <button className="Btn btn-add-plant" onClick={addPlantHandler}>
+            Add plant
+          </button>
+        </div>
       </div>
       {activePlantGrid}
       {hiddenPlantGrid}
       {showAddModal ? <AddPlant showModal={addPlantHandler} /> : null}
-
     </div>
   )
 }
@@ -153,5 +182,12 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getUserProducts, toggleProductMenu, removeProduct, toggleHideProduct, toggleShowProduct, openModal }
+  {
+    getUserProducts,
+    toggleProductMenu,
+    removeProduct,
+    toggleHideProduct,
+    toggleShowProduct,
+    openModal
+  }
 )(UserProfile)

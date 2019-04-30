@@ -255,6 +255,44 @@ router.post("/search", (req, res, next) => {
       })
     })
 })
+router.post("/search/nouser", (req, res, next) => {
+  console.log("products search requested")
+  console.log(req.body)
+  let searchParam = new RegExp(req.body.searchParam, "i")
+  Product.aggregate([
+    { $match: { name: searchParam } },
+    {
+      $project: {
+        _id: "$_id",
+        image: "$image",
+        message: "$message",
+        name: "$name",
+        userId: "$userId",
+        userName: "$userName",
+        zip: "$zipv",
+        userCity: "$userCity",
+        longitude: "$longitude",
+        latitude: "$latitude",
+        time: "$time",
+        toggleMenu: "$toggleMenu",
+        flagged: "$flagged",
+        hidden: "$hidden"
+      }
+    },
+    { $sort: { irrelevancy: 1 } },
+    { $skip: req.body.count[0] },
+    { $limit: req.body.count[1] }
+  ])
+    .then(result => {
+      res.status(200).json(result)
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({
+        error: err
+      })
+    })
+})
 
 router.post("/", checkAuth, upload.single("productImage"), (req, res, next) => {
   const product = new Product({
