@@ -40,7 +40,7 @@ const PlantInfo = props => {
         </div>
         <img
           className="plant-info-image"
-          src={"http://localhost:5000/plants/" + props.image}
+          src={"https://planthood.dk/plants/" + props.image}
           alt={props.name}
         />
         <p>Plant: {props.plantType}</p>

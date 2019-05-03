@@ -4,7 +4,7 @@ const mongoose = require("mongoose")
 
 const Swap = require("../models/swap")
 
-router.get("/", (req, res, next) => {
+router.post("/", (req, res, next) => {
   const swap = new Swap({
     _id: mongoose.Types.ObjectId(),
     requesterId: req.body.requesterId,
