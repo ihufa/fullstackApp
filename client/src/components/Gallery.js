@@ -187,7 +187,7 @@ const Gallery = props => {
       <div className="location-and-search-bar">
         <div className="location-search">
           <div className="sort-options">
-            <h3>Sort by</h3>
+            <h2>Sort by</h2>
           </div>
           <div className="sort-option">
             <input onChange={onSortChange} type="radio" name="sort" id="time" />

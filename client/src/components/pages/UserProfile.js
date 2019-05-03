@@ -106,7 +106,9 @@ const UserProfile = props => {
     ) : (
       <div className="plant">
         <h2>My plants</h2>
-        <p>-</p>
+        <p>
+          You have no plants to swap with yet, click Add plant to get started!
+        </p>
       </div>
     )
 

@@ -1,0 +1,20 @@
+.nav-item-login {
+  vertical-align: top;
+  margin: 5px;
+  line-height: 45px;
+  color: $terra;
+  font-size: 1.3rem;
+  &:hover {
+    color: lighten($terra, 20%);
+  }
+}
+.nav-items-right-login {
+  display: inline-block;
+  margin-left: 10px;
+  margin-right: 10px;
+  height: 45px;
+  position: relative;
+}
+.burger-menu-items-active-login {
+  height: 199px; // hard coded for transition to work, 1 pixel short to hide bottom border
+}

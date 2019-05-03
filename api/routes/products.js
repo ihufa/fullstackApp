@@ -11,13 +11,15 @@ const storage = multer.diskStorage({
     cb(null, "./uploads/")
   },
   filename: function(req, file, cb) {
-    cb(null, Date.now() + file.originalname)
+    cb(null, Date.now() + file.originalname + ".jpeg")
   }
 })
 const fileFilter = (req, file, cb) => {
   // reject a file
 
-  if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+  if (
+    file.mimetype === "image/jpeg" //|| file.mimetype === "image/png"   currently .jpeg is added to all files, not .png
+  ) {
     cb(null, true)
   } else {
     cb(null, false)

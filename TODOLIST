@@ -22,19 +22,36 @@ V   Make login and signup validate inputs and give error messages
 V   Make upload plant function crisp
 V   Change zip modal to update userCity and include form validation
     
-    Plant swapping interface {
-        Make request objects in mongodb
-        Make request functionality on each plant in gallery
-        Show incoming + outgoing requests in userprofile
-        Make chat function
+V    Plant swapping interface {
+V        Make request objects in mongodb
+V        Make request functionality on each plant in gallery
+V        Show incoming + outgoing requests in userprofile
+V        Make chat function
         Make rating function (?)
-        Make userprofile showing the users plants
+V        Make userprofile showing the users plants
 
 
 
     }
-    Make individual GET routes for gallery, userprofiles, and different gallery searches
+V    Make individual GET routes for gallery, userprofiles, and different gallery searches
     Make elasticSearch function and db
-    Make about page
-    Filters for plant gallery: Nearest, latest ...
-    Make server send increments of products
+V    Make about page
+V    Filters for plant gallery: Nearest, latest ...
+V    Make server send increments of products
+
+
+V    Fix chat layout
+V    Fix Swap request layout
+    Resize images on upload
+V    Fix login/signup modal width
+    Make media queries for 453px and below
+
+
+
+## DEPLOYMENT
+
+V    run on port 443
+V    use SSL (nginx)?
+V    use auto restarting package (pm2?)
+    remove redux dev tools middleware in production
+    Fix websockets server

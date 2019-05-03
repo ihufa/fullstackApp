@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react"
+import React, { useState, useContext } from "react"
 import { connect } from "react-redux"
 import {
   getSwaps,
@@ -87,25 +87,6 @@ const Swaps = props => {
     }, 0)
   }
 
-  const timeConvert = millisec => {
-    var seconds = (millisec / 1000).toFixed(0)
-
-    var minutes = (millisec / (1000 * 60)).toFixed(0)
-
-    var hours = (millisec / (1000 * 60 * 60)).toFixed(0)
-
-    var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(0)
-
-    if (seconds < 60) {
-      return seconds + " Sec"
-    } else if (minutes < 60) {
-      return minutes + " Min"
-    } else if (hours < 24) {
-      return hours + " Hrs"
-    } else {
-      return days + " Days"
-    }
-  }
   const IncomingRequests =
     props.swaps && props.swaps.length > 0
       ? props.swaps
@@ -196,13 +177,17 @@ const Swaps = props => {
   const OngoingSwaps =
     props.swaps && props.swaps.length > 0 && !toggledChat
       ? props.swaps
+          .filter(el => el.accepted === true)
           .sort((a, b) => {
-            return (
-              a.messages[a.messages.length - 1].time +
+            if (
+              a.messages[a.messages.length - 1].time <
               b.messages[b.messages.length - 1].time
             )
+              return 1
+            else {
+              return -1
+            }
           })
-          .filter(el => el.accepted === true)
           .map((el, index) => (
             <div
               onClick={chatToggleHandler}
@@ -229,7 +214,16 @@ const Swaps = props => {
                 )}
                 <div id={el._id} className="swap-chat-message-sender">
                   <span id={el._id}>
-                    {el.messages[el.messages.length - 1].sender}:{" "}
+                    [
+                    {new Date(
+                      el.messages[el.messages.length - 1].time
+                    ).toLocaleTimeString("en", {
+                      weekday: "long",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hourCycle: "h24"
+                    })}
+                    ] {el.messages[el.messages.length - 1].sender}:{" "}
                     {el.messages[el.messages.length - 1].message}
                   </span>
                 </div>

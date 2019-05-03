@@ -44,7 +44,7 @@ const Signup = props => {
       return "password needs to be 6 characters or more"
     if (!name) return "please enter a name"
     if (!zip) return "please enter a zip code"
-    if (zip < 0 || zip > 10000) return "please use a 4 digit zip code"
+    if (!city) return "please use a valid zip code"
     else return "accepted"
   }
 

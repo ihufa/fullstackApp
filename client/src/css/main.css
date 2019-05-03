@@ -84,6 +84,25 @@
   border-radius: 8px;
   border: 1px white solid; }
 
+.nav-item-login {
+  vertical-align: top;
+  margin: 5px;
+  line-height: 45px;
+  color: #da7547;
+  font-size: 1.3rem; }
+  .nav-item-login:hover {
+    color: #ebb59c; }
+
+.nav-items-right-login {
+  display: inline-block;
+  margin-left: 10px;
+  margin-right: 10px;
+  height: 45px;
+  position: relative; }
+
+.burger-menu-items-active-login {
+  height: 199px; }
+
 .plant-gallery-page-wrapper {
   clear: both; }
 
@@ -317,10 +336,9 @@
 .user-info-container {
   background-color: #d1eddd;
   padding: 10px;
-  margin: 25px 0px 25px 0px;
+  margin: 10px 0px 10px 0px;
   height: 140px;
-  position: relative;
-  margin: 10px; }
+  position: relative; }
 
 .user-info-data > * {
   margin: 5px;
@@ -483,7 +501,7 @@
 .chat-box {
   margin: 10px;
   position: relative;
-  height: calc(100vh - 160px); }
+  height: calc(100vh - 220px); }
 
 .chat-box-history-text {
   bottom: 50px;
@@ -493,7 +511,7 @@
 
 .chat-box-history {
   overflow-y: scroll;
-  height: calc(100vh - 220px);
+  height: calc(100vh - 280px);
   display: flex; }
 
 .chat-box-input form {
@@ -508,7 +526,7 @@
     outline: none; }
 
 .chat-box-input input {
-  width: calc(100vw - 80px);
+  width: calc(100vw - 120px);
   max-width: 920px;
   height: 40px;
   border-radius: 6px;
@@ -639,7 +657,8 @@
   border: 1px solid #888;
   display: inline-block;
   margin-top: 15%;
-  z-index: 11; }
+  z-index: 11;
+  max-width: 500px; }
 
 .confirmation-modal > * {
   text-align: center;
@@ -664,6 +683,10 @@
   font-size: 1rem;
   margin: 10px; }
 
+.login button {
+  margin-left: 100px;
+  margin-right: 100px; }
+
 .signupmodal {
   position: fixed;
   z-index: 5;
@@ -684,7 +707,8 @@
   border: 1px solid #888;
   display: block;
   margin-top: 15%;
-  z-index: 6; }
+  z-index: 6;
+  max-width: 320px; }
 
 .zip-input {
   width: 80px; }
@@ -692,7 +716,8 @@
 .modal-form-plantinfo {
   position: relative;
   margin: 20px;
-  max-width: 100vw; }
+  max-width: 100vw;
+  background-color: #e4f4eb; }
 
 .plant-info-modal-close-btn {
   position: absolute;
@@ -704,6 +729,10 @@
 
 .plant-info-image {
   max-width: 100%; }
+
+.modal-form-plantinfo textarea {
+  width: 320px;
+  height: 50px; }
 
 * {
   margin: 0;
@@ -719,8 +748,10 @@
   clear: both;
   width: 100%;
   max-width: 1000px;
-  margin: auto;
-  min-height: calc(100vh - 75px); }
+  margin: auto; }
+
+.static-page * {
+  text-align: center; }
 
 h1 {
   color: #da7547;
@@ -733,7 +764,7 @@ h2 {
   color: #da7547; }
 
 h3 {
-  font-size: 1.3rem;
+  font-size: 1.15rem;
   font-weight: 400;
   color: #da7547; }
 
@@ -744,7 +775,25 @@ h3 {
 .Btn {
   padding: 5px 15px 5px 15px;
   background-color: #2b5d76;
-  color: white; }
+  color: white;
+  border-radius: 3px; }
   .Btn:hover {
     background-color: #397a9b;
     cursor: pointer; }
+
+@media screen and (max-width: 460px) {
+  .nav-items-right {
+    margin-top: 15px; }
+  .nav-item {
+    height: 40px; }
+  .nav-logo {
+    height: 46px;
+    margin-left: 6px;
+    margin-top: 12px;
+    margin-right: 0px; }
+  .navbar {
+    height: 70px; }
+  .burger-menu-items {
+    top: 55px; }
+  .nav-item-login {
+    font-size: 1.15rem; } }

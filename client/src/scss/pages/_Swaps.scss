@@ -152,7 +152,7 @@
 .chat-box {
   margin: 10px;
   position: relative;
-  height: calc(100vh - 160px);
+  height: calc(100vh - 220px);
 }
 
 .chat-box-history-text {
@@ -163,7 +163,7 @@
 }
 .chat-box-history {
   overflow-y: scroll;
-  height: calc(100vh - 220px);
+  height: calc(100vh - 280px);
   display: flex;
 }
 .chat-box-input form {
@@ -179,7 +179,7 @@
   }
 }
 .chat-box-input input {
-  width: calc(100vw - 80px);
+  width: calc(100vw - 120px);
   max-width: 920px;
   height: 40px;
   border-radius: 6px;

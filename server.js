@@ -12,7 +12,7 @@ io.attach(server, {
   pingTimeout: 5000,
   cookie: false
 })
-server.listen(4000)
+server.listen(8989)
 io.on("connect", onConnect)
 let clients = []
 function onConnect(socket) {
@@ -78,14 +78,14 @@ app.use("/swaps", swaps)
 app.use("/plants", express.static("uploads"))
 
 // Serve static assets if in production
-if (process.env.NODE_ENV === "production") {
-  // Set static folder
-  app.use(express.static("client/build"))
+//if (process.env.NODE_ENV === "production") {
+// Set static folder
+app.use(express.static("client/build"))
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
-  })
-}
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+})
+//}
 
 const port = process.env.PORT || 5000
 

@@ -35,9 +35,10 @@
   width: 100%;
   max-width: $maxWidth;
   margin: auto;
-  min-height: calc(100vh - 75px);
 }
-
+.static-page * {
+  text-align: center;
+}
 h1 {
   color: $terra;
   text-align: center;
@@ -49,7 +50,7 @@ h2 {
   color: $terra;
 }
 h3 {
-  font-size: 1.3rem;
+  font-size: 1.15rem;
   font-weight: 400;
   color: $terra;
 }
@@ -66,14 +67,32 @@ h3 {
     background-color: lighten($blue, 10%);
     cursor: pointer;
   }
+  border-radius: 3px;
 }
 
 //User Profile
 
-@media screen and (max-width: 1200px) {
-}
-@media screen and (max-width: 1000px) {
-}
+@media screen and (max-width: 460px) {
+  .nav-items-right {
+    margin-top: 15px;
+  }
+  .nav-item {
+    height: 40px;
+  }
+  .nav-logo {
+    height: 46px;
 
-@media screen and (max-width: 800px) {
+    margin-left: 6px;
+    margin-top: 12px;
+    margin-right: 0px;
+  }
+  .navbar {
+    height: 70px;
+  }
+  .burger-menu-items {
+    top: 55px;
+  }
+  .nav-item-login {
+    font-size: 1.15rem;
+  }
 }
