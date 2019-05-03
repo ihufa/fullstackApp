@@ -80,7 +80,7 @@ const UserProfile = props => {
                 <img
                   className="plant-img"
                   alt={el.name}
-                  src={"http://localhost:5000/plants/" + el.image}
+                  src={"http://95.216.101.144/plants/" + el.image}
                 />
                 <div onClick={togglePlantMenu} className={"image-menu"}>
                   <i id={el._id} className="fas fa-ellipsis-v" />
