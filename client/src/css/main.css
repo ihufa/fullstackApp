@@ -82,7 +82,7 @@
   font-weight: bold;
   text-align: center;
   border-radius: 8px;
-  border: 1px white solid; }
+  border: none; }
 
 .nav-item-login {
   vertical-align: top;
