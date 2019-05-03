@@ -9,7 +9,8 @@ if (userData !== null) {
   initialState = { items: { userData } }
 }
 console.log(userData)
-
 const middleWare = [thunk]
-const store = createStore(rootReducer, initialState)
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const enhancer = composeEnhancers(applyMiddleware(...middleWare))
+const store = createStore(rootReducer, initialState, enhancer)
 export default store

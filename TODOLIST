@@ -44,7 +44,10 @@ V    Fix chat layout
 V    Fix Swap request layout
     Resize images on upload
 V    Fix login/signup modal width
-    Make media queries for 453px and below
+V    Make media queries for 453px and below
+V    Fix swap request modals layout
+V    Make it impossible to swap with yourself
+V    Sort chat by time of latest message
 
 
 
@@ -53,5 +56,6 @@ V    Fix login/signup modal width
 V    run on port 443
 V    use SSL (nginx)?
 V    use auto restarting package (pm2?)
-    remove redux dev tools middleware in production
-    Fix websockets server
+V    fix redux dev tools for production
+?    Fix websockets server
+    Protect all relevant routes
