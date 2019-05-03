@@ -158,7 +158,7 @@ const Gallery = props => {
                 className={"plant-img plantImg" + index}
                 id={"plant" + index}
                 alt={el.name}
-                src={"https://95.216.101.144/plants/" + el.image}
+                src={"https://planthood.dk/plants/" + el.image}
               />
               <button
                 id={el._id}

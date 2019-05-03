@@ -98,7 +98,7 @@ const Swaps = props => {
                 <img
                   className="swap-inbox-img"
                   alt={el.plantType}
-                  src={"https://95.216.101.144/plants/" + el.plant}
+                  src={"https://planthood.dk/plants/" + el.plant}
                 />
                 <Link to={`/users/${el.requesterId}`}>
                   <div className="swap-inbox-sender">{el.requesterName}</div>
@@ -201,7 +201,7 @@ const Swaps = props => {
                   id={el._id}
                   className="swap-chat-img"
                   alt={el.plantType}
-                  src={"https://95.216.101.144/plants/" + el.plant}
+                  src={"https://planthood.dk/plants/" + el.plant}
                 />
                 {el.requesterId !== props.userData.userId ? (
                   <Link to={`/users/${el.requesterId}/${el.requesterName}`}>
