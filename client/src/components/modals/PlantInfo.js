@@ -1,6 +1,7 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import { connect } from "react-redux"
 import { requestSwap } from "../../state/actions/swapActions"
+import SocketContext from "../SocketContext"
 
 const PlantInfo = props => {
   const [message, setMessage] = useState(
@@ -8,6 +9,7 @@ const PlantInfo = props => {
       props.plantType
     }. Please see my plants and let me know if you are interested.`
   )
+  const { socket } = useContext(SocketContext)
   const closeModal = e => {
     if (e.target.className === "modal" && e.target.className !== "modal-form") {
       props.closeModal()
@@ -27,6 +29,7 @@ const PlantInfo = props => {
       message: message
     }
     props.requestSwap(swapRequest)
+    socket.emit("message", swapRequest)
     props.closeModal()
   }
   const messageChangeHandler = e => {
@@ -40,7 +43,7 @@ const PlantInfo = props => {
         </div>
         <img
           className="plant-info-image"
-          src={"https://planthood.dk/plants/" + props.image}
+          src={"https://planthood.dk/plants/resized/" + props.image}
           alt={props.name}
         />
         <p>Plant: {props.plantType}</p>

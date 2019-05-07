@@ -18,7 +18,7 @@ const Userplants = props => {
                 className={"plant-img plantImg" + index}
                 id={"plant" + index}
                 alt={el.name}
-                src={"https://planthood.dk/plants/" + el.image}
+                src={"https://planthood.dk/plants/resized/" + el.image}
               />
               <div className="user-plant-grid-text">
                 <p>type: {el.name}</p>

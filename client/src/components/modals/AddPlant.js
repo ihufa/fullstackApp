@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react"
 import { connect } from "react-redux"
-import { addProduct } from "../../state/actions/productsActions"
+import {
+  addProduct,
+  getUserProducts
+} from "../../state/actions/productsActions"
 import ReactCrop from "react-image-crop/dist/ReactCrop"
 import "react-image-crop/dist/ReactCrop.css"
 import { ZIPS } from "../../zips"
@@ -50,6 +53,7 @@ const AddPlant = props => {
     body.append("lat", lat)
     props.addProduct(body)
     props.showModal()
+    props.getUserProducts(props.userData.userId)
   }
   //figure out how to make universal onChange to set state without setState()
   const onChangeImg = e => {
@@ -198,5 +202,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { addProduct }
+  { addProduct, getUserProducts }
 )(AddPlant)

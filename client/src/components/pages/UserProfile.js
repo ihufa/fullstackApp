@@ -80,7 +80,7 @@ const UserProfile = props => {
                 <img
                   className="plant-img"
                   alt={el.name}
-                  src={"https://planthood.dk/plants/" + el.image}
+                  src={"https://planthood.dk/plants/resized/" + el.image}
                 />
                 <div onClick={togglePlantMenu} className={"image-menu"}>
                   <i id={el._id} className="fas fa-ellipsis-v" />
