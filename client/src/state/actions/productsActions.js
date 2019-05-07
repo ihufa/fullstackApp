@@ -92,6 +92,7 @@ export const getUserProducts = userId => dispatch => {
     .catch(err => console.log(err))
 }
 export const addProduct = product => dispatch => {
+  let id = product.userId
   console.log("addProduct...")
   console.log(product)
   axios
@@ -109,6 +110,7 @@ export const addProduct = product => dispatch => {
           type: "confirmationPlantAdd"
         }
       })
+      getUserProducts(id)
     })
     .catch(err => {
       dispatch({

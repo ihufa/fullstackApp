@@ -53,7 +53,6 @@ const AddPlant = props => {
     body.append("lat", lat)
     props.addProduct(body)
     props.showModal()
-    props.getUserProducts(props.userData.userId)
   }
   //figure out how to make universal onChange to set state without setState()
   const onChangeImg = e => {
