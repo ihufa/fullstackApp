@@ -2,6 +2,7 @@ const express = require("express")
 const mongoose = require("mongoose")
 const router = express.Router()
 const Product = require("../models/product")
+const sharp = require("sharp")
 
 const checkAuth = require("../auth/checkAuth")
 const multer = require("multer")
@@ -32,6 +33,44 @@ const upload = multer({
     fileSize: 1024 * 1024 * 5
   },
   fileFilter: fileFilter
+}).single("productImage")
+
+router.post("/", checkAuth, upload, (req, res, next) => {
+  console.log(req.file)
+
+  sharp(req.file.path)
+    .resize(440, 440)
+    .toFile("./uploads/resized/" + req.file.filename, err => {
+      if (!err) console.log("sharp worked")
+
+      const product = new Product({
+        _id: new mongoose.Types.ObjectId(),
+        image: req.file.filename,
+        name: req.body.name,
+        message: req.body.message,
+        userId: req.body.userId,
+        userName: req.body.userName,
+        zip: req.body.zip,
+        userCity: req.body.userCity,
+        longitude: req.body.long,
+        latitude: req.body.lat,
+        time: Date.now(),
+        toggleMenu: false,
+        flagged: false,
+        hidden: false
+      })
+      product
+        .save()
+        .then(result => {
+          res.status(201).json({ "product added": result })
+        })
+        .catch(err => {
+          console.log(err)
+          res.status(500).json({
+            err
+          })
+        })
+    })
 })
 
 router.post("/sort/time", (req, res, next) => {
@@ -296,35 +335,6 @@ router.post("/search/nouser", (req, res, next) => {
     })
 })
 
-router.post("/", checkAuth, upload.single("productImage"), (req, res, next) => {
-  const product = new Product({
-    _id: new mongoose.Types.ObjectId(),
-    image: req.file.filename,
-    name: req.body.name,
-    message: req.body.message,
-    userId: req.body.userId,
-    userName: req.body.userName,
-    zip: req.body.zip,
-    userCity: req.body.userCity,
-    longitude: req.body.long,
-    latitude: req.body.lat,
-    time: Date.now(),
-    toggleMenu: false,
-    flagged: false,
-    hidden: false
-  })
-  product
-    .save()
-    .then(result => {
-      res.status(201).json({ "product added": result })
-    })
-    .catch(err => {
-      console.log(err)
-      res.status(500).json({
-        err
-      })
-    })
-})
 router.get("/:userId", (req, res, next) => {
   const id = req.params.userId
   Product.find({ userId: id })

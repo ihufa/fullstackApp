@@ -88,42 +88,48 @@ const Swaps = props => {
   }
 
   const IncomingRequests =
-    props.swaps && props.swaps.length > 0
-      ? props.swaps
-          .filter(el => el.requesterId !== props.userData.userId)
-          .filter(el => el.accepted === false)
-          .map((el, index) => (
-            <div key={el._id} className="swap-item">
-              <div className="swap-inbox-text">
-                <img
-                  className="swap-inbox-img"
-                  alt={el.plantType}
-                  src={"https://planthood.dk/plants/" + el.plant}
-                />
-                <Link to={`/users/${el.requesterId}`}>
-                  <div className="swap-inbox-sender">{el.requesterName}</div>
-                </Link>{" "}
-                <div className="swap-inbox-message">
-                  {el.messages[0].message}
-                </div>
-                <div className="swap-inbox-buttons">
-                  <button
-                    onClick={acceptHandler}
-                    id={el._id}
-                    className="swap-inbox-yes-button">
-                    Accept
-                  </button>
-                  <button
-                    onClick={deleteHandler}
-                    id={el._id}
-                    className="swap-inbox-no-button">
-                    Decline
-                  </button>
-                </div>
+    props.swaps &&
+    props.swaps.length &&
+    props.swaps
+      .filter(el => el.requesterId !== props.userData.userId)
+      .filter(el => el.accepted === false) > 0 ? (
+      props.swaps
+        .filter(el => el.requesterId !== props.userData.userId)
+        .filter(el => el.accepted === false)
+        .map((el, index) => (
+          <div key={el._id} className="swap-item">
+            <div className="swap-inbox-text">
+              <img
+                className="swap-inbox-img"
+                alt={el.plantType}
+                src={"https://planthood.dk/plants/" + el.plant}
+              />
+              <Link to={`/users/${el.requesterId}`}>
+                <div className="swap-inbox-sender">{el.requesterName}</div>
+              </Link>{" "}
+              <div className="swap-inbox-message">{el.messages[0].message}</div>
+              <div className="swap-inbox-buttons">
+                <button
+                  onClick={acceptHandler}
+                  id={el._id}
+                  className="swap-inbox-yes-button">
+                  Accept
+                </button>
+                <button
+                  onClick={deleteHandler}
+                  id={el._id}
+                  className="swap-inbox-no-button">
+                  Decline
+                </button>
               </div>
             </div>
-          ))
-      : null
+          </div>
+        ))
+    ) : (
+      <div className="no-requests">
+        <h2>Nobody has asked to swap with you yet :(</h2>
+      </div>
+    )
 
   const Chat =
     props.swaps &&
@@ -175,8 +181,11 @@ const Swaps = props => {
     ) : null
 
   const OngoingSwaps =
-    props.swaps && props.swaps.length > 0 && !toggledChat
-      ? props.swaps
+    (props.swaps &&
+      props.swaps.length &&
+      props.swaps.filter(el => el.accepted === true).length) > 0 ? (
+      !toggledChat ? (
+        props.swaps
           .filter(el => el.accepted === true)
           .sort((a, b) => {
             if (
@@ -230,7 +239,14 @@ const Swaps = props => {
               </div>
             </div>
           ))
-      : Chat
+      ) : (
+        Chat
+      )
+    ) : (
+      <div className="no-requests">
+        <h2>Not much chatting going on</h2>
+      </div>
+    )
 
   return (
     <div className="profile-swaps-container">

@@ -1,6 +1,7 @@
 .plant-gallery-page-wrapper {
   clear: both;
 }
+
 .plant-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -62,6 +63,8 @@
   text-align: right;
   margin: 0;
   padding-top: 13px;
+  margin-left: 10px;
+  margin-bottom: 10px;
 }
 .searchbox {
   position: relative;
@@ -119,6 +122,7 @@
 .location-and-search-bar {
   margin-top: 60px;
   display: inline-block;
+  text-align: center;
 }
 .text-label {
   display: inline-block;

@@ -46,7 +46,7 @@
   width: 80px;
   z-index: +1;
   &:hover {
-    background-color: lighten($turq, 10%);
+    background-color: darken($turq, 10%);
     cursor: pointer;
   }
 }

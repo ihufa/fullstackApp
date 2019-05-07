@@ -72,7 +72,7 @@ h3 {
 
 //User Profile
 
-@media screen and (max-width: 460px) {
+@media screen and (max-width: 500px) {
   .nav-items-right {
     margin-top: 15px;
   }
@@ -94,5 +94,13 @@ h3 {
   }
   .nav-item-login {
     font-size: 1.15rem;
+    margin-left: 5px;
+  }
+  .burger-menu {
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+  .sort-options {
+    display: none;
   }
 }

@@ -20,7 +20,7 @@ import SocketContext from "./components/SocketContext"
 import { getSwaps } from "./state/actions/swapActions"
 
 const App = props => {
-  let socket = io("https://95.216.101.144:8989", {
+  let socket = io("https://planthood.dk", {
     query: `userId=${props.userData.userId}&userName=${props.userData.userName}`
   })
 

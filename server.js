@@ -1,18 +1,14 @@
-const express = require("express")
-const app = express()
-
 const mongoose = require("mongoose")
 const bodyParser = require("body-parser")
 const path = require("path")
 
-const server = require("http").createServer()
-const io = require("socket.io")({})
-io.attach(server, {
-  pingInterval: 10000,
-  pingTimeout: 5000,
-  cookie: false
-})
-server.listen(8989)
+var express = require("express")
+var app = express()
+var server = require("http").Server(app)
+var io = require("socket.io")(server)
+
+server.listen(5000)
+
 io.on("connect", onConnect)
 let clients = []
 function onConnect(socket) {
@@ -75,19 +71,10 @@ const swaps = require("./api/routes/swaps")
 app.use("/users", users)
 app.use("/products", products)
 app.use("/swaps", swaps)
+
 app.use("/plants", express.static("uploads"))
-
-// Serve static assets if in production
-//if (process.env.NODE_ENV === "production") {
-// Set static folder
+app.use("/plants/resized", express.static("uploads/resized"))
 app.use(express.static("client/build"))
-
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
 })
-//}
-
-const port = process.env.PORT || 5000
-
-app.listen(port, () => console.log(`Server started on port ${port}`))
-app.use(express.static("client/public"))

@@ -142,9 +142,6 @@ const UserProfile = props => {
                   <div onClick={toggleShowProduct}>
                     <p>Show</p>
                   </div>
-                  <div>
-                    <p>Edit</p>
-                  </div>
                 </div>
                 <div className="profile-plant-grid-name">
                   <p>{el.name}</p>

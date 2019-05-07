@@ -103,6 +103,9 @@
 .burger-menu-items-active-login {
   height: 199px; }
 
+.nav-item-login {
+  margin-left: 15px; }
+
 .plant-gallery-page-wrapper {
   clear: both; }
 
@@ -163,7 +166,9 @@
   vertical-align: top;
   text-align: right;
   margin: 0;
-  padding-top: 13px; }
+  padding-top: 13px;
+  margin-left: 10px;
+  margin-bottom: 10px; }
 
 .searchbox {
   position: relative;
@@ -219,7 +224,8 @@
 
 .location-and-search-bar {
   margin-top: 60px;
-  display: inline-block; }
+  display: inline-block;
+  text-align: center; }
 
 .text-label {
   display: inline-block;
@@ -304,7 +310,7 @@
   width: 80px;
   z-index: +1; }
   .image-menu-items > *:hover {
-    background-color: #d1eddd;
+    background-color: #89cfa7;
     cursor: pointer; }
 
 .image-menu-items > * > p {
@@ -362,6 +368,10 @@
 
 .swap-inbox {
   width: 100%; }
+
+.no-requests {
+  text-align: center;
+  margin-top: 60px; }
 
 .swap-messages-toggler {
   margin: auto;
@@ -781,7 +791,7 @@ h3 {
     background-color: #397a9b;
     cursor: pointer; }
 
-@media screen and (max-width: 460px) {
+@media screen and (max-width: 500px) {
   .nav-items-right {
     margin-top: 15px; }
   .nav-item {
@@ -796,4 +806,10 @@ h3 {
   .burger-menu-items {
     top: 55px; }
   .nav-item-login {
-    font-size: 1.15rem; } }
+    font-size: 1.15rem;
+    margin-left: 5px; }
+  .burger-menu {
+    margin-left: 2px;
+    margin-right: 2px; }
+  .sort-options {
+    display: none; } }
