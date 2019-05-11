@@ -10,8 +10,9 @@ import {
 } from "./types"
 
 export const requestSwap = swapRequest => dispatch => {
+  console.log(localStorage.token)
   axios
-    .post("/swaps", swapRequest)
+    .post("/swaps", swapRequest, { headers: { authorization: localStorage.token } })
     .then(res => {
       dispatch({
         type: REQUEST_SWAP,
@@ -33,7 +34,7 @@ export const requestSwap = swapRequest => dispatch => {
 export const getSwaps = id => dispatch => {
   console.log("getting swaps")
   axios
-    .get(`/swaps/${id}`)
+    .get(`/swaps/${id}`, { headers: { authorization: localStorage.token } })
     .then(res => {
       dispatch({
         type: UPDATE_SWAPS,
@@ -48,8 +49,9 @@ export const getSwaps = id => dispatch => {
     })
 }
 export const acceptSwap = id => dispatch => {
+  let lul = "patch requests need a body!?"
   axios
-    .patch(`/swaps/accept/${id}`)
+    .patch(`/swaps/accept/${id}`, lul, { headers: { authorization: localStorage.token } })
     .then(res => {
       dispatch({
         type: ACCEPT_SWAP,
@@ -69,7 +71,7 @@ export const acceptSwap = id => dispatch => {
 }
 export const deleteSwap = id => dispatch => {
   axios
-    .delete(`/swaps/${id}`)
+    .delete(`/swaps/${id}`, { headers: { authorization: localStorage.token } })
     .then(res => {
       dispatch({
         type: DELETE_SWAP,
@@ -97,18 +99,19 @@ export const addMessage = message => dispatch => {
   })
   console.log("/swaps/message.id sent", mes)
   axios
-    .patch(`/swaps/${message.id}`, mes)
+    .patch(`/swaps/${message.id}`, mes, { headers: { authorization: localStorage.token } })
     .then(() => console.log("addMessage success"))
     .catch(() => console.log("addMessage error"))
 }
 
 export const seeMessage = swap => dispatch => {
   console.log(swap)
-  axios.patch(`/swaps/seen/${swap}`).then(res => {
-    console.log("swapsies ", swap)
+  axios.patch(`/swaps/seen/${swap}`, { headers: { authorization: localStorage.token } })
+    .then(() => {
     dispatch({
       type: SEE_MESSAGE,
       payload: swap
     })
+    .catch(() => console.log("seeMessage error"))
   })
 }

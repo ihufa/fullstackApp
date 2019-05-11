@@ -292,7 +292,7 @@
   top: 0px;
   right: 0px;
   width: 80px;
-  height: 60px;
+  height: 90px;
   z-index: 1;
   background-color: #addec2; }
   .image-menu-items:hover {
@@ -376,7 +376,8 @@
 .swap-messages-toggler {
   margin: auto;
   width: 320px;
-  font-size: 0; }
+  font-size: 0;
+  margin-bottom: 30px; }
 
 .swap-messages-toggler-left {
   position: relative;

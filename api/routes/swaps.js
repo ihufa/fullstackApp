@@ -1,10 +1,11 @@
 const express = require("express")
 const router = express.Router()
 const mongoose = require("mongoose")
+const checkAuth = require("../auth/checkAuth")
 
 const Swap = require("../models/swap")
 
-router.post("/", (req, res, next) => {
+router.post("/", checkAuth, (req, res, next) => {
   const swap = new Swap({
     _id: mongoose.Types.ObjectId(),
     requesterId: req.body.requesterId,
@@ -35,7 +36,7 @@ router.post("/", (req, res, next) => {
     })
 })
 
-router.get("/:userId", (req, res, next) => {
+router.get("/:userId", checkAuth, (req, res, next) => {
   let results
   Swap.find({ receiverId: req.params.userId })
     .sort({ time: -1 })
@@ -55,7 +56,7 @@ router.get("/:userId", (req, res, next) => {
     .catch(() => console.log("fetching swaps error"))
 })
 
-router.delete("/:swapId", (req, res, next) => {
+router.delete("/:swapId", checkAuth, (req, res, next) => {
   Swap.deleteOne({ _id: req.params.swapId })
     .exec()
     .then(result => {
@@ -67,7 +68,7 @@ router.delete("/:swapId", (req, res, next) => {
       res.status(404).json(err)
     })
 })
-router.patch("/accept/:swapId", (req, res, next) => {
+router.patch("/accept/:swapId", checkAuth, (req, res, next) => {
   const accepted = {
     accepted: true,
     seenByReceiver: true,

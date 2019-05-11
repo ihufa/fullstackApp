@@ -10,6 +10,17 @@ import {
 } from "./types"
 import axios from "axios"
 
+export const rotateProduct = img => {
+  console.log(img)
+  let path = img.img
+  let id = img.id
+  axios
+  .patch(`products/rotate/${path}`)
+  .then(res => {
+    console.log(res)
+  })
+}
+
 export const getProducts = args => dispatch => {
   console.log("getProducts", args)
   if (args.sort === "time") {
@@ -110,7 +121,6 @@ export const addProduct = product => dispatch => {
           type: "confirmationPlantAdd"
         }
       })
-      getUserProducts(id)
     })
     .catch(err => {
       dispatch({

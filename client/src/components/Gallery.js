@@ -84,7 +84,7 @@ const Gallery = props => {
   const swapHandler = e => {
     let id = e.target.id
     let plant = props.products.filter(el => el._id === id)
-
+    if(props.userData) {
     props.openModal({
       type: "plantInfo",
       userId: plant[0].userId,
@@ -98,6 +98,12 @@ const Gallery = props => {
       free: plant[0].free,
       sapling: plant[0].sapling
     })
+  }
+  else props.openModal ({
+    type: "error",
+    binary: false,
+    message: "Please log in to swap plants"
+  })
   }
   const onSearchChange = e => {
     setSearch(e.target.value)
@@ -124,6 +130,13 @@ const Gallery = props => {
     }
   }
   const onSortChange = e => {
+    if(!props.userData) {
+      props.openModal({
+        type: "error",
+        binary: false,
+        message: "Please log in to sort by location. Now plants are sorted only by latest."
+      })
+    }
     setSort(e.target.id)
     dispatch("null")
   }

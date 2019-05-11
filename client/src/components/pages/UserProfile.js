@@ -5,7 +5,8 @@ import {
   toggleProductMenu,
   removeProduct,
   toggleHideProduct,
-  toggleShowProduct
+  toggleShowProduct,
+  rotateProduct
 } from "../../state/actions/productsActions"
 import AddPlant from "../modals/AddPlant"
 import { openModal } from "../../state/actions/modalActions"
@@ -42,6 +43,15 @@ const UserProfile = props => {
       message: "Are you sure you want to remove this plant?",
       id: plantInFocus
     })
+  }
+  const rotateProduct = async(e) => {
+    e.preventDefault()
+    let img = {
+      img: plantInFocus,
+      id: props.userData.userId
+    }
+    await props.rotateProduct(img)
+    getUserProducts(props.userData.userId)
   }
   const togglePlantMenu = e => {
     e.preventDefault()
@@ -92,6 +102,9 @@ const UserProfile = props => {
                   <div onClick={toggleHideProduct}>
                     <p>Hide</p>
                   </div>
+                  <div id={el.image} onClick={rotateProduct}>
+                    <p>Rotate</p>
+                  </div>
                 </div>
                 <div className="profile-plant-grid-name">
                   <p>{el.name}</p>
@@ -130,7 +143,7 @@ const UserProfile = props => {
                 <img
                   className="plant-img"
                   alt={el.name}
-                  src={"http://localhost:5000/plants/" + el.image}
+                  src={"https://planthood.dk/plants/resized/" + el.image}
                 />
                 <div onClick={togglePlantMenu} className={"image-menu"}>
                   <i id={el._id} className="fas fa-ellipsis-v" />
@@ -187,6 +200,7 @@ export default connect(
     removeProduct,
     toggleHideProduct,
     toggleShowProduct,
+    rotateProduct,
     openModal
   }
 )(UserProfile)

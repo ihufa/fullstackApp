@@ -44,17 +44,17 @@ export const checkUser = user => dispatch => {
     })
 }
 
-export const getUsers = () => dispatch => {
-  console.log("getUsers...")
-  axios
-    .get("/users", { headers: { authorization: sessionStorage.token } })
-    .then(res =>
-      dispatch({
-        type: GET_USERS,
-        payload: res.data
-      })
-    )
-}
+// export const getUsers = () => dispatch => {      //don't need this for now
+//   console.log("getUsers...")
+//   axios
+//     .get("/users", { headers: { authorization: localStorage.token } })
+//     .then(res =>
+//       dispatch({
+//         type: GET_USERS,
+//         payload: res.data
+//       })
+//     )
+// }
 
 export const addUser = user => dispatch => {
   axios
@@ -89,7 +89,7 @@ export const addUser = user => dispatch => {
 
 export const changeEmail = email => dispatch => {
   axios
-    .patch("/users/email", email)
+    .patch("/users/email", email, { headers: { authorization: localStorage.token } })
     .then(res => {
       console.log("email return data ", res.data)
 
@@ -118,7 +118,7 @@ export const changeEmail = email => dispatch => {
 }
 export const changeZip = zip => dispatch => {
   axios
-    .patch("/users/zip", zip)
+    .patch("/users/zip", zip, { headers: { authorization: localStorage.token } })
     .then(res => {
       console.log("zip return data ", res.data)
 

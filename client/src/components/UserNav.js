@@ -107,9 +107,11 @@ const UserNav = props => {
                   <h2>Contact</h2>
                 </div>
               </Link>
+              <Link to="/plants">
               <div onClick={clearUser} className="burger-menu-item">
                 <h2>Log out</h2>
               </div>
+              </Link>
             </div>
           </div>
         </div>

@@ -50,6 +50,7 @@ const PlantInfo = props => {
         <p>{props.description !== "undefined" ? props.description : ""}</p>
         <p>Location: {props.userCity}</p>
         <p>User: {props.userName}</p>
+        <p>{props.sapling === true ? "Note! This is only a cutting, not the whole plant" : ""}</p>
         {props.userData.userId !== props.userId ? (
           <>
             <p>

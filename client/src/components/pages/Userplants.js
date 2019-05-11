@@ -10,22 +10,25 @@ const Userplants = props => {
     <div className="browsed-user-plant-wrapper">
       <h1>{props.location.pathname.split("/")[3]}'s plants</h1>
       <div className="browsed-user-plants">
-        {props.browsedUserProducts &&
-          props.browsedUserProducts.length > 0 &&
-          props.browsedUserProducts.map((el, index) => (
-            <div className="plant-card" key={el._id}>
-              <img
-                className={"plant-img plantImg" + index}
-                id={"plant" + index}
-                alt={el.name}
-                src={"https://planthood.dk/plants/resized/" + el.image}
-              />
-              <div className="user-plant-grid-text">
-                <p>type: {el.name}</p>
-                <p>description: {el.message}</p>
-              </div>
-            </div>
-          ))}
+        {(props.browsedUserProducts &&
+          props.browsedUserProducts.length > 0) ?
+            (props.browsedUserProducts.map((el, index) => (
+              <div className="plant-card" key={el._id}>
+                <img
+                  className={"plant-img plantImg" + index}
+                  id={"plant" + index}
+                  alt={el.name}
+                  src={"https://planthood.dk/plants/resized/" + el.image}
+                />
+                <div className="user-plant-grid-text">
+                  <p>type: {el.name}</p>
+                  <p>{el.message !== "undefined" ? el.message : ""}</p>
+                  <p>{el.sapling ? "A cutting from this plant" : ""}</p>
+                </div>
+              </div>)
+          ))
+        : <div className="static-page"><h3>No plants in this garden</h3></div>
+        }
       </div>
     </div>
   )

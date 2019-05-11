@@ -185,7 +185,7 @@ const AddPlant = props => {
             </p>
             <div>
               <input type="checkbox" onChange={onChangeSapling} />
-              <span>I am only offering a sapling of this plant</span>
+              <span>I am only offering a cutting of this plant</span>
             </div>
             <input className="submit-plant-btn" type="submit" value="Add!" />
           </form>

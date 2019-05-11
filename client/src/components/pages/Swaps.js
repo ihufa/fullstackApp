@@ -89,10 +89,10 @@ const Swaps = props => {
 
   const IncomingRequests =
     props.swaps &&
-    props.swaps.length &&
+    props.swaps.length > 0 &&
     props.swaps
       .filter(el => el.requesterId !== props.userData.userId)
-      .filter(el => el.accepted === false) > 0 ? (
+      .filter(el => el.accepted === false).length > 0 ? (
       props.swaps
         .filter(el => el.requesterId !== props.userData.userId)
         .filter(el => el.accepted === false)
@@ -104,7 +104,7 @@ const Swaps = props => {
                 alt={el.plantType}
                 src={"https://planthood.dk/plants/resized/" + el.plant}
               />
-              <Link to={`/users/${el.requesterId}`}>
+              <Link to={`/users/${el.requesterId}/${el.requesterName}`}>
                 <div className="swap-inbox-sender">{el.requesterName}</div>
               </Link>{" "}
               <div className="swap-inbox-message">{el.messages[0].message}</div>
@@ -134,7 +134,6 @@ const Swaps = props => {
   const Chat =
     props.swaps &&
     props.swaps.length > 0 &&
-    props.swaps.filter(swap => swap._id === toggledChat) &&
     props.swaps.filter(swap => swap._id === toggledChat)[0] &&
     props.swaps.filter(swap => swap._id === toggledChat)[0].messages ? (
       <div className="chat-box">
@@ -181,10 +180,9 @@ const Swaps = props => {
     ) : null
 
   const OngoingSwaps =
-    (props.swaps &&
-      props.swaps.length &&
-      props.swaps.filter(el => el.accepted === true).length) > 0 ? (
-      !toggledChat ? (
+    props.swaps &&
+      props.swaps.length > 0 &&
+      props.swaps.filter(el => el.accepted === true).length && !toggledChat ? (
         props.swaps
           .filter(el => el.accepted === true)
           .sort((a, b) => {
@@ -239,9 +237,10 @@ const Swaps = props => {
               </div>
             </div>
           ))
-      ) : (
+      ) : props.swaps &&
+      props.swaps.length > 0 &&
+      props.swaps.filter(el => el.accepted === true).length > 0 ? (
         Chat
-      )
     ) : (
       <div className="no-requests">
         <h2>Not much chatting going on</h2>

@@ -3,6 +3,7 @@ const mongoose = require("mongoose")
 const router = express.Router()
 const Product = require("../models/product")
 const sharp = require("sharp")
+const fs = require ("fs")
 
 const checkAuth = require("../auth/checkAuth")
 const multer = require("multer")
@@ -12,14 +13,14 @@ const storage = multer.diskStorage({
     cb(null, "./uploads/")
   },
   filename: function(req, file, cb) {
-    cb(null, Date.now() + file.originalname + ".jpeg")
+    cb(null, Date.now() + file.originalname +".jpeg")
   }
 })
 const fileFilter = (req, file, cb) => {
   // reject a file
 
   if (
-    file.mimetype === "image/jpeg" //|| file.mimetype === "image/png"   currently .jpeg is added to all files, not .png
+    file.mimetype === "image/jpeg" //|| file.mimetype === "image/png" currently only jpeg supported, cus .jpeg is added in storage
   ) {
     cb(null, true)
   } else {
@@ -30,16 +31,40 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
   storage: storage,
   limits: {
-    fileSize: 1024 * 1024 * 5
+    fileSize: 1024 * 1024 * 50
   },
   fileFilter: fileFilter
 }).single("productImage")
+
+router.patch("/rotate/:image", (req, res, next) => {
+  let image = ""
+  Product.findById(req.params.image)
+  .exec()
+  .then(result => {
+    image = './uploads/resized/'+result.image
+    console.log("image", image)
+    
+    sharp(image)
+    .rotate(90)
+    .withMetadata()
+    .toBuffer(function(err, buffer) {
+      if(err) throw err
+      fs.writeFile(image, buffer, function() {
+        res.status(200).json("image rotated")
+      });
+    })
+  })
+  .catch(err => {res.status(400).json("invalid img id")
+    console.log(err)})
+  })
 
 router.post("/", checkAuth, upload, (req, res, next) => {
   console.log(req.file)
 
   sharp(req.file.path)
+  .withMetadata()
     .resize(440, 440)
+    .jpeg()
     .toFile("./uploads/resized/" + req.file.filename, err => {
       if (!err) console.log("sharp worked")
 

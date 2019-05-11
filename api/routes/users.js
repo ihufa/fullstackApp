@@ -7,16 +7,16 @@ const checkAuth = require("../auth/checkAuth")
 const User = require("../models/user")
 const ZIPS = require("../zips")
 
-router.get("/", checkAuth, (req, res, next) => {
-  User.find()
-    .exec()
-    .then(user => {
-      res.status(201).json(user)
-    })
-    .catch(err => {
-      res.status(500).json({ message: "Please log in" })
-    })
-})
+// router.get("/", checkAuth, (req, res, next) => {   //don't need this atm
+//   User.find()
+//     .exec()
+//     .then(user => {
+//       res.status(201).json(user)
+//     })
+//     .catch(err => {
+//       res.status(500).json({ message: "Please log in" })
+//     })
+// })
 
 router.post("/", (req, res, next) => {
   console.log("post request received")
@@ -92,20 +92,20 @@ router.post("/login", (req, res, then) => {
     })
 })
 
-router.delete("/", (req, res, next) => {
-  const id = req.body._id
+// router.delete("/", (req, res, next) => {   //Don't need this for now
+//   const id = req.body._id
 
-  User.remove({ _id: id })
-    .exec()
-    .then(result => {
-      console.log("user deleted" + result)
-      res.status(200).json("User deleted!" + result)
-    })
-    .catch(err => {
-      console.log({ error: err })
-    })
-})
-router.patch("/email", (req, res, next) => {
+//   User.remove({ _id: id })
+//     .exec()
+//     .then(result => {
+//       console.log("user deleted" + result)
+//       res.status(200).json("User deleted!" + result)
+//     })
+//     .catch(err => {
+//       console.log({ error: err })
+//     })
+// })
+router.patch("/email", checkAuth, (req, res, next) => {
   console.log(req.body)
   User.updateOne({ _id: req.body.id }, { $set: { email: req.body.input } })
     .exec()
@@ -127,7 +127,7 @@ router.patch("/email", (req, res, next) => {
     .catch(err => console.log(err))
 })
 
-router.patch("/zip", (req, res, next) => {
+router.patch("/zip", checkAuth, (req, res, next) => {
   let city = ZIPS.filter(el => el.zip == req.body.input)[0].city
   User.updateOne({ _id: req.body.id }, { $set: { city: city, zip: req.body.input } })
     .exec()
