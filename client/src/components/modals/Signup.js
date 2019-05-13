@@ -53,7 +53,7 @@ const Signup = props => {
     let validation = formValidation()
     if (validation === "accepted") {
       props.addUser({
-        email: email,
+        email: email.toLowerCase(),
         password: password,
         name: name,
         zip: zip,

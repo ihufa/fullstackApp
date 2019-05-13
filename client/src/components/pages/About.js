@@ -13,7 +13,11 @@ const About = props => {
         </h3>
         <br/>
         <h3>
-          If there are other bugs, issues or suggestions I would love to hear about it. I will try to make this site into what the users want, so do speak up.
+          Right now you cannot upload plant photos using Safari! this is being worked on, but until then please user another browser.
+        </h3>
+        <br/>
+        <h3>
+          If there are other bugs, issues or suggestions I would love to hear about it. I will try to make this site into what the users want, so do let me know.
         </h3>
     </div>
   )

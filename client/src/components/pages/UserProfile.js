@@ -44,14 +44,14 @@ const UserProfile = props => {
       id: plantInFocus
     })
   }
-  const rotateProduct = async(e) => {
+  const rotateProduct = (e) => {
     e.preventDefault()
     let img = {
       img: plantInFocus,
       id: props.userData.userId
     }
-    await props.rotateProduct(img)
-    getUserProducts(props.userData.userId)
+    props.rotateProduct(img)
+    setTimeout(getUserProducts(props.userData.userId), 500)
   }
   const togglePlantMenu = e => {
     e.preventDefault()

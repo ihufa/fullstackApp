@@ -165,7 +165,7 @@ const Gallery = props => {
     props.products && props.products.length > 0 ? (
       <div className="plant-gallery-page-wrapper">
         <div className="plant-grid">
-          {props.products.map((el, index) => (
+          {props.products.filter(el => el.hidden === false).map((el, index) => (
             <div className="plant-card" key={el._id}>
               <img
                 className={"plant-img plantImg" + index}

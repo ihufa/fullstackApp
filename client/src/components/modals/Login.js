@@ -16,7 +16,7 @@ const Login = (props) => {
   const checkUser = e => {
     props.history.push("/plants")
     props.checkUser({
-      email: email,
+      email: email.toLowerCase(),
       password: password
     })
   }

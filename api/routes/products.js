@@ -3,6 +3,7 @@ const mongoose = require("mongoose")
 const router = express.Router()
 const Product = require("../models/product")
 const sharp = require("sharp")
+sharp.cache(false)
 const fs = require ("fs")
 
 const checkAuth = require("../auth/checkAuth")
@@ -46,7 +47,6 @@ router.patch("/rotate/:image", (req, res, next) => {
     
     sharp(image)
     .rotate(90)
-    .withMetadata()
     .toBuffer(function(err, buffer) {
       if(err) throw err
       fs.writeFile(image, buffer, function() {
@@ -62,7 +62,6 @@ router.post("/", checkAuth, upload, (req, res, next) => {
   console.log(req.file)
 
   sharp(req.file.path)
-  .withMetadata()
     .resize(440, 440)
     .jpeg()
     .toFile("./uploads/resized/" + req.file.filename, err => {
