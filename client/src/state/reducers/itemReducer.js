@@ -14,7 +14,8 @@ import {
   TOGGLE_HIDE_PRODUCT,
   CHANGE_EMAIL,
   CHANGE_ZIP,
-  CONCAT_PRODUCTS
+  CONCAT_PRODUCTS,
+  TOGGLE_PRODUCTS_LOADING
 } from "../actions/types"
 
 const initialState = {
@@ -24,7 +25,8 @@ const initialState = {
   invalidLogin: false,
   products: [],
   browsedUserProducts: [],
-  userProducts: []
+  userProducts: [],
+  productsLoading: false
 }
 
 export default function(state = initialState, action) {
@@ -85,17 +87,23 @@ export default function(state = initialState, action) {
         invalidLogin: action.payload
       }
     case UPDATE_PRODUCTS:
-      console.log("products updated", action.payload)
       return {
         ...state,
-        products: action.payload
+        products: action.payload,
+        productsLoading: false
+      }
+    case TOGGLE_PRODUCTS_LOADING:
+      return {
+        ...state,
+        productsLoading: true
       }
     case CONCAT_PRODUCTS:
-      console.log("concatting products", action.payload)
       let concattedProd = state.products.concat(action.payload)
+      let loading = action.payload.length === 0 ? true : false
       return {
         ...state,
-        products: concattedProd
+        products: concattedProd,
+        productsLoading: loading
       }
 
     case UPDATE_BROWSED_USER_PRODUCTS:

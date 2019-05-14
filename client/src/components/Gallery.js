@@ -3,7 +3,8 @@ import { connect } from "react-redux"
 import {
   getProducts,
   productSearch,
-  productSearchNoUser
+  productSearchNoUser,
+  toggleProductsLoading
 } from "../state/actions/productsActions"
 import { openModal } from "../state/actions/modalActions"
 import { ZIPS } from "../zips"
@@ -17,7 +18,7 @@ const Gallery = props => {
   const [count, dispatch] = useReducer((state, action) => {
     //the picture # reached by scrolling and loading more pictures
     if (action === "inc") {
-      console.log("incrementing")
+      console.log("incrementing", state + incrementer)
       return state + incrementer
     } else if (action === "null") {
       return 0
@@ -39,15 +40,23 @@ const Gallery = props => {
       window.removeEventListener("scroll", loadOnScroll, true)
     }
   })
-
+  let isLoading = false
   const loadOnScroll = () => {
+    if (isLoading) return
+    isLoading = true
+    console.log("scroll ", props.productsLoading)
     var scrollTop =
       document.documentElement.scrollTop || document.body.scrollTop
     var offsetHeight = document.body.offsetHeight
     var clientHeight = document.documentElement.clientHeight
-    if (offsetHeight <= scrollTop + clientHeight) {
+    if (
+      !props.productsLoading &&
+      offsetHeight - 450 <= scrollTop + clientHeight
+    ) {
       getOneRoundOfProducts(coords)
+      props.toggleProductsLoading()
     }
+    isLoading = false
   }
   const getOneRoundOfProducts = () => {
     if (!search && props.userData) {
@@ -84,26 +93,26 @@ const Gallery = props => {
   const swapHandler = e => {
     let id = e.target.id
     let plant = props.products.filter(el => el._id === id)
-    if(props.userData) {
-    props.openModal({
-      type: "plantInfo",
-      userId: plant[0].userId,
-      productId: plant[0]._id,
-      image: plant[0].image,
-      plantType: plant[0].name,
-      description: plant[0].message,
-      userName: plant[0].userName,
-      userCity: plant[0].userCity,
-      time: plant[0].time,
-      free: plant[0].free,
-      sapling: plant[0].sapling
-    })
-  }
-  else props.openModal ({
-    type: "error",
-    binary: false,
-    message: "Please log in to swap plants"
-  })
+    if (props.userData) {
+      props.openModal({
+        type: "plantInfo",
+        userId: plant[0].userId,
+        productId: plant[0]._id,
+        image: plant[0].image,
+        plantType: plant[0].name,
+        description: plant[0].message,
+        userName: plant[0].userName,
+        userCity: plant[0].userCity,
+        time: plant[0].time,
+        free: plant[0].free,
+        sapling: plant[0].sapling
+      })
+    } else
+      props.openModal({
+        type: "error",
+        binary: false,
+        message: "Please log in to swap plants"
+      })
   }
   const onSearchChange = e => {
     setSearch(e.target.value)
@@ -118,7 +127,6 @@ const Gallery = props => {
         sort: sort
       })
       dispatch("firstSearch")
-      setSearch("")
     } else if (!props.userData) {
       props.productSearchNoUser({
         searchParam: search,
@@ -126,15 +134,15 @@ const Gallery = props => {
         sort: "time"
       })
       dispatch("firstSearch")
-      setSearch("")
     }
   }
   const onSortChange = e => {
-    if(!props.userData) {
+    if (!props.userData) {
       props.openModal({
         type: "error",
         binary: false,
-        message: "Please log in to sort by location. Now plants are sorted only by latest."
+        message:
+          "Please log in to sort by location. Now plants are sorted only by latest."
       })
     }
     setSort(e.target.id)
@@ -165,28 +173,30 @@ const Gallery = props => {
     props.products && props.products.length > 0 ? (
       <div className="plant-gallery-page-wrapper">
         <div className="plant-grid">
-          {props.products.filter(el => el.hidden === false).map((el, index) => (
-            <div className="plant-card" key={el._id}>
-              <img
-                className={"plant-img plantImg" + index}
-                id={"plant" + index}
-                alt={el.name}
-                src={"https://planthood.dk/plants/resized/" + el.image}
-              />
-              <button
-                id={el._id}
-                onClick={swapHandler}
-                className={"plant request-button plant" + index}>
-                Swap
-              </button>
-              <div className="plant-grid-name">
-                <p>{el.userCity}</p>
+          {props.products
+            .filter(el => el.hidden === false)
+            .map((el, index) => (
+              <div className="plant-card" key={el._id}>
+                <img
+                  className={"plant-img plantImg" + index}
+                  id={"plant" + index}
+                  alt={el.name}
+                  src={"https://planthood.dk/plants/resized/" + el.image}
+                />
+                <button
+                  id={el._id}
+                  onClick={swapHandler}
+                  className={"plant request-button plant" + index}>
+                  Swap
+                </button>
+                <div className="plant-grid-name">
+                  <p>{el.userCity}</p>
+                </div>
+                <div className="plant-grid-city">
+                  <p>{timeConvert(Date.now() - el.time)} siden</p>
+                </div>
               </div>
-              <div className="plant-grid-city">
-                <p>{timeConvert(Date.now() - el.time)} siden</p>
-              </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
     ) : (
@@ -249,10 +259,17 @@ const Gallery = props => {
 
 const mapStateToProps = state => ({
   products: state.items.products,
-  userData: state.items.userData
+  userData: state.items.userData,
+  productsLoading: state.items.productsLoading
 })
 
 export default connect(
   mapStateToProps,
-  { getProducts, productSearch, productSearchNoUser, openModal }
+  {
+    getProducts,
+    productSearch,
+    toggleProductsLoading,
+    productSearchNoUser,
+    openModal
+  }
 )(Gallery)

@@ -22,7 +22,7 @@
     "eject": "react-scripts eject",
     "sass": "node-sass -w src/scss/main.scss -o src/css/"
   },
-  "proxy": "https://localhost:5000",
+  "proxy": "https://planthood.dk",
   "eslintConfig": {
     "extends": "react-app"
   },

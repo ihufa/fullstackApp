@@ -6,17 +6,22 @@ import {
   REMOVE_PRODUCT,
   TOGGLE_HIDE_PRODUCT,
   OPEN_MODAL,
-  CONCAT_PRODUCTS
+  CONCAT_PRODUCTS,
+  TOGGLE_PRODUCTS_LOADING
 } from "./types"
 import axios from "axios"
+
+export const toggleProductsLoading = () => dispatch => {
+  dispatch({
+    type: TOGGLE_PRODUCTS_LOADING
+  })
+}
 
 export const rotateProduct = img => {
   console.log(img)
   let path = img.img
   let id = img.id
-  axios
-  .patch(`products/rotate/${path}`)
-  .then(res => {
+  axios.patch(`products/rotate/${path}`).then(res => {
     console.log(res)
   })
 }
@@ -190,15 +195,21 @@ export const productSearch = args => dispatch => {
     .post("/products/search", args)
     .then(res => {
       if (args.count[0] === 0)
-        dispatch({
-          type: UPDATE_PRODUCTS,
-          payload: res.data
-        })
+        dispatch(
+          {
+            type: UPDATE_PRODUCTS,
+            payload: res.data
+          },
+          { type: TOGGLE_PRODUCTS_LOADING }
+        )
       else {
-        dispatch({
-          type: CONCAT_PRODUCTS,
-          payload: res.data
-        })
+        dispatch(
+          {
+            type: CONCAT_PRODUCTS,
+            payload: res.data
+          },
+          { type: TOGGLE_PRODUCTS_LOADING }
+        )
       }
     })
     .catch(err => console.log(err))
