@@ -81,7 +81,7 @@ const Gallery = props => {
       })
       dispatch("inc")
     } else if (search && !props.userData) {
-      props.productSearch({
+      props.productSearchNoUser({
         searchParam: search,
         count: [count, incrementer],
         sort: "time"
