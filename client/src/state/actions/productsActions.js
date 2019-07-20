@@ -1,6 +1,7 @@
 import {
   UPDATE_BROWSED_USER_PRODUCTS,
   UPDATE_USER_PRODUCTS,
+  UPDATE_PRODUCT,
   UPDATE_PRODUCTS,
   PRODUCT_MENU_TOGGLE,
   REMOVE_PRODUCT,
@@ -17,12 +18,18 @@ export const toggleProductsLoading = () => dispatch => {
   })
 }
 
-export const rotateProduct = img => {
-  console.log(img)
+export const rotateProduct = img => dispatch => {
+  console.log("rotating...", img)
   let path = img.img
   let id = img.id
-  axios.patch(`products/rotate/${path}`).then(res => {
-    console.log(res)
+  axios
+      .patch(`products/rotate/${path}/${id}`)
+      .then(res => {
+        console.log("rotatedProduct", res)
+        dispatch({
+          type: UPDATE_PRODUCT,
+          payload: res.data
+        })
   })
 }
 
@@ -99,13 +106,13 @@ export const getUserProducts = userId => dispatch => {
   axios
     .get(`/products/${userId}`)
     .then(res => {
-      console.log("updateProductsByUserId...", res)
+      console.log("updateUserProducts", res)
       dispatch({
         type: UPDATE_USER_PRODUCTS,
         payload: res.data
       })
     })
-    .catch(err => console.log(err))
+    .catch(err => console.log("error:", err))
 }
 export const addProduct = product => dispatch => {
   let id = product.userId

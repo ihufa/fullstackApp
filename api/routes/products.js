@@ -37,20 +37,26 @@ const upload = multer({
   fileFilter: fileFilter
 }).single("productImage")
 
-router.patch("/rotate/:image", (req, res, next) => {
+router.patch("/rotate/:image/:id/", (req, res, next) => {
   let image = ""
-  Product.findById(req.params.image)
+  let imgId = req.params.image
+  let productId = req.params.id
+  console.log("rotateImg", imgId, productId)
+
+  Product.findById(imgId)
   .exec()
   .then(result => {
     image = './uploads/resized/'+result.image
-    console.log("image", image)
     
     sharp(image)
     .rotate(90)
     .toBuffer(function(err, buffer) {
       if(err) throw err
       fs.writeFile(image, buffer, function() {
-        res.status(200).json("image rotated")
+        res.status(200).json({
+          image: image,
+          id: productId
+        })
       });
     })
   })

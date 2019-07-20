@@ -6,6 +6,7 @@ import {
   INITIATE_USER,
   CLEAR_USER,
   INVALID_LOGIN,
+  UPDATE_PRODUCT,
   UPDATE_PRODUCTS,
   UPDATE_USER_PRODUCTS,
   UPDATE_BROWSED_USER_PRODUCTS,
@@ -142,6 +143,25 @@ export default function(state = initialState, action) {
         userProducts: state.userProducts.filter(
           item => item._id !== action.payload
         )
+      }
+
+      case UPDATE_PRODUCT:
+        let index5 = state.userProducts
+        .map(prod => prod._id)
+        .indexOf(action.payload._id) // find index of product to toggle
+      let newProd5 = state.userProducts.map((item, idx) => {
+        // create new array without mutating
+        if (idx !== index5) {
+          return item
+        }
+        return {
+          ...item,
+          flagged: !item.flagged 
+        }
+      })
+      return {
+        ...state,
+        userProducts: newProd5
       }
 
     case TOGGLE_HIDE_PRODUCT:
