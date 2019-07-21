@@ -52,11 +52,12 @@ router.patch("/rotate/:image/:id/", (req, res, next) => {
     .rotate(90)
     .toBuffer(function(err, buffer) {
       if(err) throw err
-      fs.writeFile(image, buffer, function() {
+      fs.writeFile(`${image}Rotated`, buffer, function() {
         res.status(200).json({
-          image: image,
+          image: `${image}Rotated`,
           id: productId
         })
+        fs.unlink(image)
       });
     })
   })
