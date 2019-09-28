@@ -48,21 +48,21 @@ export const getSwaps = id => dispatch => {
       })
     })
 }
-export const acceptSwap = id => dispatch => {
-  let lul = "patch requests need a body!?"
+export const acceptSwap = swap => dispatch => {
+  console.log('acceptSwap', swap)
   axios
-    .patch(`/swaps/accept/${id}`, lul, { headers: { authorization: localStorage.token } })
+    .patch(`/swaps/accept/${swap.id}`, swap, { headers: { authorization: localStorage.token } })
     .then(res => {
       dispatch({
         type: ACCEPT_SWAP,
-        payload: id
+        payload: swap.id
       })
     })
     .catch(err => {
       dispatch({
         type: ADD_MESSAGE,
         payload: {
-          id: id,
+          id: swap.id,
           sender: "",
           message: "error"
         }
@@ -89,6 +89,7 @@ export const addMessage = message => dispatch => {
   let mes = {
     requester: message.requester,
     receiverId: message.receiverId,
+    receiverEmail: message.receiverEmail,
     sender: message.sender,
     message: message.message,
     time: message.time
@@ -99,7 +100,7 @@ export const addMessage = message => dispatch => {
   })
   console.log("/swaps/message.id sent", mes)
   axios
-    .patch(`/swaps/${message.id}`, mes, { headers: { authorization: localStorage.token } })
+    .patch(`/swaps/${message.id}`, message, { headers: { authorization: localStorage.token } })
     .then(() => console.log("addMessage success"))
     .catch(() => console.log("addMessage error"))
 }

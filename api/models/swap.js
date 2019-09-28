@@ -6,6 +6,8 @@ const swapSchema = mongoose.Schema({
   requesterName: { type: String, required: true },
   receiverId: { type: mongoose.Schema.Types.ObjectId, required: true },
   receiverName: { type: String, required: true },
+  requesterEmail: {type: String, required: true},
+  receiverEmail: {type: String, required: true},
   productId: { type: mongoose.Schema.Types.ObjectId, required: true },
   messages: { type: Array },
   accepted: { type: Boolean, required: true },

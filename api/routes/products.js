@@ -52,12 +52,11 @@ router.patch("/rotate/:image/:id/", (req, res, next) => {
     .rotate(90)
     .toBuffer(function(err, buffer) {
       if(err) throw err
-      fs.writeFile(`${image}Rotated`, buffer, function() {
+      fs.writeFile(image, buffer, function() {
         res.status(200).json({
-          image: `${image}Rotated`,
+          image: image,
           id: productId
         })
-        fs.unlink(image)
       });
     })
   })
@@ -81,6 +80,7 @@ router.post("/", checkAuth, upload, (req, res, next) => {
         message: req.body.message,
         userId: req.body.userId,
         userName: req.body.userName,
+        userEmail: req.body.userEmail,
         zip: req.body.zip,
         userCity: req.body.userCity,
         longitude: req.body.long,
@@ -115,6 +115,7 @@ router.post("/sort/time", (req, res, next) => {
         name: "$name",
         userId: "$userId",
         userName: "$userName",
+        userEmail: "$userEmail",
         zip: "$zipv",
         userCity: "$userCity",
         longitude: "$longitude",
@@ -165,6 +166,7 @@ router.post("/sort/distance", (req, res, next) => {
         name: "$name",
         userId: "$userId",
         userName: "$userName",
+        userEmail: "$userEmail",
         zip: "$zipv",
         userCity: "$userCity",
         longitude: "$longitude",
@@ -235,6 +237,7 @@ router.post("/sort/suggested", (req, res, next) => {
         name: "$name",
         userId: "$userId",
         userName: "$userName",
+        userEmail: "$userEmail",
         zip: "$zipv",
         userCity: "$userCity",
         longitude: "$longitude",
@@ -303,6 +306,7 @@ router.post("/search", (req, res, next) => {
         name: "$name",
         userId: "$userId",
         userName: "$userName",
+        userEmail: "$userEmail",
         zip: "$zipv",
         userCity: "$userCity",
         longitude: "$longitude",
@@ -341,6 +345,7 @@ router.post("/search/nouser", (req, res, next) => {
         name: "$name",
         userId: "$userId",
         userName: "$userName",
+        userEmail: "$userEmail",
         zip: "$zipv",
         userCity: "$userCity",
         longitude: "$longitude",

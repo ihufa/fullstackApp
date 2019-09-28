@@ -24,7 +24,11 @@ const Swaps = props => {
     setToggledChat(null)
   }
   const acceptHandler = e => {
-    props.acceptSwap(e.target.id)
+    props.acceptSwap({
+      id: e.target.id,
+      requesterEmail: props.swaps.filter(el => el._id === e.target.id)[0].requesterEmail,
+      requesterId: props.swaps.filter(el => el._id === e.target.id)[0].requesterId,
+    })
   }
   const deleteHandler = e => {
     props.deleteSwap(e.target.id)
@@ -55,11 +59,10 @@ const Swaps = props => {
     setChatMessage(e.target.value)
   }
   const sendChatHandler = e => {
+    const currentSwap = props.swaps.filter(el => el._id === toggledChat)[0]
     e.preventDefault()
-    let chatRequester = props.swaps.filter(el => el._id === toggledChat)[0]
-      .requesterId
-    let chatReceiver = props.swaps.filter(el => el._id === toggledChat)[0]
-      .receiverId
+    let chatRequester = currentSwap.requesterId
+    let chatReceiver = currentSwap.receiverId
     let receiverId
     if (chatRequester !== props.userData.userId) {
       receiverId = chatRequester
@@ -67,14 +70,18 @@ const Swaps = props => {
       receiverId = chatReceiver
     }
     if (chatMessage !== "" && chatMessage !== " ") {
+
+      const requester = props.userData.userId ===
+        currentSwap.requesterId
+
       let message = {
         // is the message sender the original requester of the swap, true=yes
-        requester:
-          props.userData.userId ===
-          props.swaps.filter(el => el._id === toggledChat)[0].requesterId,
+        requester,
+        receiverEmail: requester ? currentSwap.receiverEmail : currentSwap.requesterEmail,
+        requesterEmail: requester ? currentSwap.requesterEmail : currentSwap.receiverEmail,
+        receiverId: requester ? currentSwap.receiverId : currentSwap.requesterId,
         id: toggledChat,
         sender: props.userData.userName,
-        receiverId: receiverId,
         message: chatMessage,
         time: Date.now()
       }

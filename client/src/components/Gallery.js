@@ -105,7 +105,8 @@ const Gallery = props => {
         userCity: plant[0].userCity,
         time: plant[0].time,
         free: plant[0].free,
-        sapling: plant[0].sapling
+        sapling: plant[0].sapling,
+        userEmail: plant[0].userEmail
       })
     } else
       props.openModal({

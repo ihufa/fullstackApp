@@ -9,8 +9,8 @@ var io = require("socket.io")(server)
 
 server.listen(5000)
 
+var clients = []
 io.on("connect", onConnect)
-let clients = []
 function onConnect(socket) {
   if (socket.handshake.query.userId !== "undefined") {
     console.log(socket.id, "connected")
@@ -67,8 +67,9 @@ mongoose
 const users = require("./api/routes/users")
 const products = require("./api/routes/products")
 const swaps = require("./api/routes/swaps")
+app.set('clients', clients)
 
-app.use("/users", users)
+app.use("/users", users)  
 app.use("/products", products)
 app.use("/swaps", swaps)
 

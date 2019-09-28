@@ -22,8 +22,10 @@ const PlantInfo = props => {
     let swapRequest = {
       requesterId: props.userData.userId,
       requesterName: props.userData.userName,
+      requesterEmail: props.userData.userEmail,
       receiverId: props.userId,
       receiverName: props.userName,
+      receiverEmail: props.userEmail,
       productId: props.productId,
       plant: props.image,
       message: message

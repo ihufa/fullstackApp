@@ -45,6 +45,7 @@ const AddPlant = props => {
     body.append("message", plantDescription)
     body.append("userId", props.userData.userId)
     body.append("userName", props.userData.userName)
+    body.append('userEmail', props.userData.userEmail)
     body.append("zip", props.userData.userZip)
     body.append("free", plantFree)
     body.append("sappling", plantSapling)
@@ -54,7 +55,6 @@ const AddPlant = props => {
     props.addProduct(body)
     props.showModal()
   }
-  //figure out how to make universal onChange to set state without setState()
   const onChangeImg = e => {
     setPlantImg(e.target.files[0])
     console.log(plantImg)
