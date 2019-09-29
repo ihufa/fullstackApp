@@ -1,4 +1,4 @@
 node_modules/
 uploads
 build/
-config/
+config/keys.js
