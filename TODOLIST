@@ -42,7 +42,7 @@ V    Make server send increments of products
 
 V    Fix chat layout
 V    Fix Swap request layout
-    Resize images on upload
+V    Resize images on upload
 V    Fix login/signup modal width
 V    Make media queries for 453px and below
 V    Fix swap request modals layout
@@ -57,5 +57,13 @@ V    run on port 443
 V    use SSL (nginx)?
 V    use auto restarting package (pm2?)
 V    fix redux dev tools for production
-?    Fix websockets server
-    Protect all relevant routes
+V    Fix websockets server
+V    Protect all relevant routes
+
+## ROUND TWO
+
+V   make emailService
+    make email html templates
+    make reset password functionality
+    SoMe links in profiles. insta, twitter, snapchat
+    Log in with fb / google /insta ?

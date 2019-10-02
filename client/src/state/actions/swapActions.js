@@ -32,7 +32,7 @@ export const requestSwap = swapRequest => dispatch => {
     })
 }
 export const getSwaps = id => dispatch => {
-  console.log("getting swaps")
+  console.log("getting swaps", localStorage.token)
   axios
     .get(`/swaps/${id}`, { headers: { authorization: localStorage.token } })
     .then(res => {
@@ -113,6 +113,6 @@ export const seeMessage = swap => dispatch => {
       type: SEE_MESSAGE,
       payload: swap
     })
-    .catch(() => console.log("seeMessage error"))
   })
+    .catch(() => console.log("seeMessage error"))
 }

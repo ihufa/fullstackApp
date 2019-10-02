@@ -5,7 +5,9 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const checkAuth = require("../auth/checkAuth")
 const User = require("../models/user")
+const PendingPasswordReset = require("../models/pendingPasswordReset")
 const ZIPS = require("../zips")
+const sendMail = require('../email/emailService')
 
 // router.get("/", checkAuth, (req, res, next) => {   //don't need this atm
 //   User.find()
@@ -17,6 +19,67 @@ const ZIPS = require("../zips")
 //       res.status(500).json({ message: "Please log in" })
 //     })
 // })
+
+router.post('/newpass', (req, res, next) => {
+  console.log('newpass requested')
+  const { password, id } = req.body
+  PendingPasswordReset.findById(id)
+    .exec()
+    .then(result => {
+      const newPass = bcrypt.hash(password, 10, (err, hash) => {
+        if(err) {
+          res.status(500).json({message:'hash failed'})
+        }
+        User.updateOne({ _id: result.userId }, { $set: { password: hash} })
+        .exec()
+        .then(re => {
+          console.log('password updated')
+        })
+        .catch(err => {
+          console.log('update failed')
+          res.status(404)
+      })
+    })
+  })
+  .catch(err => {
+    console.log('no pending reset found')
+    res.status(404)
+})
+})
+
+router.post('/resetlink/:email', (req, res, next) => {
+  const { email } = req.params
+  User.findOne({ email: email })
+    .exec()
+    .then(user => {
+      const id = new mongoose.Types.ObjectId()
+      const pendingPasswordReset = new PendingPasswordReset({
+        _id: id,
+        userId: user._id,
+        userEmail: email,
+        timeStamp: Date.now()
+      })
+      pendingPasswordReset.save()
+      .then(result => {
+        sendMail({
+          type: 'RESET_PASSWORD_LINK',
+          receiver: email,
+          subject: 'Reset password',
+          message: `Click here to reset password: http://planthood.dk/resetpassword/${id}`
+        })
+        res.status(200).json({message:'email sent'})
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500)
+    })
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({message:'email not found'})
+    })
+}
+)
 
 router.post("/", (req, res, next) => {
   console.log("post request received")

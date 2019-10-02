@@ -760,6 +760,9 @@
   max-width: 1000px;
   margin: auto; }
 
+.centered {
+  text-align: center; }
+
 .static-page * {
   text-align: center; }
 

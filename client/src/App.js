@@ -4,6 +4,8 @@ import Signup from "./components/modals/Signup"
 import Login from "./components/modals/Login"
 import LoginNav from "./components/LoginNav"
 import UserNav from "./components/UserNav"
+import Forgot from "./components/pages/Forgot"
+import ResetPassword from "./components/pages/ResetPassword"
 import UserProfile from "./components/pages/UserProfile"
 import Gallery from "./components/Gallery"
 import { connect } from "react-redux"
@@ -55,7 +57,9 @@ const App = props => {
           <div className="content-wrapper">
             <Route exact path="/" component={Gallery} />
             <Route path="/plants/" component={Gallery} />
-            <Route path="/plants/login/" component={Login} />
+            <Route exact path="/plants/login/" component={Login} />
+            <Route exact path="/forgot" component={Forgot} />
+            <Route path="/resetpassword" component={ResetPassword} />
             <Route path="/plants/signup/" component={Signup} />
             <Route exact path="/myplants" component={UserProfile} />
             <Route path="/myswaps" component={Swaps} />

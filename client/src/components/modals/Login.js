@@ -20,6 +20,9 @@ const Login = (props) => {
       password: password
     })
   }
+  const forgotPassword = e => {
+    props.history.push('/forgot')
+  }
 
   const closeModal = e => {
     console.log(e.target.className)
@@ -52,6 +55,10 @@ const Login = (props) => {
           <button className="Btn" onClick={checkUser}>
             Log in
             </button>
+            <button className="Btn" onClick={forgotPassword}>
+            Forgot password
+            </button>
+
         </div>
       </div>
     </div>
