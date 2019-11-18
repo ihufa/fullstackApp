@@ -1,9 +1,10 @@
 const mongoose = require("mongoose")
 const bodyParser = require("body-parser")
 const path = require("path")
-
+const compression = require('compression')
 var express = require("express")
 var app = express()
+app.use(compression())
 var server = require("http").Server(app)
 var io = require("socket.io")(server)
 
